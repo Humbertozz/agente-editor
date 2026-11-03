@@ -503,7 +503,7 @@ button.credits{cursor:pointer}
 </div>
 <canvas id="cv" width="720" height="1280" hidden></canvas>
 
-<script src="config.js?v=20261103b"></script>
+<script src="config.js?v=20261103c"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 (() => {
@@ -741,7 +741,7 @@ const MONTHLY = { id: "creditos_mensal", price: +(CFG.MONTHLY_PRICE || 0), credi
 const STYLE_COST = +(CFG.STYLE_COST || 5);
 const PACKS = [{ id: "recarga100", price: 49.90, credits: 100 }, { id: "recarga300", price: 119.90, credits: 300 }];
 let ME = null;
-function checkoutUrl(id) { const u = (CFG.CHECKOUT || {})[id]; if (!u) return ""; const em = ME && ME.email; return em ? u + (u.includes("?") ? "&" : "?") + "email=" + encodeURIComponent(em) : u; }
+function checkoutUrl(id) { const u = String((CFG.CHECKOUT || {})[id] || "").trim(); return /^https:\/\//.test(u) && !/COLE_/.test(u) ? u : ""; }
 const money = v => new Intl.NumberFormat(LANG === "pt" ? "pt-BR" : "en-US", { style: "currency", currency: "BRL" }).format(v);
 function renderPlans() {
   const box = $("#plans"); box.innerHTML = "";

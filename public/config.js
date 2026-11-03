@@ -7,9 +7,9 @@ window.FF_CONFIG = {
   // Deixe vazio se o site estiver hospedado na própria Vercel. Preencha se o site estiver no GitHub Pages.
   API_BASE: "",
 
-  // Links de pagamento (Hypercash). O e-mail do cliente logado é adicionado automaticamente quando possível.
+  // Links de pagamento (Hypercash). Abrem exatamente como estão aqui.
   CHECKOUT: {
-    vitalicio:       "https://pay.hypercash.com.br/pt/checkout/COLE_O_LINK_DO_ACESSO_VITALICIO",   // R$ 1.190,90 pagamento único
+    vitalicio:       "https://pay.hypercash.com.br/pt/checkout/b470cd3b-9c39-4ba3-b2cf-d76210413e74", // R$ 1.190,90 pagamento único
     creditos_mensal: "https://pay.hypercash.com.br/pt/checkout/b470cd3b-9c39-4ba3-b2cf-d76210413e74", // assinatura mensal de créditos
     recarga100:      "",  // opcional
     recarga300:      ""   // opcional
