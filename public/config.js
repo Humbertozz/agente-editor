@@ -14,9 +14,9 @@ window.FF_CONFIG = {
     recarga100:      "",  // opcional
     recarga300:      ""   // opcional
   },
-  // Login do produtor enquanto o Supabase não está ligado (modo pré-visualização).
+  // Conta de demonstração do produtor enquanto o Supabase não está ligado (gera demoVideos vídeos para mostrar a clientes).
   // A senha NÃO fica aqui: só um resumo criptográfico dela (PBKDF2). Depois de ligar o Supabase, este bloco deixa de ser usado.
-  OWNER: { name: "José Humberto", email: "humbertooliviera21@gmail.com", salt: "qxpQlzoHjzMYYzq7HHXSYA==", hash: "mMQKr5Eg5fdz+Iv4sR0+p6S/WGGwDOKaSbsBIBjry24=", iter: 310000 },
+  OWNER: { name: "José Humberto", email: "humbertooliviera21@gmail.com", salt: "q0rtWWI+Jft2KEfx5s53gQ==", hash: "0uhSuN5/IJX3pSagmNNH60MUjR99wN9gGS/SlkR+/gA=", iter: 310000, demoVideos: 3 },
 
   MONTHLY_PRICE: 0,      // preço da assinatura mensal de créditos (ex.: 197.90). 0 = não mostra o preço
   MONTHLY_CREDITS: 300,  // vídeos somados a cada mês pago

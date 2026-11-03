@@ -3,13 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta property="og:title" content="Flamefields">
+<meta property="og:description" content="Vídeos de lançamento imobiliário editados por IA.">
+<meta property="og:image" content="flamefields-banner.jpg">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Cdefs%3E%3ClinearGradient id=%22g%22 x1=%220%22 y1=%220%22 x2=%221%22 y2=%221%22%3E%3Cstop offset=%220%22 stop-color=%22%23ffb02e%22/%3E%3Cstop offset=%221%22 stop-color=%22%23e8174f%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width=%2232%22 height=%2232%22 rx=%229%22 fill=%22url(%23g)%22/%3E%3Cpath d=%22M16 5c1.5 4 7 6.5 7 13a7 7 0 0 1-14 0c0-3 1.6-5 3.4-6.3.1 2 .9 3.4 2.2 4C14.4 12 15 8.4 16 5z%22 fill=%22%23fff%22 transform=%22translate(0 -2.2)%22/%3E%3C/svg%3E">
 </head>
 <body>
 <title>Flamefields</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Manrope:wght@500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;800;900&family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Manrope:wght@500;600;700;800&display=swap">
 <style>
 /* Layout: SaaS no padrão americano — hero centralizado com janela do produto rodando ao vivo, passos, bento de recursos, planos com economia, FAQ e CTA final; área do cliente em formato app */
 :root{
@@ -53,7 +56,10 @@ p{margin:0}
 /* site */
 .nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(6,11,22,.8);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
 .nav .page{display:flex;align-items:center;justify-content:space-between;gap:14px;height:64px}
-.wm b{font-weight:800;background:linear-gradient(90deg,#ffb02e,#ff5a1f 60%,#e8174f);-webkit-background-clip:text;background-clip:text;color:transparent}
+.wm{font-family:"Outfit",var(--f-display);font-weight:800;letter-spacing:-.035em;font-size:1.22em;line-height:1;color:#f6f6f6}
+.wm b{font-weight:800;background:linear-gradient(95deg,#ffb12a 0%,#ff7a1a 40%,#ff3a2f 75%,#ef0f4d 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo .wm{font-size:24px}
+.mixeq .wm{font-size:1.15em}
 .logo{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:800;font-size:17px;letter-spacing:-.02em;white-space:nowrap}
 .nav-links{display:none;gap:28px;color:var(--mist);font-size:14px}
 .nav-links a:hover{color:var(--fg)}
@@ -294,7 +300,6 @@ button.credits{cursor:pointer}
   <header class="nav gut">
     <div class="page">
       <a class="logo" href="#inicio" aria-label="Flamefields">
-        <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><use href="#ffmark"/></svg>
         <span class="wm">Flame<b>fields</b></span>
       </a>
       <nav class="nav-links" aria-label="Seções">
@@ -424,7 +429,7 @@ button.credits{cursor:pointer}
   </main>
   <footer class="ft gut">
     <div class="page">
-      <div style="display:grid;gap:10px"><span class="logo"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><use href="#ffmark"/></svg><span class="wm">Flame<b>fields</b></span></span><p data-i18n="ft.tag"></p></div>
+      <div style="display:grid;gap:10px"><span class="logo"><span class="wm">Flame<b>fields</b></span></span><p data-i18n="ft.tag"></p></div>
       <div><h4 data-i18n="ft.product"></h4><nav><a href="#como" data-i18n="nav.how"></a><a href="#recursos" data-i18n="nav.features"></a><a href="#planos" data-i18n="nav.pricing"></a></nav></div>
       <div><h4 data-i18n="ft.account"></h4><nav><a href="?app=1" data-i18n="nav.login"></a><a href="#contato" data-i18n="ft.sales"></a><a href="#duvidas" data-i18n="nav.faq"></a></nav></div>
     </div>
@@ -434,7 +439,7 @@ button.credits{cursor:pointer}
 <!-- ======================= APP ======================= -->
 <div id="app" class="app" hidden>
   <aside class="side">
-    <a class="logo" href="./" aria-label="Flamefields"><svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><use href="#ffmark"/></svg><span class="wm">Flame<b>fields</b></span></a>
+    <a class="logo" href="./" aria-label="Flamefields"><span class="wm">Flame<b>fields</b></span></a>
     <button class="btn newchat" type="button" id="newChat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span data-i18n="app.new"></span></button>
     <div class="convs"><h4 data-i18n="app.recent"></h4><div id="convList"></div></div>
     <div class="acct"><div class="avatar" id="av">?</div><div style="min-width:0"><b id="acctName" data-i18n="acct.name"></b><span data-i18n="acct.active"></span></div></div>
@@ -600,6 +605,15 @@ pt: {
  "login.wrongPreview": "E-mail ou senha incorretos.", "login.previewOnly": "Entre com e-mail e senha. O link por e-mail e a criação de senha funcionam depois que o Supabase for ligado.",
  "preview.title": "Vídeo modelo (pré-visualização)", "preview.reply": "Modo pré-visualização: a IA ainda não está ligada no servidor (Vercel), então montei um vídeo modelo no estilo motion com os seus takes para você ver o editor funcionando. Depois de ligar a Vercel, eu crio o roteiro a partir do seu pedido.",
  "preview.t1": "ESSE LUGAR", "preview.t2": "que você tá vendo", "preview.t3": "agora", "preview.t4": "não é um", "preview.t5": "RESORT", "preview.t6": "é o seu bairro.", "preview.t7": "Aqui o pôr do sol\nvira rotina", "preview.t7m": "rotina", "preview.t8": "Lazer", "preview.t9": "lançamento", "preview.t9b": "EM BREVE", "preview.t10": "quer saber mais?", "preview.t11": "comenta QUERO", "preview.t11m": "quero",
+ "demo.badge": "Demonstração: {n}/{m} vídeos", "demo.title": "Conta de demonstração do produtor", "demo.acct": "Conta de demonstração", "demo.info": "Esta é a sua conta de demonstração: restam {n} de {m} vídeos. Use para mostrar o Flamefields a quem quer aderir.", "demo.reset": "Liberar mais {m} vídeos de demonstração", "demo.resetDone": "Pronto: {m} vídeos de demonstração liberados.",
+ "demo.over": "Os {m} vídeos de demonstração já foram usados.", "demo.cut": "Sua demonstração tinha só {n} vídeo(s) restante(s), então fiz essa quantidade.", "demo.lastOnes": "Estes foram os últimos vídeos da demonstração ({m} no total).", "demo.reply": "Fechado. Montei {n} vídeo(s) para o {name}: {list}. Editando agora, um por um.",
+ "demo.defName": "seu lançamento", "demo.soon": "EM BREVE", "demo.tMotion": "Motion editorial", "demo.tImpacto": "Impacto de lançamento", "demo.tLife": "Lifestyle cinema",
+ "demo.m1": "ESSE LUGAR", "demo.m2": "que você tá vendo", "demo.m3": "agora", "demo.m4": "não é um", "demo.m5": "RESORT", "demo.m6": "é o seu bairro.", "demo.m7": "Aqui o pôr do sol\nvira rotina", "demo.m7m": "rotina", "demo.m8": "Lazer", "demo.m9": "perto de tudo", "demo.m10": "lançamento", "demo.m11": "quer saber mais?", "demo.m12": "comenta QUERO", "demo.m12m": "quero",
+ "demo.i1": "PARA TUDO.", "demo.i2": "olha onde você", "demo.i3": "PODE MORAR", "demo.i3m": "morar", "demo.i4": "LAZER\nCOMPLETO", "demo.i4m": "completo", "demo.i5": "LOCALIZAÇÃO\nPRIVILEGIADA", "demo.i5m": "privilegiada", "demo.i6": "TOQUE EM SAIBA MAIS",
+ "demo.l1": "Existe um lugar", "demo.l2": "onde o fim de tarde vira rotina", "demo.l3": "e a vida acontece devagar",
+ "demo.locM": "[voz feminina calma e acolhedora] Esse lugar que você tá vendo agora não é um resort. É o seu bairro. Aqui o pôr do sol vira rotina, o lazer fica a poucos passos e tudo o que você precisa está perto. {n}. Lançamento: {d}. Quer saber mais? Comenta quero que eu te mando tudo.",
+ "demo.locI": "[voz masculina grave e firme] Para tudo. Olha onde você pode morar. Lazer completo, localização privilegiada e um projeto pensado para quem não quer abrir mão de nada. {n}. Lançamento: {d}. Toque em Saiba Mais e garanta o seu cadastro antes de todo mundo.",
+ "demo.locL": "[voz feminina calma e acolhedora] Existe um lugar onde o fim de tarde vira rotina e a vida acontece devagar. Um lugar para viver com calma, perto de quem você ama. {n}. Lançamento: {d}. Toque em Saiba Mais e conheça.",
  "idle.1": "PRONTO PARA\nEDITAR", "idle.2": "Peça no chat",
  "demo.t1": "SEU LANÇAMENTO", "demo.t2": "MERECE\nVÍDEO ASSIM", "demo.t3": "CORTE NA BATIDA", "demo.t4": "TRILHA PRÓPRIA", "demo.t5": "TEXTO QUE VENDE", "demo.t6": "EM 30 SEGUNDOS", "demo.t7": "AGRESSIVO OU\nTRANQUILO", "demo.t8": "VOCÊ SÓ PEDE", "demo.t10": "EDIÇÃO COM IA"
 },
@@ -694,6 +708,15 @@ en: {
  "login.wrongPreview": "Wrong email or password.", "login.previewOnly": "Sign in with email and password. Email links and password setup work once Supabase is connected.",
  "preview.title": "Sample video (preview)", "preview.reply": "Preview mode: the AI isn't connected on the server (Vercel) yet, so I built a motion-style sample video with your clips so you can see the editor working. Once Vercel is connected, I'll write the script from your request.",
  "preview.t1": "THIS PLACE", "preview.t2": "you're looking at", "preview.t3": "now", "preview.t4": "it's not a", "preview.t5": "RESORT", "preview.t6": "it's your neighborhood.", "preview.t7": "Here sunsets\nare routine", "preview.t7m": "routine", "preview.t8": "Leisure", "preview.t9": "launch", "preview.t9b": "COMING SOON", "preview.t10": "want to know more?", "preview.t11": "comment WANT", "preview.t11m": "want",
+ "demo.badge": "Demo: {n}/{m} videos", "demo.title": "Producer demo account", "demo.acct": "Demo account", "demo.info": "This is your demo account: {n} of {m} videos left. Use it to show Flamefields to people who want to join.", "demo.reset": "Unlock {m} more demo videos", "demo.resetDone": "Done: {m} demo videos unlocked.",
+ "demo.over": "The {m} demo videos have been used.", "demo.cut": "Your demo only had {n} video(s) left, so I made that many.", "demo.lastOnes": "These were the last demo videos ({m} in total).", "demo.reply": "Done. I built {n} video(s) for {name}: {list}. Editing now, one by one.",
+ "demo.defName": "your launch", "demo.soon": "COMING SOON", "demo.tMotion": "Editorial motion", "demo.tImpacto": "Launch impact", "demo.tLife": "Cinema lifestyle",
+ "demo.m1": "THIS PLACE", "demo.m2": "you're looking at", "demo.m3": "now", "demo.m4": "it's not a", "demo.m5": "RESORT", "demo.m6": "it's your neighborhood.", "demo.m7": "Here sunsets\nare routine", "demo.m7m": "routine", "demo.m8": "Leisure", "demo.m9": "close to everything", "demo.m10": "launch", "demo.m11": "want to know more?", "demo.m12": "comment WANT", "demo.m12m": "want",
+ "demo.i1": "STOP SCROLLING.", "demo.i2": "look where you", "demo.i3": "COULD LIVE", "demo.i3m": "live", "demo.i4": "FULL\nAMENITIES", "demo.i4m": "amenities", "demo.i5": "PRIME\nLOCATION", "demo.i5m": "prime", "demo.i6": "TAP LEARN MORE",
+ "demo.l1": "There is a place", "demo.l2": "where sunsets become routine", "demo.l3": "and life slows down",
+ "demo.locM": "[calm, warm female voice] This place you're looking at isn't a resort. It's your neighborhood. Here sunsets are routine, leisure is steps away and everything you need is close. {n}. Launch: {d}. Want to know more? Comment want and I'll send you everything.",
+ "demo.locI": "[deep, firm male voice] Stop scrolling. Look where you could live. Full amenities, prime location and a project made for people who won't settle. {n}. Launch: {d}. Tap Learn More and sign up before everyone else.",
+ "demo.locL": "[calm, warm female voice] There is a place where sunsets become routine and life slows down. A place to live calmly, close to the people you love. {n}. Launch: {d}. Tap Learn More to discover it.",
  "idle.1": "READY TO\nEDIT", "idle.2": "Ask in the chat",
  "demo.t1": "YOUR LAUNCH", "demo.t2": "DESERVES\nVIDEOS LIKE THIS", "demo.t3": "CUT ON THE BEAT", "demo.t4": "ORIGINAL MUSIC", "demo.t5": "COPY THAT SELLS", "demo.t6": "IN 30 SECONDS", "demo.t7": "BOLD OR\nCALM", "demo.t8": "JUST ASK", "demo.t10": "AI VIDEO EDITING"
 }};
@@ -1185,9 +1208,13 @@ async function ownerCheck(email, pass) {
   const want = b64(O.hash); if (bits.length !== want.length) return false;
   let d = 0; for (let i = 0; i < bits.length; i++) d |= bits[i] ^ want[i]; return d === 0;
 }
+const DEMO_MAX = (CFG.OWNER && +CFG.OWNER.demoVideos) || 3;
+function demoLeft() { const v = store.get("ff_demo_left", null); return v == null ? DEMO_MAX : Math.max(0, +v); }
+function setDemoLeft(n) { store.set("ff_demo_left", n); if (ME && ME.profile) { ME.profile.credits = n; ME.profile.extra_credits = n; } paintCredits(); updSend(); }
 function enterOwner(email) {
   OWNER_MODE = true; try { sessionStorage.setItem("ff_owner", email); } catch (e) {}
-  applyMe({ email, admin: true, access: { ok: true, admin: true }, profile: { email, name: (CFG.OWNER && CFG.OWNER.name) || "Produtor", plan: "produtor", credits: Infinity, plan_credits: 0, extra_credits: Infinity } });
+  const n = demoLeft();
+  applyMe({ email, demo: true, access: { ok: true }, profile: { email, name: (CFG.OWNER && CFG.OWNER.name) || "Produtor", plan: "demo", credits: n, plan_credits: 0, extra_credits: n } });
   showGate(null); newConv(); setTimeout(() => inp.focus(), 50);
 }
 async function token() { if (!SB) return null; const { data } = await SB.auth.getSession(); return data && data.session ? data.session.access_token : null; }
@@ -1235,10 +1262,11 @@ $("#newPassForm").addEventListener("submit", async e => {
   if (error) { $("#gateNote").textContent = t("login.passFail"); return; }
   $("#gateNote").textContent = t("login.passOk"); setTimeout(() => { appReady = false; enterApp(); }, 900);
 });
-$("#credits").addEventListener("click", () => { if ($("#credits").classList.contains("free")) { if ($("#home").hidden === false) $("#home").hidden = true; agentNote(t("credits.freeInfo")); return; } if ($("#home").hidden === false) $("#home").hidden = true; const b = agentNote(t("credits.info", { n: (ME && ME.profile && ME.profile.credits) || 0 })); upsell(b, "recarga"); });
+$("#credits").addEventListener("click", () => { if (ME && ME.demo) { if ($("#home").hidden === false) $("#home").hidden = true; demoInfo(); return; } if ($("#credits").classList.contains("free")) { if ($("#home").hidden === false) $("#home").hidden = true; agentNote(t("credits.freeInfo")); return; } if ($("#home").hidden === false) $("#home").hidden = true; const b = agentNote(t("credits.info", { n: (ME && ME.profile && ME.profile.credits) || 0 })); upsell(b, "recarga"); });
 function paintCredits() {
   const el = $("#credits"); if (!ME || !ME.profile) { el.hidden = true; return; }
   const c = ME.profile.credits || 0; el.hidden = false;
+  if (ME.demo) { el.textContent = t("demo.badge", { n: c, m: DEMO_MAX }); el.className = "credits" + (c <= 0 ? " zero" : " free"); el.title = t("demo.title"); const ac = document.querySelector(".acct span"); if (ac) { ac.removeAttribute("data-i18n"); ac.textContent = t("demo.acct"); } return; }
   const free = ME.admin || (ME.access && ME.access.admin) || ME.profile.plan === "produtor";
   if (free) { el.textContent = t("credits.free"); el.className = "credits free"; el.title = t("credits.freeTitle"); const ac = document.querySelector(".acct span"); if (ac) { ac.removeAttribute("data-i18n"); ac.textContent = t("acct.free"); } return; }
   el.textContent = t("credits.badge", { n: c }); el.className = "credits" + (c <= 0 ? " zero" : c <= 20 ? " low" : "");
@@ -1557,13 +1585,72 @@ function videoCard(grid, plan) {
     if (!job.blob) return;
     const a = document.createElement("a"); a.href = job.url; a.download = "flamefields_" + num + "_" + slug(plan.titulo || "video") + "." + (job.blob.type.includes("mp4") ? "mp4" : "webm"); document.body.append(a); a.click(); a.remove();
   };
-  q('[data-a="redo"]').onclick = () => { if (!clips.size) { agentNote(t("app.reopenNote")); return; } audioCtx(); bar.parentElement.hidden = false; job.resetForRedo(); enqueue(job); };
+  q('[data-a="redo"]').onclick = () => { if (!clips.size) { agentNote(t("app.reopenNote")); return; } if (ME && ME.demo) { if (demoLeft() <= 0) { demoInfo(); return; } setDemoLeft(demoLeft() - 1); } audioCtx(); bar.parentElement.hidden = false; job.resetForRedo(); enqueue(job); };
   q('[data-a="copy"]').onclick = async () => { const txt = plan.locucao || ""; try { await navigator.clipboard.writeText(txt); q('[data-a="copy"]').textContent = t("card.copied"); } catch (e) { const r = document.createRange(); r.selectNodeContents(q(".loc p")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); } };
   conv.vids.push(job); job.paint(); return job;
 }
 
 /* modo pré-visualização: sem servidor de IA ligado, monta um vídeo modelo com os takes */
+function demoInfo() {
+  const b = agentNote(t("demo.info", { n: demoLeft(), m: DEMO_MAX }));
+  const btn = document.createElement("button"); btn.type = "button"; btn.className = "btn sm"; btn.style.justifySelf = "start"; btn.textContent = t("demo.reset", { m: DEMO_MAX });
+  btn.onclick = () => { setDemoLeft(DEMO_MAX); btn.remove(); agentNote(t("demo.resetDone", { m: DEMO_MAX })); };
+  b.append(btn);
+}
+/* gerador de roteiros da demonstração (funciona sem servidor) */
+function demoPlans(text, n) {
+  const T = String(text || "");
+  const dm = T.match(/\b(\d{1,2}\/\d{1,2})\b/); const date = dm ? dm[1] : "";
+  const nm = T.match(/(?:residencial|condom[ií]nio|empreendimento|lan[cç]amento d[oa]|do|da|para o|para a)\s+((?:[A-ZÁÉÍÓÚÂÊÔÃÕÇ][\wÀ-ú'-]*\s*){1,4})/) || T.match(/"([^"]{3,40})"/);
+  let name = nm ? nm[1].trim().replace(/\s+(em|no|na|com|para|dia)$/i, "") : t("demo.defName");
+  const cm = T.match(/\bem\s+([A-ZÁÉÍÓÚ][\wÀ-ú]+(?:\s+(?:d[aoe]s?|de)\s+[A-ZÁÉÍÓÚ][\wÀ-ú]+)?)/); const city = cm ? cm[1] : "";
+  const wants = /motion|tipogra|reels/i.test(T) ? ["motion"] : /agressiv|impacto|forte|urg[eê]n/i.test(T) ? ["impacto"] : /tranquil|elegan|lifestyle|sofistic|calm/i.test(T) ? ["lifestyle"] : ["motion", "impacto", "lifestyle"];
+  const ids = [...clips.keys()]; const pick = i => ids[(i + ids.length * 7) % ids.length];
+  const NAME = name.toUpperCase(), D = date || t("demo.soon");
+  const MK = {
+    motion: k => ({ titulo: t("demo.tMotion"), pegada: "motion", musica: "lancamento", bpm: 100, cor: "punchy", destaque: "#ff6a1f",
+      cenas: [5, 5, 7, 5, 5, 5, 7, 11].map((b, i) => ({ clip: pick(i + k), batidas: b, mov: ["in", "in", "out", "left", "in", "right", "in", "in"][i], trans: i === 7 ? "corte" : "fade" })),
+      textos: [{ de: .2, ate: 2.9, texto: t("demo.m1"), y: .36, tam: "gg" }, { de: .8, ate: 2.9, texto: t("demo.m2"), y: .445, tam: "m", cor: "cinza" }, { de: 1.5, ate: 2.9, texto: t("demo.m3"), y: .52, tam: "g", caixa: true, marca: t("demo.m3"), anim: "desfoca" },
+        { de: 3.1, ate: 5.9, texto: t("demo.m4"), y: .37, tam: "m", cor: "cinza" }, { de: 3.4, ate: 5.9, texto: t("demo.m5"), y: .45, tam: "gg", risco: true }, { de: 4.6, ate: 5.9, texto: t("demo.m6"), y: .54, tam: "g", estilo: "serif", anim: "desfoca", cor: "destaque" },
+        { de: 6.2, ate: 9.8, texto: t("demo.m7"), y: .40, tam: "g", marca: t("demo.m7m") }, { de: 10.2, ate: 13, texto: t("demo.m8"), y: .40, tam: "gg", caixa: true, marca: t("demo.m8"), anim: "desfoca" },
+        { de: 13.3, ate: 18.8, texto: name, y: .40, tam: "g", anim: "palavra" }, { de: 14.2, ate: 18.8, texto: city || t("demo.m9"), y: .48, tam: "m", estilo: "serif", anim: "desfoca", cor: "destaque" },
+        { de: 19.3, ate: 23, texto: t("demo.m10"), y: .45, tam: "m", cor: "cinza" }, { de: 20.2, ate: 23, texto: D, y: .55, tam: date ? "xg" : "gg", anim: "digita", cor: "destaque" },
+        { de: 23.5, ate: 29.8, texto: t("demo.m11"), y: .62, tam: "m", cor: "cinza" }, { de: 24.3, ate: 29.8, texto: t("demo.m12"), y: .70, tam: "gg", marca: t("demo.m12m"), caixa: true }],
+      impactos: [3.4, 20.2], locucao: t("demo.locM", { n: name, d: D }) }),
+    impacto: k => ({ titulo: t("demo.tImpacto"), pegada: "agressivo", musica: "epico", bpm: 100, cor: "dark", destaque: "#ff6a1f",
+      cenas: [4, 3, 3, 4, 3, 3, 4, 4, 22].map((b, i) => ({ clip: pick(i + k + 2), batidas: b, mov: ["punch", "in", "punch", "out", "punch", "in", "punch", "in", "in"][i], trans: i % 3 === 2 ? "zoom" : "branco" })),
+      textos: [{ de: .15, ate: 2.3, texto: t("demo.i1"), y: .40, tam: "gg", anim: "pisca" }, { de: 2.5, ate: 5.2, texto: t("demo.i2"), y: .38, tam: "m", cor: "cinza", anim: "palavra" }, { de: 3, ate: 5.2, texto: t("demo.i3"), y: .47, tam: "gg", caixa: true, marca: t("demo.i3m") },
+        { de: 5.6, ate: 8.6, texto: t("demo.i4"), y: .42, tam: "g", anim: "palavra", marca: t("demo.i4m") }, { de: 9, ate: 12.4, texto: t("demo.i5"), y: .42, tam: "g", anim: "palavra", marca: t("demo.i5m") },
+        { de: 12.8, ate: 16.6, texto: NAME, y: .42, tam: "gg", anim: "sobe" }, { de: 13.6, ate: 16.6, texto: city || t("demo.m9"), y: .51, tam: "m", estilo: "serif", cor: "destaque", anim: "desfoca" },
+        { de: 17, ate: 29.8, texto: t("demo.m10").toUpperCase(), y: .40, tam: "m", cor: "cinza" }, { de: 17.6, ate: 29.8, texto: D, y: .50, tam: date ? "xg" : "gg", anim: "digita", cor: "destaque" },
+        { de: 20.5, ate: 29.8, texto: t("demo.i6"), y: .64, tam: "g", caixa: true }],
+      impactos: [0, 3, 12.8, 17.6], locucao: t("demo.locI", { n: name, d: D }) }),
+    lifestyle: k => ({ titulo: t("demo.tLife"), pegada: "tranquilo", musica: "cinema", bpm: 90, cor: "warm", layout: "cinema", destaque: "#f3c34a",
+      cenas: [7, 6, 7, 6, 7, 12].map((b, i) => ({ clip: pick(i + k + 4), batidas: b, mov: ["in", "right", "out", "left", "in", "in"][i], trans: i === 5 ? "corte" : i % 2 ? "preto" : "fade" })),
+      textos: [{ de: .6, ate: 4.4, texto: t("demo.l1"), y: .27, tam: "m", peso: "leve", alinha: "centro" }, { de: 5, ate: 9.2, texto: t("demo.l2"), y: .27, tam: "m", peso: "leve", alinha: "centro" },
+        { de: 9.8, ate: 14.2, texto: t("demo.l3"), y: .27, tam: "m", peso: "leve", alinha: "centro" }, { de: 14.8, ate: 19.6, texto: city || t("demo.m9"), y: .72, tam: "p", cor: "destaque", alinha: "centro" },
+        { de: 21, ate: 29.8, texto: name, y: .27, tam: "g", estilo: "serif", alinha: "centro", anim: "desfoca" }, { de: 22, ate: 29.8, texto: t("demo.m10") + " " + D, y: .72, tam: "p", cor: "destaque", alinha: "centro" }],
+      impactos: [], locucao: t("demo.locL", { n: name, d: D }) })
+  };
+  const list = []; for (let i = 0; i < n; i++) { const kind = wants.length === 1 ? wants[0] : wants[i % wants.length]; const pl = MK[kind](i * 3); if (wants.length === 1 && n > 1) pl.titulo += " " + (i + 1); list.push(pl); }
+  return { list, name };
+}
 function previewDemo(body, txt, text) {
+  if (OWNER_MODE && ME && ME.demo) {
+    const left = demoLeft();
+    if (left <= 0) { txt.textContent = t("demo.over", { m: DEMO_MAX }); demoInfo(); return; }
+    const m = String(text).match(/\b(\d+)\s*v[ií]deos?|\b(um|uma|dois|duas|tr[eê]s)\s+v[ií]deos?/i);
+    const words = { um: 1, uma: 1, dois: 2, duas: 2, "três": 3, tres: 3 };
+    let n = m ? (+m[1] || words[(m[2] || "").toLowerCase()] || 3) : 3; n = Math.max(1, Math.min(n, left, 5));
+    const { list, name } = demoPlans(text, n);
+    txt.textContent = t("demo.reply", { n: list.length, name, list: list.map(v => v.titulo).join(", ") }) + (n < (m ? (+m[1] || 3) : 3) ? "\n\n" + t("demo.cut", { n: left }) : "");
+    conv.msgs.push({ role: "assistant", text: txt.textContent, plans: list }); saveConv();
+    turns.push({ role: "assistant", content: JSON.stringify({ resposta: txt.textContent, videos: list }).slice(0, 60000) });
+    setDemoLeft(left - list.length);
+    const grid = vidGrid(body); list.forEach(v => enqueue(videoCard(grid, v)));
+    if (demoLeft() <= 0) { const nn = document.createElement("div"); nn.className = "note"; nn.textContent = t("demo.lastOnes", { m: DEMO_MAX }); body.append(nn); }
+    scrollEnd(); return;
+  }
   const ids = [...clips.keys()]; const pick = i => ids[i % ids.length];
   const plan = { titulo: t("preview.title"), pegada: "motion", musica: "lancamento", bpm: 100, cor: "punchy", destaque: "#ff6a1f",
     cenas: [5, 5, 7, 5, 5, 5, 7, 11].map((b, i) => ({ clip: pick(i), batidas: b, mov: ["in", "in", "out", "left", "in", "right", "zoom", "in"][i] === "zoom" ? "in" : ["in", "in", "out", "left", "in", "right", "in", "in"][i], trans: i === 7 ? "corte" : "fade" })),
@@ -1589,9 +1676,9 @@ async function ask(text) {
   turns.push({ role: "user", content: text }); while (turns.length > 14) turns.shift(); if (turns[0].role !== "user") turns.shift();
   const all = [...clips.values()];
   const payload = { lang: LANG, turns, catalog: all.map(c => ({ id: c.id, dur: c.dur, synth: !!c.synth, desc: c.synth ? c.desc : "" })), images: all.some(c => !c.synth) ? all.slice(0, 20).map(c => c.synth ? "" : (c.thumb || "")).filter(Boolean) : [], feitos: conv.vids.map(j => j.plan.titulo || ""), estilo: conv.estilo ? { nome: conv.estilo.nome, resumo: conv.estilo.resumo, receita: conv.estilo.receita } : null };
-  let r; try { r = await api("/api/agent", { method: "POST", body: JSON.stringify(payload) }); } catch (e) { r = { ok: false, status: 0, data: {} }; }
+  let r; if (OWNER_MODE && ME && ME.demo && !SB) { await new Promise(res => setTimeout(res, 2600)); r = { ok: false, status: 0, data: {} }; } else try { r = await api("/api/agent", { method: "POST", body: JSON.stringify(payload) }); } catch (e) { r = { ok: false, status: 0, data: {} }; }
   done();
-  if (!r.ok && OWNER_MODE && (r.status === 0 || r.status === 404 || r.status === 405)) { turns.pop(); return previewDemo(body, txt, text); }
+  if (!r.ok && OWNER_MODE && (r.status === 0 || r.status === 404 || r.status === 405 || r.status === 501)) { turns.pop(); return previewDemo(body, txt, text); }
   if (r.data && r.data.profile) { ME = { ...(ME || {}), profile: r.data.profile }; paintCredits(); }
   if (!r.ok) {
     turns.pop();
