@@ -14,6 +14,10 @@ window.FF_CONFIG = {
     recarga100:      "",  // opcional
     recarga300:      ""   // opcional
   },
+  // Login do produtor enquanto o Supabase não está ligado (modo pré-visualização).
+  // A senha NÃO fica aqui: só um resumo criptográfico dela (PBKDF2). Depois de ligar o Supabase, este bloco deixa de ser usado.
+  OWNER: { name: "José Humberto", email: "humbertooliviera21@gmail.com", salt: "qxpQlzoHjzMYYzq7HHXSYA==", hash: "mMQKr5Eg5fdz+Iv4sR0+p6S/WGGwDOKaSbsBIBjry24=", iter: 310000 },
+
   MONTHLY_PRICE: 0,      // preço da assinatura mensal de créditos (ex.: 197.90). 0 = não mostra o preço
   MONTHLY_CREDITS: 300,  // vídeos somados a cada mês pago
   STYLE_COST: 5          // créditos por análise de estilo

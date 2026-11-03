@@ -188,7 +188,7 @@ footer.ft a:hover{color:var(--fg)}
 .conv[aria-current="true"]{background:rgba(255,255,255,.07);color:var(--fg)}
 .acct{display:flex;gap:10px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
 .avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#ff8a1f,#e8174f);display:grid;place-items:center;font-weight:700;font-size:12.5px;flex:none}
-.acct b{display:block;font-size:13px;line-height:1.2}
+.acct b{display:block;font-size:13px;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .acct span{font-size:11.5px;color:var(--ok)}
 .main{min-width:0;display:flex;flex-direction:column;min-height:100vh}
 .topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px));background:rgba(6,11,22,.85);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
@@ -270,6 +270,7 @@ details.loc p{margin:6px 0;background:var(--card2);padding:8px;border-radius:8px
 .scard .row{display:flex;gap:6px;flex-wrap:wrap}
 button.credits{cursor:pointer}
 .credits{font-size:12.5px;font-weight:600;padding:6px 10px;border-radius:9px;border:1px solid var(--line2);background:var(--card);white-space:nowrap;font-variant-numeric:tabular-nums}
+.credits.free{border-color:rgba(52,211,153,.55);color:var(--ok);background:rgba(52,211,153,.08)}
 .credits.low{border-color:rgba(251,191,36,.6);color:var(--warn)}
 .credits.zero{border-color:rgba(251,113,133,.6);color:var(--live)}
 .gate{flex:1;display:grid;place-items:center;padding:40px max(16px,env(safe-area-inset-right,0px)) 40px max(16px,env(safe-area-inset-left,0px))}
@@ -595,6 +596,10 @@ pt: {
  "mix.au.tag": "estúdio de som", "mix.au.t": "Trilha original e efeitos", "mix.au.p": "Trilha de lançamento composta para cada vídeo, sem direitos autorais, com efeitos sonoros que acompanham cada palavra e cada revelação.",
  "mix.eq1": "Motion", "mix.eq2": "Cortes de Reels", "mix.eq3": "Cor de cinema",
  "mix.note": "After Effects, Premiere, CapCut e DaVinci Resolve são marcas de seus respectivos donos. O Flamefields não é afiliado a eles: é uma IA de edição própria que aplica técnicas inspiradas nesses editores.",
+ "credits.free": "∞ Acesso free", "credits.freeTitle": "Conta do produtor: sem limite de créditos", "credits.freeInfo": "Sua conta é de produtor: acesso free, sem limite de créditos. O custo da IA sai direto da sua chave da Anthropic.", "acct.free": "Acesso free · produtor",
+ "login.wrongPreview": "E-mail ou senha incorretos.", "login.previewOnly": "Entre com e-mail e senha. O link por e-mail e a criação de senha funcionam depois que o Supabase for ligado.",
+ "preview.title": "Vídeo modelo (pré-visualização)", "preview.reply": "Modo pré-visualização: a IA ainda não está ligada no servidor (Vercel), então montei um vídeo modelo no estilo motion com os seus takes para você ver o editor funcionando. Depois de ligar a Vercel, eu crio o roteiro a partir do seu pedido.",
+ "preview.t1": "ESSE LUGAR", "preview.t2": "que você tá vendo", "preview.t3": "agora", "preview.t4": "não é um", "preview.t5": "RESORT", "preview.t6": "é o seu bairro.", "preview.t7": "Aqui o pôr do sol\nvira rotina", "preview.t7m": "rotina", "preview.t8": "Lazer", "preview.t9": "lançamento", "preview.t9b": "EM BREVE", "preview.t10": "quer saber mais?", "preview.t11": "comenta QUERO", "preview.t11m": "quero",
  "idle.1": "PRONTO PARA\nEDITAR", "idle.2": "Peça no chat",
  "demo.t1": "SEU LANÇAMENTO", "demo.t2": "MERECE\nVÍDEO ASSIM", "demo.t3": "CORTE NA BATIDA", "demo.t4": "TRILHA PRÓPRIA", "demo.t5": "TEXTO QUE VENDE", "demo.t6": "EM 30 SEGUNDOS", "demo.t7": "AGRESSIVO OU\nTRANQUILO", "demo.t8": "VOCÊ SÓ PEDE", "demo.t10": "EDIÇÃO COM IA"
 },
@@ -685,6 +690,10 @@ en: {
  "mix.au.tag": "sound studio", "mix.au.t": "Original soundtrack and SFX", "mix.au.p": "A launch soundtrack composed for each video, copyright-free, with sound effects that follow every word and reveal.",
  "mix.eq1": "Motion", "mix.eq2": "Reels cuts", "mix.eq3": "Cinema color",
  "mix.note": "After Effects, Premiere, CapCut and DaVinci Resolve are trademarks of their respective owners. Flamefields is not affiliated with them: it is its own AI editor applying techniques inspired by those tools.",
+ "credits.free": "∞ Free access", "credits.freeTitle": "Producer account: unlimited credits", "credits.freeInfo": "This is a producer account: free access with unlimited credits. AI costs come straight from your Anthropic key.", "acct.free": "Free access · producer",
+ "login.wrongPreview": "Wrong email or password.", "login.previewOnly": "Sign in with email and password. Email links and password setup work once Supabase is connected.",
+ "preview.title": "Sample video (preview)", "preview.reply": "Preview mode: the AI isn't connected on the server (Vercel) yet, so I built a motion-style sample video with your clips so you can see the editor working. Once Vercel is connected, I'll write the script from your request.",
+ "preview.t1": "THIS PLACE", "preview.t2": "you're looking at", "preview.t3": "now", "preview.t4": "it's not a", "preview.t5": "RESORT", "preview.t6": "it's your neighborhood.", "preview.t7": "Here sunsets\nare routine", "preview.t7m": "routine", "preview.t8": "Leisure", "preview.t9": "launch", "preview.t9b": "COMING SOON", "preview.t10": "want to know more?", "preview.t11": "comment WANT", "preview.t11m": "want",
  "idle.1": "READY TO\nEDIT", "idle.2": "Ask in the chat",
  "demo.t1": "YOUR LAUNCH", "demo.t2": "DESERVES\nVIDEOS LIKE THIS", "demo.t3": "CUT ON THE BEAT", "demo.t4": "ORIGINAL MUSIC", "demo.t5": "COPY THAT SELLS", "demo.t6": "IN 30 SECONDS", "demo.t7": "BOLD OR\nCALM", "demo.t8": "JUST ASK", "demo.t10": "AI VIDEO EDITING"
 }};
@@ -1166,7 +1175,21 @@ const thread = $("#thread"), inp = $("#inp");
 const BASE = (CFG.API_BASE || "").replace(/\/$/, "");
 const APP_URL = location.origin + location.pathname.replace(/\/app\/?$/, "/").replace(/index\.html$/, "") + "?app=1";
 const SB = (window.supabase && CFG.SUPABASE_URL && !/SEU-PROJETO/.test(CFG.SUPABASE_URL)) ? window.supabase.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY) : null;
-let gateState = null;
+let gateState = null, OWNER_MODE = false;
+const b64 = x => Uint8Array.from(atob(x), c => c.charCodeAt(0));
+async function ownerCheck(email, pass) {
+  const O = CFG.OWNER; if (!O || !O.hash || !window.crypto || !crypto.subtle) return false;
+  if (String(email).trim().toLowerCase() !== String(O.email).toLowerCase()) return false;
+  const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(pass), "PBKDF2", false, ["deriveBits"]);
+  const bits = new Uint8Array(await crypto.subtle.deriveBits({ name: "PBKDF2", hash: "SHA-256", salt: b64(O.salt), iterations: O.iter || 310000 }, key, 256));
+  const want = b64(O.hash); if (bits.length !== want.length) return false;
+  let d = 0; for (let i = 0; i < bits.length; i++) d |= bits[i] ^ want[i]; return d === 0;
+}
+function enterOwner(email) {
+  OWNER_MODE = true; try { sessionStorage.setItem("ff_owner", email); } catch (e) {}
+  applyMe({ email, admin: true, access: { ok: true, admin: true }, profile: { email, name: (CFG.OWNER && CFG.OWNER.name) || "Produtor", plan: "produtor", credits: Infinity, plan_credits: 0, extra_credits: Infinity } });
+  showGate(null); newConv(); setTimeout(() => inp.focus(), 50);
+}
 async function token() { if (!SB) return null; const { data } = await SB.auth.getSession(); return data && data.session ? data.session.access_token : null; }
 async function api(path, opts = {}) {
   const tk = await token();
@@ -1187,21 +1210,22 @@ function showGate(kind) {
   if (kind !== "login" && kind !== "config" && kind !== "senha") { const out = document.createElement("button"); out.type = "button"; out.className = "btn block"; out.textContent = t("gate.logout"); out.onclick = async () => { if (SB) await SB.auth.signOut(); location.reload(); }; box.append(out); }
 }
 $("#loginForm").addEventListener("submit", async e => {
-  e.preventDefault(); const email = $("#loginEmail").value.trim().toLowerCase(), pass = $("#loginPass").value; if (!email || !SB) return;
+  e.preventDefault(); const email = $("#loginEmail").value.trim().toLowerCase(), pass = $("#loginPass").value; if (!email) return;
   if (!pass) { $("#gateNote").textContent = t("login.needPass"); $("#loginPass").focus(); return; }
   const b = $('#loginForm button[type="submit"]'); b.disabled = true; $("#gateNote").textContent = t("login.entering");
+  if (!SB) { const ok = await ownerCheck(email, pass); b.disabled = false; if (ok) enterOwner(email); else $("#gateNote").textContent = t("login.wrongPreview"); return; }
   const { error } = await SB.auth.signInWithPassword({ email, password: pass });
   b.disabled = false;
   if (error) { $("#gateNote").textContent = t("login.wrong"); return; }
   appReady = false; enterApp();
 });
 $("#magicBtn").addEventListener("click", async () => {
-  const email = $("#loginEmail").value.trim().toLowerCase(); if (!email || !SB) { $("#gateNote").textContent = t("login.needEmail"); $("#loginEmail").focus(); return; }
+  const email = $("#loginEmail").value.trim().toLowerCase(); if (!SB) { $("#gateNote").textContent = t("login.previewOnly"); return; } if (!email) { $("#gateNote").textContent = t("login.needEmail"); $("#loginEmail").focus(); return; }
   const { error } = await SB.auth.signInWithOtp({ email, options: { shouldCreateUser: false, emailRedirectTo: APP_URL } });
   $("#gateNote").textContent = error ? t("gate.notFound") : t("gate.sent", { e: email });
 });
 $("#forgotBtn").addEventListener("click", async () => {
-  const email = $("#loginEmail").value.trim().toLowerCase(); if (!email || !SB) { $("#gateNote").textContent = t("login.needEmail"); $("#loginEmail").focus(); return; }
+  const email = $("#loginEmail").value.trim().toLowerCase(); if (!SB) { $("#gateNote").textContent = t("login.previewOnly"); return; } if (!email) { $("#gateNote").textContent = t("login.needEmail"); $("#loginEmail").focus(); return; }
   const { error } = await SB.auth.resetPasswordForEmail(email, { redirectTo: APP_URL });
   $("#gateNote").textContent = error ? t("gate.notFound") : t("login.resetSent", { e: email });
 });
@@ -1211,16 +1235,18 @@ $("#newPassForm").addEventListener("submit", async e => {
   if (error) { $("#gateNote").textContent = t("login.passFail"); return; }
   $("#gateNote").textContent = t("login.passOk"); setTimeout(() => { appReady = false; enterApp(); }, 900);
 });
-$("#credits").addEventListener("click", () => { if ($("#home").hidden === false) $("#home").hidden = true; const b = agentNote(t("credits.info", { n: (ME && ME.profile && ME.profile.credits) || 0 })); upsell(b, "recarga"); });
+$("#credits").addEventListener("click", () => { if ($("#credits").classList.contains("free")) { if ($("#home").hidden === false) $("#home").hidden = true; agentNote(t("credits.freeInfo")); return; } if ($("#home").hidden === false) $("#home").hidden = true; const b = agentNote(t("credits.info", { n: (ME && ME.profile && ME.profile.credits) || 0 })); upsell(b, "recarga"); });
 function paintCredits() {
   const el = $("#credits"); if (!ME || !ME.profile) { el.hidden = true; return; }
   const c = ME.profile.credits || 0; el.hidden = false;
+  const free = ME.admin || (ME.access && ME.access.admin) || ME.profile.plan === "produtor";
+  if (free) { el.textContent = t("credits.free"); el.className = "credits free"; el.title = t("credits.freeTitle"); const ac = document.querySelector(".acct span"); if (ac) { ac.removeAttribute("data-i18n"); ac.textContent = t("acct.free"); } return; }
   el.textContent = t("credits.badge", { n: c }); el.className = "credits" + (c <= 0 ? " zero" : c <= 20 ? " low" : "");
   el.title = t("credits.title", { p: ME.profile.plan_credits || 0, x: ME.profile.extra_credits || 0 });
 }
 function applyMe(d) {
   ME = d; paintCredits();
-  const nm = (d.profile && d.profile.name) || d.email || "";
+  const nm = (d.profile && d.profile.name && d.profile.name !== "Produtor" ? d.profile.name : "") || d.email || "";
   if (nm) { $("#acctName").removeAttribute("data-i18n"); $("#acctName").textContent = nm; $("#av").textContent = nm.trim().split(/[\s@.]+/).filter(Boolean).map(w => w[0]).slice(0, 2).join("").toUpperCase(); firstName = (d.profile && d.profile.name ? d.profile.name.split(" ")[0] : ""); }
 }
 function monthlyBtn(parent, cls) {
@@ -1241,7 +1267,7 @@ function upsell(body, reason) {
 }
 async function enterApp() {
   if (appReady) return; appReady = true;
-  if (!SB) { showGate("config"); return; }
+  if (!SB) { let em = null; try { em = sessionStorage.getItem("ff_owner"); } catch (e) {} if (em) { enterOwner(em); return; } showGate("login"); return; }
   const tk = await token();
   if (!tk) { showGate("login"); return; }
   const r = await api("/api/me");
@@ -1536,6 +1562,22 @@ function videoCard(grid, plan) {
   conv.vids.push(job); job.paint(); return job;
 }
 
+/* modo pré-visualização: sem servidor de IA ligado, monta um vídeo modelo com os takes */
+function previewDemo(body, txt, text) {
+  const ids = [...clips.keys()]; const pick = i => ids[i % ids.length];
+  const plan = { titulo: t("preview.title"), pegada: "motion", musica: "lancamento", bpm: 100, cor: "punchy", destaque: "#ff6a1f",
+    cenas: [5, 5, 7, 5, 5, 5, 7, 11].map((b, i) => ({ clip: pick(i), batidas: b, mov: ["in", "in", "out", "left", "in", "right", "zoom", "in"][i] === "zoom" ? "in" : ["in", "in", "out", "left", "in", "right", "in", "in"][i], trans: i === 7 ? "corte" : "fade" })),
+    textos: [{ de: .2, ate: 2.9, texto: t("preview.t1"), y: .36, tam: "gg" }, { de: .8, ate: 2.9, texto: t("preview.t2"), y: .445, tam: "m", cor: "cinza" }, { de: 1.5, ate: 2.9, texto: t("preview.t3"), y: .52, tam: "g", caixa: true, marca: t("preview.t3"), anim: "desfoca" },
+      { de: 3.1, ate: 5.9, texto: t("preview.t4"), y: .37, tam: "m", cor: "cinza" }, { de: 3.4, ate: 5.9, texto: t("preview.t5"), y: .45, tam: "gg", risco: true }, { de: 4.6, ate: 5.9, texto: t("preview.t6"), y: .54, tam: "g", estilo: "serif", anim: "desfoca", cor: "destaque" },
+      { de: 6.2, ate: 9.8, texto: t("preview.t7"), y: .40, tam: "g", marca: t("preview.t7m") }, { de: 10.2, ate: 13, texto: t("preview.t8"), y: .40, tam: "gg", caixa: true, marca: t("preview.t8"), anim: "desfoca" },
+      { de: 19.3, ate: 23, texto: t("preview.t9"), y: .45, tam: "m", cor: "cinza" }, { de: 20.2, ate: 23, texto: t("preview.t9b"), y: .55, tam: "gg", anim: "digita", cor: "destaque" },
+      { de: 23.5, ate: 29.8, texto: t("preview.t10"), y: .62, tam: "m", cor: "cinza" }, { de: 24.3, ate: 29.8, texto: t("preview.t11"), y: .70, tam: "gg", marca: t("preview.t11m"), caixa: true }],
+    impactos: [3.4, 20.2], locucao: "" };
+  txt.textContent = t("preview.reply");
+  conv.msgs.push({ role: "assistant", text: txt.textContent, plans: [plan] }); saveConv();
+  const grid = vidGrid(body); enqueue(videoCard(grid, plan)); scrollEnd();
+}
+
 /* cérebro (servidor Flamefields) */
 async function ask(text) {
   busyAsk = true; updSend();
@@ -1549,6 +1591,7 @@ async function ask(text) {
   const payload = { lang: LANG, turns, catalog: all.map(c => ({ id: c.id, dur: c.dur, synth: !!c.synth, desc: c.synth ? c.desc : "" })), images: all.some(c => !c.synth) ? all.slice(0, 20).map(c => c.synth ? "" : (c.thumb || "")).filter(Boolean) : [], feitos: conv.vids.map(j => j.plan.titulo || ""), estilo: conv.estilo ? { nome: conv.estilo.nome, resumo: conv.estilo.resumo, receita: conv.estilo.receita } : null };
   let r; try { r = await api("/api/agent", { method: "POST", body: JSON.stringify(payload) }); } catch (e) { r = { ok: false, status: 0, data: {} }; }
   done();
+  if (!r.ok && OWNER_MODE && (r.status === 0 || r.status === 404 || r.status === 405)) { turns.pop(); return previewDemo(body, txt, text); }
   if (r.data && r.data.profile) { ME = { ...(ME || {}), profile: r.data.profile }; paintCredits(); }
   if (!r.ok) {
     turns.pop();
