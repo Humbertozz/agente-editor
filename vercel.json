@@ -1,0 +1,21 @@
+{
+  "outputDirectory": "public",
+  "functions": {
+    "api/agent.js": {
+      "maxDuration": 120
+    },
+    "api/style.js": {
+      "maxDuration": 120
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/app",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/admin",
+      "destination": "/admin.html"
+    }
+  ]
+}

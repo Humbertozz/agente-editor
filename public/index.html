@@ -1,0 +1,1509 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Cdefs%3E%3ClinearGradient id=%22g%22 x1=%220%22 y1=%220%22 x2=%221%22 y2=%221%22%3E%3Cstop offset=%220%22 stop-color=%22%23ffb02e%22/%3E%3Cstop offset=%221%22 stop-color=%22%23e8174f%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width=%2232%22 height=%2232%22 rx=%229%22 fill=%22url(%23g)%22/%3E%3Cpath d=%22M16 5c1.5 4 7 6.5 7 13a7 7 0 0 1-14 0c0-3 1.6-5 3.4-6.3.1 2 .9 3.4 2.2 4C14.4 12 15 8.4 16 5z%22 fill=%22%23fff%22 transform=%22translate(0 -2.2)%22/%3E%3C/svg%3E">
+</head>
+<body>
+<title>Flamefields</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Manrope:wght@500;600;700;800&display=swap">
+<style>
+/* Layout: SaaS no padrão americano — hero centralizado com janela do produto rodando ao vivo, passos, bento de recursos, planos com economia, FAQ e CTA final; área do cliente em formato app */
+:root{
+  --bg:#060b16; --bg2:#0a1222; --card:rgba(255,255,255,.03); --card2:rgba(255,255,255,.055);
+  --line:rgba(255,255,255,.08); --line2:rgba(255,255,255,.14);
+  --fg:#f8fafc; --mist:#94a3b8; --mist2:#64748b;
+  --brand:#155dfb; --brand2:#60a5fa; --ok:#34d399; --warn:#fbbf24; --live:#fb7185;
+  --f-display:"Manrope",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{background:var(--bg);color:var(--fg)}
+body{font-family:var(--f-body);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--brand2);outline-offset:2px}
+h1,h2,h3{font-family:var(--f-display);letter-spacing:-.03em;text-wrap:balance;margin:0}
+p{margin:0}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.page{max-width:1180px;margin:0 auto}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--brand2);font-weight:700}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:10px;padding:11px 18px;font-weight:600;font-size:14.5px;border:1px solid var(--line2);background:var(--card2);transition:background-color .15s,border-color .15s,transform .15s}
+.btn:hover{border-color:var(--mist)}
+.btn:active{transform:translateY(1px)}
+.btn.pri{background:var(--brand);border-color:var(--brand);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 8px 24px -8px rgba(21,93,251,.7)}
+.btn.pri:hover{background:#2563eb}
+.btn.lg{padding:14px 24px;font-size:16px;border-radius:12px}
+.btn.sm{padding:6px 11px;font-size:13px;border-radius:8px}
+.btn.block{width:100%}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.lang{display:inline-flex;border:1px solid var(--line2);border-radius:9px;padding:2px;background:var(--card)}
+.lang button{border:0;background:transparent;color:var(--mist);font-size:12px;font-weight:700;padding:5px 9px;border-radius:7px;letter-spacing:.04em}
+.lang button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* site */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(6,11,22,.8);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.nav .page{display:flex;align-items:center;justify-content:space-between;gap:14px;height:64px}
+.wm b{font-weight:800;background:linear-gradient(90deg,#ffb02e,#ff5a1f 60%,#e8174f);-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:800;font-size:17px;letter-spacing:-.02em;white-space:nowrap}
+.nav-links{display:none;gap:28px;color:var(--mist);font-size:14px}
+.nav-links a:hover{color:var(--fg)}
+@media (min-width:900px){.nav-links{display:flex}}
+.nav-r{display:flex;gap:8px;align-items:center}
+.nav-r .hide-s{display:none}
+@media (min-width:560px){.nav-r .hide-s{display:inline-flex}}
+.hero{position:relative;overflow:hidden;padding-block:72px 40px;text-align:center}
+.hero::before{content:"";position:absolute;left:50%;top:-360px;transform:translateX(-50%);width:1100px;height:800px;background:radial-gradient(closest-side,rgba(21,93,251,.42),rgba(21,93,251,.07) 60%,transparent);pointer-events:none}
+.hero::after{content:"";position:absolute;inset:0;background-image:linear-gradient(90deg,rgba(148,163,184,.05) 1px,transparent 0);background-size:110px 100%;-webkit-mask-image:linear-gradient(180deg,#000,transparent 70%);mask-image:linear-gradient(180deg,#000,transparent 70%);pointer-events:none}
+.hero .page{position:relative;z-index:1;display:grid;justify-items:center;gap:22px}
+.announce{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--line2);background:rgba(10,18,34,.8);border-radius:99px;padding:5px 14px 5px 6px;font-size:13px;color:var(--mist)}
+.announce b{background:var(--brand);color:#fff;border-radius:99px;padding:2px 9px;font-size:11.5px;letter-spacing:.04em}
+.hero h1{font-size:clamp(38px,6.2vw,76px);line-height:1.02;font-weight:800;max-width:15ch}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,#60a5fa,#a5c8ff 40%,#f3c34a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .lead{font-size:clamp(16px,1.6vw,20px);color:var(--mist);max-width:40em}
+.ctas{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.facts{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:center;color:var(--mist);font-size:13.5px}
+.facts span::before{content:"✓";color:var(--ok);font-weight:800;margin-right:7px}
+.frame{position:relative;z-index:1;margin-top:46px;border-radius:18px;border:1px solid var(--line2);background:var(--bg2);box-shadow:0 0 0 1px rgba(21,93,251,.15),0 40px 120px -40px rgba(21,93,251,.6),0 30px 60px -30px rgba(0,0,0,.9);overflow:hidden;text-align:left}
+.frame-bar{display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.02)}
+.frame-bar i{width:11px;height:11px;border-radius:50%;background:#2a3346}
+.frame-bar span{margin-left:10px;font-family:var(--f-mono);font-size:11.5px;color:var(--mist2)}
+.frame-body{display:grid;gap:18px;padding:18px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:860px){.frame-body{grid-template-columns:minmax(0,1fr) 300px minmax(0,.8fr);align-items:center;padding:26px}}
+.talk{display:grid;gap:12px;align-content:center}
+.bubble{max-width:290px;font-size:13.5px;padding:11px 13px;border-radius:13px;border:1px solid var(--line2);background:var(--card2)}
+.bubble.u{justify-self:end;background:var(--brand);border-color:var(--brand);border-bottom-right-radius:3px}
+.bubble.a{justify-self:start;border-bottom-left-radius:3px}
+.bubble b{display:block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px;color:var(--brand2)}
+.bubble.u b{color:#dbe7ff}
+.phone{position:relative;width:min(300px,100%);justify-self:center;aspect-ratio:9/16;border-radius:24px;overflow:hidden;background:#000;box-shadow:0 0 0 1px rgba(148,163,184,.16),0 0 80px -20px rgba(21,93,251,.6)}
+.phone canvas{width:100%;height:100%;display:block}
+.live{position:absolute;top:12px;left:12px;display:flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;background:rgba(251,113,133,.92);color:#fff;padding:3px 8px;border-radius:5px}
+.live i{width:6px;height:6px;border-radius:50%;background:#fff;animation:bl 1s infinite}
+@keyframes bl{50%{opacity:.25}}
+.sound{position:absolute;bottom:12px;left:50%;transform:translateX(-50%)}
+.pipeline{display:grid;gap:8px;align-content:center}
+.pipe{display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--mist);padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.pipe::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--mist2);flex:none}
+.pipe.on{color:var(--fg);border-color:rgba(21,93,251,.45);background:rgba(21,93,251,.1)}
+.pipe.on::before{background:var(--brand2);box-shadow:0 0 8px var(--brand2)}
+@media (max-width:859px){.talk,.pipeline{display:none}}
+section.sec{padding-block:clamp(64px,8vw,110px)}
+.sec-h{display:grid;gap:14px;max-width:46em;margin:0 auto 44px;text-align:center;justify-items:center}
+.sec-h h2{font-size:clamp(28px,3.6vw,46px);font-weight:800;line-height:1.08}
+.sec-h p{color:var(--mist);font-size:17px}
+.steps3{display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:820px){.steps3{grid-template-columns:repeat(3,1fr)}}
+.step{padding:26px;border:1px solid var(--line);border-radius:18px;background:var(--card);display:grid;gap:10px;align-content:start}
+.step .n{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:rgba(21,93,251,.16);color:var(--brand2);font-weight:800;font-family:var(--f-display)}
+.step h3{font-size:20px;font-weight:700}
+.step p{color:var(--mist);font-size:15px}
+.bento{display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:760px){.bento{grid-template-columns:repeat(6,1fr)}}
+.tile{border:1px solid var(--line);border-radius:18px;background:var(--card);padding:24px;display:grid;gap:10px;align-content:start;min-width:0}
+.tile svg{color:var(--brand2)}
+.tile h3{font-size:18px;font-weight:700}
+.tile p{color:var(--mist);font-size:14.5px}
+@media (min-width:760px){.t-a{grid-column:span 3}.t-b{grid-column:span 3}.t-c{grid-column:span 2}.t-d{grid-column:span 2}.t-e{grid-column:span 2}}
+.t-a{background:radial-gradient(120% 100% at 0 0,rgba(21,93,251,.18),transparent 60%),var(--card)}
+.wave{display:flex;align-items:flex-end;gap:3px;height:54px;margin-top:6px}
+.wave i{flex:1;background:linear-gradient(180deg,var(--brand2),var(--brand));border-radius:2px;opacity:.85}
+.modes{display:grid;gap:16px}
+@media (min-width:820px){.modes{grid-template-columns:1fr 1fr}}
+.mode{border-radius:18px;padding:28px;border:1px solid var(--line);display:grid;gap:12px;align-content:start}
+.mode.agro{background:linear-gradient(160deg,rgba(251,113,133,.12),transparent 60%)}
+.mode.calm{background:linear-gradient(160deg,rgba(96,165,250,.12),transparent 60%)}
+.mode .tag{justify-self:start;font-size:12px;padding:3px 10px;border-radius:99px;border:1px solid var(--line2);color:var(--mist)}
+.mode h3{font-size:24px;font-weight:800}
+.mode ul{margin:0;padding-left:18px;color:var(--mist);display:grid;gap:5px;font-size:15px}
+.mode q{font-family:var(--f-display);font-weight:800;font-size:16px;color:var(--fg)}
+.plans{display:grid;gap:18px;align-items:stretch}
+@media (min-width:900px){.plans{grid-template-columns:repeat(2,minmax(0,440px));justify-content:center}}
+.plan{position:relative;border:1px solid var(--line);border-radius:20px;padding:28px;background:var(--card);display:flex;flex-direction:column;gap:18px}
+.plan.hl{border-color:rgba(21,93,251,.7);background:linear-gradient(180deg,rgba(21,93,251,.16),var(--card) 55%);box-shadow:0 30px 90px -40px rgba(21,93,251,.75)}
+.plan .badge-top{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--brand);color:#fff;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 12px;border-radius:99px;white-space:nowrap}
+.plan .badge-top.gold{background:var(--warn);color:#1a1405}
+.plan h3{font-size:18px;font-weight:700}
+.plan .price{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.plan .price b{font-family:var(--f-display);font-weight:800;font-size:40px;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.plan .price span{color:var(--mist);font-size:14px}
+.plan .eq{font-size:13.5px;color:var(--mist);min-height:20px}
+.plan .eq strong{color:var(--ok);font-weight:600}
+.plan ul{list-style:none;margin:0;padding:0;display:grid;gap:9px;font-size:14.5px;flex:1;align-content:start}
+.plan li{display:flex;gap:9px;align-items:flex-start}
+.plan li::before{content:"";flex:none;width:17px;height:17px;margin-top:2px;border-radius:50%;background:rgba(52,211,153,.14) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 8.2l2.2 2.2 4.8-4.8' fill='none' stroke='%2334d399' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/17px no-repeat}
+.plan-note{text-align:center;color:var(--mist2);font-size:13px;margin-top:18px}
+.faq{display:grid;gap:10px;max-width:820px;margin:0 auto}
+.faq details{border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:var(--card)}
+.faq summary{cursor:pointer;font-weight:600;font-size:15.5px}
+.faq p{color:var(--mist);margin-top:8px;font-size:15px}
+.cta-band{border-radius:24px;padding:clamp(28px,4.5vw,56px);background:radial-gradient(110% 90% at 100% 0,rgba(21,93,251,.38),transparent 60%),var(--bg2);border:1px solid var(--line2);display:grid;gap:24px}
+@media (min-width:880px){.cta-band{grid-template-columns:1.2fr 1fr;align-items:center}}
+.cta-band h2{font-size:clamp(26px,3vw,40px);font-weight:800}
+.form{display:grid;gap:10px}
+.form label{display:grid;gap:4px;font-size:12.5px;color:var(--mist)}
+.form input,.form textarea,.form select{background:rgba(6,11,22,.7);border:1px solid var(--line2);border-radius:10px;padding:10px 12px;width:100%;color:var(--fg)}
+.form input:focus,.form textarea:focus,.form select:focus{border-color:var(--brand);outline:none;box-shadow:0 0 0 4px rgba(21,93,251,.15)}
+.form textarea{min-height:84px;resize:vertical}
+.two{display:grid;gap:10px;grid-template-columns:1fr}
+@media (min-width:520px){.two{grid-template-columns:1fr 1fr}}
+.okmsg{color:var(--ok);font-size:14px}
+footer.ft{border-top:1px solid var(--line);padding-block:40px;color:var(--mist2);font-size:13.5px}
+footer.ft .page{display:grid;gap:24px}
+@media (min-width:760px){footer.ft .page{grid-template-columns:1.4fr 1fr 1fr}}
+footer.ft h4{color:var(--fg);font-size:13px;margin:0 0 10px;font-weight:700}
+footer.ft nav{display:grid;gap:7px}
+footer.ft a:hover{color:var(--fg)}
+
+/* app: chat no estilo assistente — barra lateral com conversas, coluna central com mensagens e vídeos dentro da resposta, caixa de texto com anexos */
+.app{display:grid;grid-template-columns:minmax(0,1fr);min-height:100vh;height:100%}
+@media (min-width:980px){.app{grid-template-columns:260px minmax(0,1fr)}}
+.side{display:none;background:var(--bg2);border-right:1px solid var(--line);flex-direction:column;gap:10px;padding:16px 12px;position:sticky;top:0;height:100vh}
+@media (min-width:980px){.side{display:flex}}
+.side .logo{padding:4px 8px 8px}
+.newchat{display:flex;align-items:center;gap:9px;width:100%;justify-content:flex-start}
+.convs{display:flex;flex-direction:column;gap:2px;overflow-y:auto;min-height:0;flex:1}
+.convs h4{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mist2);margin:10px 8px 6px;font-weight:600}
+.conv{display:block;width:100%;text-align:left;border:0;background:transparent;color:var(--mist);font-size:13.5px;padding:8px 10px;border-radius:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.conv:hover{background:var(--card);color:var(--fg)}
+.conv[aria-current="true"]{background:rgba(255,255,255,.07);color:var(--fg)}
+.acct{display:flex;gap:10px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+.avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#ff8a1f,#e8174f);display:grid;place-items:center;font-weight:700;font-size:12.5px;flex:none}
+.acct b{display:block;font-size:13px;line-height:1.2}
+.acct span{font-size:11.5px;color:var(--ok)}
+.main{min-width:0;display:flex;flex-direction:column;min-height:100vh}
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px));background:rgba(6,11,22,.85);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.topbar .ttl{font-weight:600;font-size:14.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.topbar .m-only{display:flex;align-items:center;gap:8px}
+@media (min-width:980px){.topbar .m-only{display:none}}
+.topbar .row{display:flex;gap:8px;align-items:center;flex:none}
+.thread{flex:1;width:100%;max-width:800px;margin:0 auto;padding:24px max(16px,env(safe-area-inset-right,0px)) 12px max(16px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:26px}
+.home{flex:1;display:grid;place-content:center;justify-items:center;gap:18px;text-align:center;padding-block:6vh 2vh}
+.home .mark{width:56px;height:56px}
+.home h2{font-size:clamp(26px,3.4vw,38px);font-weight:800}
+.home p{color:var(--mist);max-width:34em}
+.sugs{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:680px}
+.sug{border:1px solid var(--line2);background:var(--card);border-radius:12px;padding:9px 13px;font-size:13.5px;color:var(--mist);text-align:left}
+.sug:hover{color:var(--fg);border-color:var(--mist)}
+.sug.hot{border-color:rgba(255,90,31,.55);color:#ffd0b8;background:rgba(255,90,31,.08)}
+.m-user{align-self:flex-end;max-width:86%;display:grid;gap:8px;justify-items:end}
+.m-user .bub{background:var(--card2);border:1px solid var(--line);border-radius:18px;border-bottom-right-radius:5px;padding:10px 14px;white-space:pre-wrap;overflow-wrap:anywhere}
+.atts{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}
+.att{position:relative;width:96px;height:54px;border-radius:9px;overflow:hidden;border:1px solid var(--line2);background:var(--card2)}
+.att img{width:100%;height:100%;object-fit:cover;display:block}
+.att span{position:absolute;left:4px;bottom:3px;font-family:var(--f-mono);font-size:9.5px;background:rgba(0,0,0,.65);padding:1px 5px;border-radius:4px;max-width:88px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.att.audio{width:auto;height:auto;padding:8px 10px;font-size:12px;color:var(--mist);display:flex;gap:6px;align-items:center}
+.m-agent{display:grid;grid-template-columns:30px minmax(0,1fr);gap:12px;align-items:start}
+.m-agent .mark{width:30px;height:30px}
+.m-agent .body{display:grid;gap:14px;min-width:0}
+.m-agent .txt{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.6;padding-top:4px}
+.thinking{display:flex;align-items:center;gap:10px;color:var(--mist);padding-top:5px}
+.dots{display:inline-flex;gap:4px}
+.dots i{width:6px;height:6px;border-radius:50%;background:#ff7a2a;animation:dp 1.1s infinite}
+.dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
+@keyframes dp{0%,80%,100%{opacity:.25;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
+.vids{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+.vcard{border:1px solid var(--line);border-radius:14px;background:var(--card);overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.vframe{position:relative;aspect-ratio:9/16;background:#05080f;display:grid;place-items:center}
+.vframe canvas,.vframe video{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;background:#000}
+.vframe .wait{color:var(--mist2);font-size:12.5px;display:grid;gap:8px;justify-items:center;padding:12px;text-align:center}
+.vbadge{position:absolute;top:8px;left:8px;z-index:2;font-family:var(--f-mono);font-size:10px;padding:2px 7px;border-radius:5px;background:rgba(0,0,0,.6);color:#fff;display:flex;gap:5px;align-items:center}
+.vbadge.live{background:rgba(251,113,133,.92)}
+.vbadge i{width:6px;height:6px;border-radius:50%;background:#fff}
+.vbadge.live i{animation:bl 1s infinite}
+.vprog{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.12);z-index:2}
+.vprog b{display:block;height:100%;width:0;background:linear-gradient(90deg,#ffb02e,#ff5a1f,#e8174f)}
+.vinfo{padding:10px 11px;display:grid;gap:8px}
+.vinfo .t{font-weight:600;font-size:13.5px;line-height:1.3}
+.vinfo .tags{display:flex;gap:5px;flex-wrap:wrap}
+.chipt{font-size:11px;background:var(--card2);padding:2px 7px;border-radius:6px;color:var(--mist)}
+.chipt.agro{color:#fda4af}.chipt.calmo{color:#93c5fd}
+.vact{display:flex;gap:6px;flex-wrap:wrap}
+details.loc{font-size:12.5px}
+details.loc summary{cursor:pointer;color:#ff9a5c}
+details.loc p{margin:6px 0;background:var(--card2);padding:8px;border-radius:8px;white-space:pre-wrap}
+.dock{position:sticky;bottom:0;z-index:10;padding:10px max(16px,env(safe-area-inset-right,0px)) calc(14px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:linear-gradient(180deg,rgba(6,11,22,0),var(--bg) 30%)}
+.composer{max-width:800px;margin:0 auto;border:1px solid var(--line2);background:var(--bg2);border-radius:20px;padding:10px 10px 8px 14px;box-shadow:0 20px 50px -20px rgba(0,0,0,.8);display:grid;gap:8px}
+.composer.drag{border-color:#ff7a2a;box-shadow:0 0 0 4px rgba(255,90,31,.18)}
+.composer:focus-within{border-color:rgba(255,255,255,.28)}
+.pend{display:flex;flex-wrap:wrap;gap:6px}
+.pend .att button{position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;border:0;background:rgba(0,0,0,.7);color:#fff;font-size:11px;line-height:18px;padding:0}
+.composer textarea{border:0;background:transparent;resize:none;outline:none;width:100%;min-height:26px;max-height:200px;font-size:15px;line-height:1.5;padding:4px 0}
+.cbar{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.cbar .l{display:flex;align-items:center;gap:6px;min-width:0}
+.iconbtn{width:34px;height:34px;border-radius:10px;border:1px solid var(--line2);background:transparent;display:grid;place-items:center;color:var(--mist);flex:none}
+.iconbtn:hover{color:var(--fg);border-color:var(--mist)}
+.sendbtn{width:36px;height:36px;border-radius:11px;border:0;display:grid;place-items:center;background:linear-gradient(135deg,#ff8a1f,#e8174f);color:#fff;flex:none}
+.sendbtn:disabled{background:var(--card2);color:var(--mist2);cursor:not-allowed}
+.hint{font-size:11.5px;color:var(--mist2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.foot{max-width:800px;margin:6px auto 0;text-align:center;font-size:11.5px;color:var(--mist2)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.stylechip{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:4px 6px 4px 10px;border-radius:99px;background:rgba(255,90,31,.14);border:1px solid rgba(255,90,31,.5);color:#ffd0b8;max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stylechip button{border:0;background:transparent;color:inherit;padding:0 4px;font-size:14px}
+.scard{border:1px solid rgba(255,90,31,.45);background:linear-gradient(160deg,rgba(255,90,31,.10),transparent 60%);border-radius:14px;padding:14px;display:grid;gap:10px}
+.scard h3{font-size:17px;font-weight:800;margin:0}
+.scard .chips2{display:flex;flex-wrap:wrap;gap:6px}
+.scard .chips2 span{font-size:11.5px;padding:3px 8px;border-radius:99px;background:var(--card2);color:var(--mist)}
+.scard ol{margin:0;padding-left:18px;color:var(--mist);font-size:13.5px;display:grid;gap:2px}
+.scard pre{white-space:pre-wrap;margin:0;background:rgba(6,11,22,.7);border:1px solid var(--line);border-radius:10px;padding:10px;font:13px/1.5 var(--f-body);color:var(--fg)}
+.scard .row{display:flex;gap:6px;flex-wrap:wrap}
+button.credits{cursor:pointer}
+.credits{font-size:12.5px;font-weight:600;padding:6px 10px;border-radius:9px;border:1px solid var(--line2);background:var(--card);white-space:nowrap;font-variant-numeric:tabular-nums}
+.credits.low{border-color:rgba(251,191,36,.6);color:var(--warn)}
+.credits.zero{border-color:rgba(251,113,133,.6);color:var(--live)}
+.gate{flex:1;display:grid;place-items:center;padding:40px max(16px,env(safe-area-inset-right,0px)) 40px max(16px,env(safe-area-inset-left,0px))}
+.gate-card{width:100%;max-width:460px;border:1px solid var(--line2);border-radius:20px;background:var(--bg2);padding:30px;display:grid;gap:14px;justify-items:center;text-align:center;box-shadow:0 30px 80px -30px rgba(0,0,0,.8)}
+.gate-card .mark{width:52px;height:52px}
+.gate-card h2{font-size:24px;font-weight:800}
+.gate-card p{color:var(--mist)}
+.gate-form{display:grid;gap:10px;width:100%}
+.gate-form input{background:rgba(6,11,22,.7);border:1px solid var(--line2);border-radius:10px;padding:12px;width:100%;color:var(--fg);font-size:15px}
+.gate-btns{display:grid;gap:8px;width:100%}
+.upsell{display:grid;gap:8px;border:1px solid rgba(255,90,31,.45);background:rgba(255,90,31,.07);border-radius:14px;padding:14px}
+.upsell .row{display:flex;gap:8px;flex-wrap:wrap}
+</style>
+
+<!-- ======================= SITE ======================= -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="ffg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffb02e"/><stop offset=".55" stop-color="#ff5a1f"/><stop offset="1" stop-color="#e8174f"/></linearGradient></defs><symbol id="ffmark" viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="url(#ffg)"/><g transform="translate(0 -2.2)"><path d="M16 5c1.5 4 7 6.5 7 13a7 7 0 0 1-14 0c0-3 1.6-5 3.4-6.3.1 2 .9 3.4 2.2 4C14.4 12 15 8.4 16 5z" fill="#fff"/><path d="M16 14.6c.8 2 3 3 3 5.2a3 3 0 0 1-6 0c0-1.6 1-2.6 2-3.2 0 .9.4 1.5 1 1.8-.3-1.4-.2-2.7 0-3.8z" fill="#ff5a1f"/></g><path d="M6.5 26.6q9.5-3.2 19 0" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="1.6" stroke-linecap="round"/></symbol></svg>
+<div id="site">
+  <header class="nav gut">
+    <div class="page">
+      <a class="logo" href="#inicio" aria-label="Flamefields">
+        <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><use href="#ffmark"/></svg>
+        <span class="wm">Flame<b>fields</b></span>
+      </a>
+      <nav class="nav-links" aria-label="Seções">
+        <a href="#como" data-i18n="nav.how"></a><a href="#recursos" data-i18n="nav.features"></a><a href="#planos" data-i18n="nav.pricing"></a><a href="#duvidas" data-i18n="nav.faq"></a>
+      </nav>
+      <div class="nav-r">
+        <div class="lang" role="group" aria-label="Idioma / Language"><button type="button" data-lang="pt">PT</button><button type="button" data-lang="en">EN</button></div>
+        <a class="btn sm hide-s" href="/app" data-i18n="nav.login"></a>
+        <a class="btn sm pri" href="#planos" data-i18n="nav.start"></a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero gut">
+      <div class="page">
+        <span class="announce"><b data-i18n="hero.new"></b><span data-i18n="hero.announce"></span></span>
+        <h1 data-i18n-html="hero.h1"></h1>
+        <p class="lead" data-i18n="hero.lead"></p>
+        <div class="ctas"><a class="btn pri lg" href="#planos" data-i18n="hero.cta1"></a><a class="btn lg" href="#como" data-i18n="hero.cta2"></a></div>
+        <div class="facts"><span data-i18n="hero.f1"></span><span data-i18n="hero.f2"></span><span data-i18n="hero.f3"></span></div>
+      </div>
+      <div class="page">
+        <div class="frame">
+          <div class="frame-bar"><i></i><i></i><i></i><span data-i18n="frame.url"></span></div>
+          <div class="frame-body">
+            <div class="talk">
+              <div class="bubble u"><b data-i18n="frame.you"></b><span data-i18n="frame.q"></span></div>
+              <div class="bubble a"><b data-i18n="frame.agent"></b><span data-i18n="frame.a"></span></div>
+            </div>
+            <div class="phone">
+              <canvas id="heroCv" width="720" height="1280" aria-label="Demo"></canvas>
+              <span class="live"><i></i><span data-i18n="live"></span></span>
+              <button class="btn sm sound" id="heroSound" type="button" data-i18n="sound.on"></button>
+            </div>
+            <div class="pipeline" id="pipeline">
+              <div class="pipe" data-i18n="pipe.1"></div><div class="pipe" data-i18n="pipe.2"></div><div class="pipe" data-i18n="pipe.3"></div><div class="pipe" data-i18n="pipe.4"></div><div class="pipe" data-i18n="pipe.5"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec gut" id="como">
+      <div class="page">
+        <div class="sec-h"><span class="eyebrow" data-i18n="how.eyebrow"></span><h2 data-i18n="how.h2"></h2><p data-i18n="how.p"></p></div>
+        <div class="steps3">
+          <div class="step"><span class="n">1</span><h3 data-i18n="how.s1t"></h3><p data-i18n="how.s1p"></p></div>
+          <div class="step"><span class="n">2</span><h3 data-i18n="how.s2t"></h3><p data-i18n="how.s2p"></p></div>
+          <div class="step"><span class="n">3</span><h3 data-i18n="how.s3t"></h3><p data-i18n="how.s3p"></p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec gut" id="recursos">
+      <div class="page">
+        <div class="sec-h"><span class="eyebrow" data-i18n="feat.eyebrow"></span><h2 data-i18n="feat.h2"></h2></div>
+        <div class="bento">
+          <div class="tile t-a"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg><h3 data-i18n="feat.1t"></h3><p data-i18n="feat.1p"></p><div class="wave" id="wave" aria-hidden="true"></div></div>
+          <div class="tile t-b"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 12h3l3-8 4 16 3-8h5"/></svg><h3 data-i18n="feat.2t"></h3><p data-i18n="feat.2p"></p></div>
+          <div class="tile t-c"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg><h3 data-i18n="feat.3t"></h3><p data-i18n="feat.3p"></p></div>
+          <div class="tile t-d"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0014 0M12 17v5"/></svg><h3 data-i18n="feat.4t"></h3><p data-i18n="feat.4p"></p></div>
+          <div class="tile t-e"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg><h3 data-i18n="feat.5t"></h3><p data-i18n="feat.5p"></p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec gut">
+      <div class="page">
+        <div class="sec-h"><span class="eyebrow" data-i18n="modes.eyebrow"></span><h2 data-i18n="modes.h2"></h2></div>
+        <div class="modes">
+          <div class="mode agro"><span class="tag" data-i18n="modes.at"></span><h3 data-i18n="modes.ah"></h3><ul><li data-i18n="modes.a1"></li><li data-i18n="modes.a2"></li><li data-i18n="modes.a3"></li><li data-i18n="modes.a4"></li></ul><q data-i18n="modes.aq"></q></div>
+          <div class="mode calm"><span class="tag" data-i18n="modes.ct"></span><h3 data-i18n="modes.ch"></h3><ul><li data-i18n="modes.c1"></li><li data-i18n="modes.c2"></li><li data-i18n="modes.c3"></li><li data-i18n="modes.c4"></li></ul><q data-i18n="modes.cq"></q></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec gut" id="planos">
+      <div class="page">
+        <div class="sec-h"><span class="eyebrow" data-i18n="price.eyebrow"></span><h2 data-i18n="price.h2"></h2><p data-i18n="price.p"></p></div>
+        <div class="plans" id="plans"></div>
+        <p class="plan-note" data-i18n="price.note"></p>
+      </div>
+    </section>
+
+    <section class="sec gut" id="duvidas">
+      <div class="page">
+        <div class="sec-h"><span class="eyebrow" data-i18n="faq.eyebrow"></span><h2 data-i18n="faq.h2"></h2></div>
+        <div class="faq">
+          <details><summary data-i18n="faq.q1"></summary><p data-i18n="faq.a1"></p></details>
+          <details><summary data-i18n="faq.q2"></summary><p data-i18n="faq.a2"></p></details>
+          <details><summary data-i18n="faq.q3"></summary><p data-i18n="faq.a3"></p></details>
+          <details><summary data-i18n="faq.q4"></summary><p data-i18n="faq.a4"></p></details>
+          <details><summary data-i18n="faq.q5"></summary><p data-i18n="faq.a5"></p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec gut" id="contato">
+      <div class="page">
+        <div class="cta-band">
+          <div style="display:grid;gap:14px"><span class="eyebrow" data-i18n="cta.eyebrow"></span><h2 data-i18n="cta.h2"></h2><p style="color:var(--mist);font-size:16px" data-i18n="cta.p"></p></div>
+          <form class="form" id="leadForm">
+            <div class="two"><label for="lNome"><span data-i18n="form.name"></span><input id="lNome" required autocomplete="name"></label><label for="lEmpresa"><span data-i18n="form.company"></span><input id="lEmpresa" required autocomplete="organization"></label></div>
+            <div class="two"><label for="lZap"><span data-i18n="form.phone"></span><input id="lZap" required inputmode="tel" autocomplete="tel"></label><label for="lPlano"><span data-i18n="form.plan"></span><select id="lPlano"><option value="vitalicio" selected></option><option value="creditos_mensal"></option></select></label></div>
+            <button class="btn pri" type="submit" data-i18n="form.submit"></button>
+            <p class="okmsg" id="leadOk" hidden data-i18n="form.ok"></p>
+            <p class="note" id="leadErr" hidden data-i18n="form.err"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="ft gut">
+    <div class="page">
+      <div style="display:grid;gap:10px"><span class="logo"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><use href="#ffmark"/></svg><span class="wm">Flame<b>fields</b></span></span><p data-i18n="ft.tag"></p></div>
+      <div><h4 data-i18n="ft.product"></h4><nav><a href="#como" data-i18n="nav.how"></a><a href="#recursos" data-i18n="nav.features"></a><a href="#planos" data-i18n="nav.pricing"></a></nav></div>
+      <div><h4 data-i18n="ft.account"></h4><nav><a href="/app" data-i18n="nav.login"></a><a href="#contato" data-i18n="ft.sales"></a><a href="#duvidas" data-i18n="nav.faq"></a></nav></div>
+    </div>
+  </footer>
+</div>
+
+<!-- ======================= APP ======================= -->
+<div id="app" class="app" hidden>
+  <aside class="side">
+    <a class="logo" href="/" aria-label="Flamefields"><svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><use href="#ffmark"/></svg><span class="wm">Flame<b>fields</b></span></a>
+    <button class="btn newchat" type="button" id="newChat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span data-i18n="app.new"></span></button>
+    <div class="convs"><h4 data-i18n="app.recent"></h4><div id="convList"></div></div>
+    <div class="acct"><div class="avatar" id="av">?</div><div style="min-width:0"><b id="acctName" data-i18n="acct.name"></b><span data-i18n="acct.active"></span></div></div>
+  </aside>
+
+  <div class="main" id="mainCol">
+    <div class="topbar">
+      <div class="m-only"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><use href="#ffmark"/></svg><button class="iconbtn" type="button" id="newChatM" aria-label="+"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></div>
+      <div class="ttl" id="convTitle"></div>
+      <div class="row"><div class="lang" role="group" aria-label="Idioma / Language"><button type="button" data-lang="pt">PT</button><button type="button" data-lang="en">EN</button></div><button type="button" class="credits" id="credits" hidden></button><a class="btn sm" href="/" data-i18n="app.site"></a></div>
+    </div>
+
+    <div class="gate" id="gate" hidden>
+      <div class="gate-card">
+        <svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><use href="#ffmark"/></svg>
+        <h2 id="gateH"></h2>
+        <p id="gateP"></p>
+        <form class="gate-form" id="loginForm" hidden><label class="sr" for="loginEmail">E-mail</label><input id="loginEmail" type="email" required autocomplete="email" placeholder="voce@empresa.com.br"><button class="btn pri" type="submit" data-i18n="gate.send"></button></form>
+        <div class="gate-btns" id="gateBtns"></div>
+        <p class="note" id="gateNote"></p>
+      </div>
+    </div>
+    <div class="thread" id="thread" aria-live="polite">
+      <div class="home" id="home">
+        <svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><use href="#ffmark"/></svg>
+        <h2 id="homeH"></h2>
+        <p data-i18n="app.homeP"></p>
+        <div class="sugs" id="sugs"></div>
+      </div>
+    </div>
+
+    <div class="dock" id="dock">
+      <form class="composer" id="composer">
+        <div class="pend" id="pend"></div>
+        <label class="sr" for="inp" data-i18n="app.inpLabel"></label>
+        <textarea id="inp" rows="1" data-i18n-ph="app.inpPh"></textarea>
+        <div class="cbar">
+          <div class="l">
+            <button class="iconbtn" type="button" id="attach" data-i18n-title="app.attach"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M21 11.5l-8.6 8.6a5.5 5.5 0 01-7.8-7.8l8.6-8.6a3.7 3.7 0 015.2 5.2l-8.6 8.6a1.8 1.8 0 01-2.6-2.6l7.9-7.9"/></svg></button>
+            <button class="iconbtn" type="button" id="styleBtn" data-i18n-title="style.btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button>
+            <span class="stylechip" id="styleChip" hidden></span>
+            <span class="hint" data-i18n="app.hint"></span>
+          </div>
+          <button class="sendbtn" type="submit" id="send" disabled data-i18n-title="app.send"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+        </div>
+        <input type="file" id="fileIn" accept="video/*,audio/*" multiple hidden>
+        <input type="file" id="refIn" accept="video/*" hidden>
+      </form>
+      <p class="foot" data-i18n="app.foot"></p>
+    </div>
+  </div>
+</div>
+<canvas id="cv" width="720" height="1280" hidden></canvas>
+
+<script src="/config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+(() => {
+"use strict";
+const W = 720, H = 1280, DUR = 30;
+const $ = s => document.querySelector(s);
+const store = { get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+
+/* ======================= i18n ======================= */
+const I18N = {
+pt: {
+ "nav.how": "Como funciona", "nav.features": "Recursos", "nav.pricing": "Preços", "nav.faq": "Dúvidas", "nav.login": "Entrar", "nav.start": "Comprar acesso",
+ "hero.new": "NOVO", "hero.announce": "Envie um vídeo de referência e o agente copia o estilo",
+ "hero.h1": "Vídeos de lançamento <em>que vendem</em>, editados por IA em minutos",
+ "hero.lead": "Envie os takes do empreendimento, peça no chat e veja o agente montar vídeos verticais de 30 segundos com trilha própria, cortes na batida, textos e chamada final. Prontos para Reels, Stories e Meta Ads.",
+ "hero.cta1": "Comprar acesso vitalício", "hero.cta2": "Ver como funciona",
+ "hero.f1": "Não precisa saber editar", "hero.f2": "Trilha sem direitos autorais", "hero.f3": "Pegada agressiva ou tranquila",
+ "frame.url": "app.flamefields · estúdio", "frame.you": "Você", "frame.agent": "Agente", "frame.q": "Faz 3 vídeos agressivos para o lançamento, com a data e a chamada para o cadastro.", "frame.a": "Fechado. Trilha de lançamento, texto palavra por palavra e assinatura no final. Editando o 1 de 3.",
+ "live": "EDITANDO AO VIVO", "sound.on": "Ouvir com som", "sound.off": "Parar som", "sound.wait": "Preparando…",
+ "pipe.1": "Lendo o briefing", "pipe.2": "Escolhendo os takes", "pipe.3": "Compondo a trilha", "pipe.4": "Cortando na batida", "pipe.5": "Exportando em 9:16",
+ "how.eyebrow": "Como funciona", "how.h2": "Do take bruto ao anúncio pronto em três passos", "how.p": "Sem editor, sem banco de músicas, sem fila de espera. O agente faz tudo e mostra cada corte acontecendo.",
+ "how.s1t": "Envie os takes", "how.s1p": "Suba drone, fachada, lazer e decorado. Quanto mais variedade, melhor o vídeo.",
+ "how.s2t": "Peça no chat", "how.s2p": "\"Faz 5 vídeos agressivos com a condição de lançamento.\" O agente monta roteiro, trilha e cortes.",
+ "how.s3t": "Baixe e anuncie", "how.s3p": "Vídeos 9:16 de 30 segundos, prontos para o gerenciador de anúncios. Peça ajustes quando quiser.",
+ "feat.eyebrow": "Recursos", "feat.h2": "Tudo que um editor faria, na velocidade de uma mensagem",
+ "feat.1t": "Trilha de lançamento original", "feat.1p": "Cada vídeo ganha uma música composta na hora, com riser, drop e impacto. Nada de áudio mutado por direitos autorais.",
+ "feat.2t": "Cortes sincronizados na batida", "feat.2p": "Zoom, flash, glitch e movimento de câmera escolhidos pelo agente e alinhados ao ritmo.",
+ "feat.3t": "Textos que convertem", "feat.3p": "Gancho nos 3 primeiros segundos, diferenciais no meio e assinatura com data e chamada.",
+ "feat.4t": "Locução com IA", "feat.4p": "Roteiro pronto para voz masculina firme ou feminina acolhedora. Suba o áudio e ele mixa.",
+ "feat.5t": "Ofertas sob controle", "feat.5p": "Preço e condição só entram se estiverem no briefing. O agente não inventa promoção.",
+ "modes.eyebrow": "Duas pegadas", "modes.h2": "Agressivo para converter. Tranquilo para encantar.",
+ "modes.at": "Pegada agressiva", "modes.ah": "Impacto e urgência", "modes.a1": "Trilha épica de lançamento, com impactos", "modes.a2": "Cortes no ritmo, flash e revelações", "modes.a3": "Textos curtos em caixa alta", "modes.a4": "Locução masculina grave e firme", "modes.aq": "“PARA TUDO. OLHA ONDE VOCÊ PODE MORAR.”",
+ "modes.ct": "Pegada tranquila", "modes.ch": "Desejo e estilo de vida", "modes.c1": "Trilha cinematográfica ou house suave", "modes.c2": "Cenas longas, fades e câmera lenta", "modes.c3": "Frases elegantes em widescreen", "modes.c4": "Locução feminina calma e acolhedora", "modes.cq": "“Existe um lugar onde todo fim de tarde vira memória.”",
+ "price.eyebrow": "Preços", "price.h2": "Pague uma vez. Edite para sempre.", "price.p": "Acesso vitalício com 1.000 vídeos inclusos. Quando precisar de mais, assine créditos mensais ou compre recargas de dentro do estúdio.", "price.note": "Valores em reais. Acesso liberado na hora para o e-mail da compra.",
+ "plan.mensal": "Mensal", "plan.trimestral": "Trimestral", "plan.anual": "Anual", "plan.per.mensal": "/mês", "plan.per.trimestral": "/trimestre", "plan.per.anual": "/ano",
+ "plan.eq": "equivale a {m}/mês", "plan.save": "economize {p}%", "plan.popular": "Mais popular", "plan.best": "Melhor valor", "plan.cta": "Assinar {n}",
+ "plan.f1": "Estúdio com chat do agente", "plan.f2": "Vídeos ilimitados de 30s em 9:16", "plan.f3": "Pegada agressiva e tranquila", "plan.f4": "Trilha original em todos os vídeos", "plan.f5": "Roteiros de locução e mixagem", "plan.f6": "Projetos salvos para refazer",
+ "faq.eyebrow": "Dúvidas", "faq.h2": "Perguntas frequentes",
+ "faq.q1": "Preciso saber editar vídeo?", "faq.a1": "Não. Você escreve o que quer no chat, como falaria com um editor. O agente decide cortes, trilha, transições e textos.",
+ "faq.q2": "A música pode derrubar meu anúncio?", "faq.a2": "A trilha é composta pelo próprio agente para cada vídeo. Não usamos músicas de terceiros.",
+ "faq.q3": "Como funciona a locução?", "faq.a3": "O agente entrega o roteiro pronto para gerar a voz numa ferramenta de IA como a ElevenLabs. Você sobe o áudio e ele refaz o vídeo com a narração.",
+ "faq.q4": "Como recebo meu acesso?", "faq.a4": "Assim que o pagamento é confirmado, o acesso é liberado automaticamente para o e-mail da compra. É só entrar com esse e-mail. Se os créditos do mês acabarem, você recarrega na hora.",
+ "faq.q5": "Em qual aparelho funciona melhor?", "faq.a5": "No computador, pelo Chrome. A edição acontece ao vivo no navegador, então mantenha a aba aberta enquanto o vídeo é montado.",
+ "cta.eyebrow": "Comece hoje", "cta.h2": "Coloque o Flamefields para editar seus lançamentos", "cta.p": "Escolha o plano e deixe seu contato. Enviamos o link de pagamento e liberamos o seu acesso.",
+ "form.name": "Nome", "form.company": "Empresa", "form.phone": "WhatsApp", "form.plan": "Plano", "form.submit": "Quero comprar", "form.ok": "Recebido. Vamos falar com você pelo WhatsApp informado.", "form.err": "Não consegui registrar por aqui. Fale com a gente pelo WhatsApp.",
+ "ft.tag": "Edição de vídeo com IA para o mercado imobiliário.", "ft.product": "Produto", "ft.account": "Conta", "ft.sales": "Falar com vendas",
+ "tab.estudio": "Estúdio", "tab.takes": "Takes", "tab.briefing": "Briefing", "tab.projetos": "Projetos",
+ "tabsub.estudio": "Peça no chat e acompanhe a edição ao vivo.", "tabsub.takes": "Os vídeos brutos que o agente usa para editar.", "tabsub.briefing": "Nome, data, diferenciais e ofertas do lançamento.", "tabsub.projetos": "Seus pedidos anteriores, prontos para reabrir.",
+ "acct.name": "Sua conta", "acct.active": "Acesso vitalício", "app.site": "Site",
+ "app.inpLabel": "Pedido para o agente", "app.inpPh": "Ex.: faz 3 vídeos agressivos com a condição de lançamento", "app.send": "Editar", "app.keepOpen": "A edição acontece ao vivo neste navegador. Mantenha a aba aberta.", "app.back": "Voltar ao palco",
+ "app.session": "Resumo da sessão", "app.stVid": "vídeos editados", "app.stTake": "takes carregados", "app.stMin": "de vídeo pronto", "app.project": "Empreendimento", "app.editBf": "Editar briefing", "app.manageTakes": "Gerenciar takes", "app.timeline": "Linha do tempo",
+ "app.bfEmpty": "Preencha o briefing para o agente usar nome, data e ofertas certas.", "app.bfLaunch": "lançamento", "app.bfOffers": "com ofertas cadastradas", "app.bfNoOffers": "sem ofertas cadastradas",
+ "badge.idle": "PALCO", "badge.live": "EDITANDO AO VIVO", "badge.done": "PRONTO", "badge.watch": "ASSISTINDO",
+ "takes.h": "Seus takes", "takes.demo": "Usar cenas de demonstração", "takes.upload": "Enviar takes", "takes.emptyT": "Nenhum take ainda", "takes.emptyP": "Envie vídeos do empreendimento (drone, fachada, lazer, decorado). Eles ficam só neste navegador.",
+ "takes.reading": "Lendo takes…", "takes.hint": "Escreva em poucas palavras o que cada take mostra e indique qual tem o logo para a cena final.", "takes.demoNote": "Cenas geradas pelo agente para testar. Para os anúncios, envie os takes do empreendimento.", "takes.ph": "o que mostra? (ex.: fachada com logo)", "takes.gen": "cena gerada",
+ "bf.h": "Briefing do lançamento", "bf.hint": "o agente só usa o que estiver aqui", "bf.name": "Empreendimento", "bf.city": "Cidade", "bf.date": "Data do lançamento", "bf.cta": "Chamada final", "bf.ctaDefault": "Toque em Saiba Mais e faça seu cadastro", "bf.dif": "Diferenciais que aparecem nos takes", "bf.difPh": "Ex.: perto da praia, área de lazer, comércio no bairro", "bf.offers": "Ofertas e condições liberadas", "bf.offersPh": "Ex.: entrada facilitada, tabela especial de lançamento. Deixe vazio se ainda não tem.", "bf.color": "Cor de destaque nos textos", "bf.saved": "Salvo automaticamente neste navegador.",
+ "proj.h": "Projetos", "proj.hint": "cada pedido vira um projeto", "proj.emptyT": "Nenhum projeto ainda", "proj.emptyP": "Peça vídeos no Estúdio e eles aparecem aqui.", "proj.go": "Ir para o Estúdio", "proj.reopen": "Reabrir", "proj.needTakes": "Carregue os takes deste projeto para reabrir.", "proj.reopening": "Reabrindo o projeto com os takes carregados.", "proj.videos": "vídeo(s)",
+ "chat.hello": "Fala{n}! Sou o Flamefields. Envie seus takes em Takes, preencha o briefing e me diga quantos vídeos quer e a pegada (agressiva ou tranquila). Eu edito aqui na sua frente.",
+ "chat.tryDemo": "Testar agora com cenas de demonstração", "chat.who": "Agente", "chat.needTakes": "Antes, carregue os takes do empreendimento na aba Takes (ou use as cenas de demonstração).", "chat.offline": "Não consegui me conectar agora. Abra o estúdio pelo seu link de acesso no navegador do computador.", "chat.go": "Bora. Editando agora.", "chat.ok": "Certo.", "chat.fail": "Algo falhou do meu lado. Mande o pedido de novo.", "chat.cancel": "Cancelado.", "chat.reopen": "Reabrir",
+ "think.1": "Lendo o briefing", "think.2": "Olhando os takes", "think.3": "Escolhendo trilha e ritmo", "think.4": "Montando o roteiro de cortes", "think.5": "Escrevendo textos e locução",
+ "chips": ["Faz 3 vídeos agressivos de lançamento", "2 vídeos tranquilos para casal e família", "1 contagem regressiva para o dia do lançamento", "Refaz o vídeo 1 mais rápido"],
+ "card.queue": "na fila", "card.editing": "editando", "card.done": "pronto", "card.error": "erro", "card.agro": "agressivo", "card.calm": "tranquilo", "card.scenes": "cenas",
+ "card.s1": "Separando os takes", "card.s2": "Compondo a trilha", "card.s3": "Sincronizando cortes na batida", "card.s4": "Editando ao vivo no palco", "card.s5": "Exportando",
+ "card.watch": "Assistir", "card.dl": "Baixar", "card.redo": "Editar de novo", "card.voice": "Adicionar locução", "card.voiceSet": "Locução: ", "card.loc": "Roteiro de locução (ElevenLabs)", "card.copy": "Copiar roteiro", "card.copied": "Copiado", "card.locMissing": "Peça ao agente: \"escreve a locução do vídeo {n}\".",
+ "card.noDl": "Este visualizador não permite baixar arquivos. Abra o estúdio no navegador do computador.", "card.dlFail": "Não consegui salvar o arquivo agora. Tente de novo em instantes.", "card.badAudio": "Não consegui ler esse áudio. Envie um MP3 ou WAV.",
+ "err.not_granted": "Você não liberou o agente nesta página. Recarregue e permita para continuar.", "err.sampling_disabled": "O agente não está disponível para esta conta.", "err.rate_limited": "Muitos pedidos seguidos. Espere um pouco e mande de novo.", "err.session_expired": "Sua sessão expirou. Entre de novo.", "err.upstream": "O servidor de edição está instável agora. Tente de novo em instantes.", "err.invalid_json": "O roteiro veio incompleto. Mande de novo, talvez com menos vídeos.", "err.refused": "Não consigo fazer esse pedido. Tente com outras palavras.", "err.prompt_too_large": "Conversa longa demais. Recarregue a página e peça de novo.",
+ "app.new": "Nova conversa", "app.recent": "Recentes", "app.newTitle": "Nova conversa", "app.homeH": "O que vamos editar hoje{n}?", "app.homeP": "Anexe os vídeos do empreendimento e escreva a ideia do jeito que quiser. Eu monto, edito e entrego pronto para anunciar.",
+ "app.inpPh": "Anexe os takes e descreva os vídeos que você quer…", "app.attach": "Anexar vídeos ou áudio", "app.hint": "Takes em vídeo e áudio de locução", "app.foot": "Os vídeos são editados ao vivo nesta aba. Mantenha a página aberta até terminar.",
+ "app.defaultAsk": "Faça 3 vídeos de lançamento com estes takes.", "app.needTakes": "Anexe os vídeos do empreendimento pelo botão de clipe e me diga a ideia. Se quiser só ver como funciona, use as cenas de demonstração.", "app.useDemo": "Testar com cenas de demonstração", "app.demoLoaded": "Cenas de demonstração carregadas. Agora me diga o que você quer.",
+ "app.voiceOn": "Colocando a locução no vídeo {n}. Ele vai ser editado de novo com a voz por cima da trilha.", "app.voiceSaved": "Áudio recebido. Vou usar essa locução no próximo vídeo que eu editar.", "app.reopenNote": "Para gerar este vídeo de novo, anexe os takes nesta conversa.", "app.regen": "Gerar de novo", "app.queue": "Na fila",
+ "app.voiceHint": "Para colocar a locução: gere o áudio na ElevenLabs, anexe aqui no chat e diga o número do vídeo.",
+ "app.sugs": [["Motion estilo Reels", "Faça 3 vídeos MOTION com os takes que enviei, texto entrando palavra por palavra, alinhado à esquerda. Empreendimento: [NOME], em [CIDADE]. Lançamento dia [DATA]. Destaque em faixa laranja as palavras [PALAVRA 1] e [PALAVRA 2]. Faça uma virada com palavra riscada e a resposta em itálico. Data gigante digitada no final e fechamento \"comenta QUERO\"."], ["Anúncio agressivo", "Crie 3 anúncios agressivos de 30s para Meta Ads do [NOME] ([CIDADE]). Gancho forte nos 3 primeiros segundos, cortes na batida, textos curtos em caixa alta. Oferta (use exatamente assim): [OFERTA]. Chamada final: \"Toque em Saiba Mais e faça seu cadastro\". Locução com voz masculina firme."], ["Lifestyle elegante", "Quero 2 vídeos tranquilos e sofisticados, formato cinema, para casais e famílias: pôr do sol, lazer e tranquilidade. Empreendimento [NOME]. Sem preços. Frases curtas e elegantes. Locução feminina acolhedora."], ["Diferenciais em lista", "Faça 1 vídeo motion mostrando os diferenciais, um por bloco, com a palavra principal em destaque: [DIFERENCIAL 1], [DIFERENCIAL 2], [DIFERENCIAL 3]. Termine com [NOME] e a data [DATA] gigante."], ["Contagem regressiva", "Faça 1 vídeo de contagem regressiva para o lançamento do [NOME] no dia [DATA]: 3, 2, 1 com impacto, revelação do nome e a data em destaque no final. Pegada agressiva."], ["Ajuste fino", "Refaça o vídeo [N] mantendo tudo igual. Mude apenas: [O QUE MUDAR]."]], "card.motion": "motion",
+ "plan.credits": "{n} vídeos por mês incluídos", "pack.label": "+{n} vídeos",
+ "credits.badge": "{n} créditos", "credits.title": "Franquia do mês: {p} · Recargas: {x}", "credits.low": "Restam {n} créditos. Recarregue para não parar no meio de uma campanha.", "credits.cut": "Seus créditos só cobriam parte do pedido: {n} vídeo(s) ficaram de fora. Recarregue para gerar o resto.",
+ "gate.send": "Receber link de acesso", "gate.sent": "Enviamos um link de acesso para {e}. Abra o e-mail neste aparelho.", "gate.notFound": "Não encontramos uma assinatura com este e-mail. Use o mesmo e-mail da compra.", "gate.logout": "Sair",
+ "gate.login.h": "Entre no Flamefields", "gate.login.p": "Digite o e-mail usado na compra. Você recebe um link de acesso, sem senha.",
+ "gate.sem_assinatura.h": "Você ainda não tem acesso", "gate.sem_assinatura.p": "Compre o acesso vitalício para liberar o estúdio com 1.000 vídeos inclusos. O acesso é liberado assim que o pagamento é confirmado.",
+ "gate.expirado.h": "Sua assinatura venceu", "gate.expirado.p": "Renove para voltar a editar. Seus créditos de recarga continuam guardados.",
+ "gate.bloqueado.h": "Acesso suspenso", "gate.bloqueado.p": "Houve um reembolso ou contestação neste pedido. Fale com o suporte para reativar.",
+ "gate.sem_creditos.h": "Seus créditos acabaram", "gate.sem_creditos.p": "Assine os créditos mensais para receber vídeos novos todo mês, ou compre uma recarga para continuar agora. Os créditos entram assim que o pagamento é confirmado.",
+ "gate.limite_custo.h": "Limite de uso do plano atingido", "gate.limite_custo.p": "Você usou o máximo previsto para o seu plano neste período. Recarregue para continuar.",
+ "gate.recarga.p": "Escolha como quer continuar:", "gate.config.h": "Configuração pendente", "gate.config.p": "O produtor ainda não configurou o acesso. Tente novamente mais tarde.",
+ "plan.vitalicio": "Acesso vitalício", "plan.per.vitalicio": "pagamento único", "plan.vit.eq": "Já vem com {n} vídeos. Sem mensalidade obrigatória.", "plan.vit.f1": "{n} vídeos inclusos (créditos não vencem)", "plan.vit.f2": "Acesso ao estúdio para sempre", "plan.vit.f3": "Identificador de estilo: envie uma referência e o agente copia", "plan.vit.cta": "Quero acesso vitalício",
+ "plan.creditos_mensal": "Créditos mensais", "plan.per.creditos_mensal": "/mês", "plan.mon.unit": "vídeos todo mês", "plan.mon.eq": "Opcional. Assine de dentro do estúdio quando quiser.", "plan.mon.f1": "+{n} vídeos somados todo mês", "plan.mon.f2": "Créditos acumulam, não vencem", "plan.mon.f3": "Liberados automaticamente a cada pagamento", "plan.mon.cta": "Assinar dentro do estúdio",
+ "plan.packs": "Recargas avulsas", "plan.packs.p": "Precisa de mais agora? Compre na hora, dentro do estúdio.", "plan.style": "Análise de estilo: {n} créditos",
+ "mon.btn": "Assinar +{n} vídeos/mês", "mon.active": "Créditos mensais ativos", "credits.info": "Você tem {n} créditos. Cada vídeo usa 1 crédito e cada análise de estilo usa 5. Para nunca ficar sem, assine os créditos mensais.",
+ "style.copy": "Copiar prompt", "style.btn": "Identificar estilo de um vídeo de referência", "style.active": "Estilo: {n}", "style.unnamed": "Estilo da referência", "style.mus.l": "trilha de lançamento", "style.mus.e": "trilha épica", "style.prompt": "Prompt pronto", "style.use": "Usar este estilo", "style.useSaved": "Usar estilo: {n}", "style.charged": "Análise de estilo: {n} créditos.",
+ "style.watching": "Assistindo a referência", "style.reading": "Identificando ritmo, tipografia e destaques", "style.readFail": "Não consegui ler esse vídeo. Envie um MP4.", "style.need": "A análise de estilo usa {n} créditos e seu saldo não cobre.", "style.done": "Identifiquei o estilo \"{n}\". Já deixei o prompt pronto: é só completar os colchetes e enviar com os takes.", "style.userMsg": "Identifique o estilo deste vídeo", "style.title": "Estilo de referência", "style.turnUser": "Analise o estilo do vídeo de referência que enviei.",
+ "idle.1": "PRONTO PARA\nEDITAR", "idle.2": "Peça no chat",
+ "demo.t1": "SEU LANÇAMENTO", "demo.t2": "MERECE\nVÍDEO ASSIM", "demo.t3": "CORTE NA BATIDA", "demo.t4": "TRILHA PRÓPRIA", "demo.t5": "TEXTO QUE VENDE", "demo.t6": "EM 30 SEGUNDOS", "demo.t7": "AGRESSIVO OU\nTRANQUILO", "demo.t8": "VOCÊ SÓ PEDE", "demo.t10": "EDIÇÃO COM IA"
+},
+en: {
+ "nav.how": "How it works", "nav.features": "Features", "nav.pricing": "Pricing", "nav.faq": "FAQ", "nav.login": "Log in", "nav.start": "Get access",
+ "hero.new": "NEW", "hero.announce": "Send a reference video and the agent copies the style",
+ "hero.h1": "Launch videos <em>that sell</em>, edited by AI in minutes",
+ "hero.lead": "Upload your property footage, ask in the chat and watch the agent build 30-second vertical videos with an original soundtrack, beat-synced cuts, on-screen copy and a closing call to action. Ready for Reels, Stories and Meta Ads.",
+ "hero.cta1": "Get lifetime access", "hero.cta2": "See how it works",
+ "hero.f1": "No editing skills needed", "hero.f2": "Copyright-free soundtrack", "hero.f3": "Bold or calm style",
+ "frame.url": "app.flamefields · studio", "frame.you": "You", "frame.agent": "Agent", "frame.q": "Make 3 bold videos for the launch, with the date and a sign-up call to action.", "frame.a": "On it. Launch soundtrack, word-by-word typography and a branded ending. Editing 1 of 3.",
+ "live": "EDITING LIVE", "sound.on": "Play with sound", "sound.off": "Stop sound", "sound.wait": "Loading…",
+ "pipe.1": "Reading the brief", "pipe.2": "Picking the footage", "pipe.3": "Composing the soundtrack", "pipe.4": "Cutting on the beat", "pipe.5": "Exporting 9:16",
+ "how.eyebrow": "How it works", "how.h2": "From raw footage to a ready ad in three steps", "how.p": "No editor, no music library, no waiting in line. The agent does it all and shows every cut as it happens.",
+ "how.s1t": "Upload your footage", "how.s1p": "Drone shots, facade, amenities and model units. The more variety, the better the video.",
+ "how.s2t": "Ask in the chat", "how.s2p": "\"Make 5 bold videos with the launch offer.\" The agent writes the script, soundtrack and cuts.",
+ "how.s3t": "Download and run ads", "how.s3p": "30-second 9:16 videos, ready for Ads Manager. Ask for changes anytime.",
+ "feat.eyebrow": "Features", "feat.h2": "Everything an editor would do, at the speed of a message",
+ "feat.1t": "Original launch soundtrack", "feat.1p": "Every video gets music composed on the spot, with riser, drop and impact. No muted audio from copyright claims.",
+ "feat.2t": "Beat-synced cuts", "feat.2p": "Zoom, flash, glitch and camera moves chosen by the agent and locked to the rhythm.",
+ "feat.3t": "Copy that converts", "feat.3p": "A hook in the first 3 seconds, highlights in the middle and a branded ending with date and CTA.",
+ "feat.4t": "AI voiceover", "feat.4p": "Scripts ready for a firm male or warm female voice. Upload the audio and it gets mixed in.",
+ "feat.5t": "Offers under control", "feat.5p": "Prices and terms only appear if they are in your brief. The agent never makes up a deal.",
+ "modes.eyebrow": "Two styles", "modes.h2": "Bold to convert. Calm to inspire.",
+ "modes.at": "Bold style", "modes.ah": "Impact and urgency", "modes.a1": "Epic launch soundtrack with impacts", "modes.a2": "Rhythmic cuts, flashes and reveals", "modes.a3": "Short all-caps copy", "modes.a4": "Deep, firm male voiceover", "modes.aq": "“STOP SCROLLING. LOOK WHERE YOU COULD LIVE.”",
+ "modes.ct": "Calm style", "modes.ch": "Desire and lifestyle", "modes.c1": "Cinematic or soft house soundtrack", "modes.c2": "Long shots, fades and slow camera", "modes.c3": "Elegant lines in widescreen", "modes.c4": "Calm, warm female voiceover", "modes.cq": "“There is a place where every sunset becomes a memory.”",
+ "price.eyebrow": "Pricing", "price.h2": "Pay once. Edit forever.", "price.p": "Lifetime access with 1,000 videos included. Need more? Subscribe to monthly credits or buy top-ups inside the studio.", "price.note": "Prices in Brazilian reais (BRL). Access is enabled instantly for your purchase email.",
+ "plan.mensal": "Monthly", "plan.trimestral": "Quarterly", "plan.anual": "Annual", "plan.per.mensal": "/month", "plan.per.trimestral": "/quarter", "plan.per.anual": "/year",
+ "plan.eq": "just {m}/month", "plan.save": "save {p}%", "plan.popular": "Most popular", "plan.best": "Best value", "plan.cta": "Get {n}",
+ "plan.f1": "Studio with the AI agent chat", "plan.f2": "Unlimited 30s 9:16 videos", "plan.f3": "Bold and calm styles", "plan.f4": "Original soundtrack on every video", "plan.f5": "Voiceover scripts and mixing", "plan.f6": "Saved projects to redo anytime",
+ "faq.eyebrow": "FAQ", "faq.h2": "Frequently asked questions",
+ "faq.q1": "Do I need editing skills?", "faq.a1": "No. Write what you want in the chat, like you would to an editor. The agent picks the cuts, soundtrack, transitions and copy.",
+ "faq.q2": "Can the music get my ad taken down?", "faq.a2": "The soundtrack is composed by the agent for each video. No third-party music is used.",
+ "faq.q3": "How does the voiceover work?", "faq.a3": "The agent writes a script ready for an AI voice tool like ElevenLabs. Upload the audio and it re-renders the video with the narration.",
+ "faq.q4": "How do I get access?", "faq.a4": "As soon as payment is confirmed, access is enabled automatically for your purchase email. Just sign in with it. If your monthly credits run out, you can top up instantly.",
+ "faq.q5": "Which device works best?", "faq.a5": "A computer with Chrome. Editing happens live in the browser, so keep the tab open while the video renders.",
+ "cta.eyebrow": "Start today", "cta.h2": "Put Flamefields to work on your launches", "cta.p": "Pick a plan and leave your contact. We will send the payment link and enable your access.",
+ "form.name": "Name", "form.company": "Company", "form.phone": "WhatsApp", "form.plan": "Plan", "form.submit": "I want to buy", "form.ok": "Got it. We will reach out on the WhatsApp number you entered.", "form.err": "Could not save it here. Please reach us on WhatsApp.",
+ "ft.tag": "AI video editing for real estate.", "ft.product": "Product", "ft.account": "Account", "ft.sales": "Talk to sales",
+ "tab.estudio": "Studio", "tab.takes": "Footage", "tab.briefing": "Brief", "tab.projetos": "Projects",
+ "tabsub.estudio": "Ask in the chat and watch the edit live.", "tabsub.takes": "The raw clips the agent edits with.", "tabsub.briefing": "Name, date, highlights and offers for the launch.", "tabsub.projetos": "Your past requests, ready to reopen.",
+ "acct.name": "Your account", "acct.active": "Lifetime access", "app.site": "Website",
+ "app.inpLabel": "Request for the agent", "app.inpPh": "e.g. make 3 bold videos with the launch offer", "app.send": "Edit", "app.keepOpen": "Editing happens live in this browser. Keep the tab open.", "app.back": "Back to stage",
+ "app.session": "Session summary", "app.stVid": "videos edited", "app.stTake": "clips loaded", "app.stMin": "of finished video", "app.project": "Property", "app.editBf": "Edit brief", "app.manageTakes": "Manage footage", "app.timeline": "Timeline",
+ "app.bfEmpty": "Fill in the brief so the agent uses the right name, date and offers.", "app.bfLaunch": "launch", "app.bfOffers": "offers added", "app.bfNoOffers": "no offers added",
+ "badge.idle": "STAGE", "badge.live": "EDITING LIVE", "badge.done": "DONE", "badge.watch": "PLAYING",
+ "takes.h": "Your footage", "takes.demo": "Use demo scenes", "takes.upload": "Upload footage", "takes.emptyT": "No footage yet", "takes.emptyP": "Upload property clips (drone, facade, amenities, model unit). They stay in this browser only.",
+ "takes.reading": "Reading clips…", "takes.hint": "Describe each clip in a few words and mark which one shows the logo for the ending.", "takes.demoNote": "Scenes generated by the agent for testing. For real ads, upload your property footage.", "takes.ph": "what does it show? (e.g. facade with logo)", "takes.gen": "generated scene",
+ "bf.h": "Launch brief", "bf.hint": "the agent only uses what is here", "bf.name": "Property name", "bf.city": "City", "bf.date": "Launch date", "bf.cta": "Closing call to action", "bf.ctaDefault": "Tap Learn More and sign up", "bf.dif": "Highlights visible in the footage", "bf.difPh": "e.g. near the beach, amenities, shops nearby", "bf.offers": "Approved offers and terms", "bf.offersPh": "e.g. easy down payment, special launch pricing. Leave empty if none yet.", "bf.color": "Highlight color for on-screen copy", "bf.saved": "Saved automatically in this browser.",
+ "proj.h": "Projects", "proj.hint": "every request becomes a project", "proj.emptyT": "No projects yet", "proj.emptyP": "Request videos in the Studio and they show up here.", "proj.go": "Go to Studio", "proj.reopen": "Reopen", "proj.needTakes": "Load this project's footage to reopen it.", "proj.reopening": "Reopening the project with the loaded footage.", "proj.videos": "video(s)",
+ "chat.hello": "Hey{n}! I'm Flamefields. Upload your clips under Footage, fill in the brief, and tell me how many videos you want and the style (bold or calm). I'll edit them right here.",
+ "chat.tryDemo": "Try it now with demo scenes", "chat.who": "Agent", "chat.needTakes": "First, load the property footage under Footage (or use the demo scenes).", "chat.offline": "I couldn't connect right now. Open the studio from your access link in a desktop browser.", "chat.go": "On it. Editing now.", "chat.ok": "Got it.", "chat.fail": "Something failed on my side. Please send the request again.", "chat.cancel": "Cancelled.", "chat.reopen": "Reopen",
+ "think.1": "Reading the brief", "think.2": "Reviewing the footage", "think.3": "Choosing soundtrack and pace", "think.4": "Building the cut list", "think.5": "Writing copy and voiceover",
+ "chips": ["Make 3 bold launch videos", "2 calm videos for couples and families", "1 countdown for launch day", "Redo video 1 faster"],
+ "card.queue": "queued", "card.editing": "editing", "card.done": "done", "card.error": "error", "card.agro": "bold", "card.calm": "calm", "card.scenes": "scenes",
+ "card.s1": "Sorting the footage", "card.s2": "Composing the soundtrack", "card.s3": "Syncing cuts to the beat", "card.s4": "Editing live on stage", "card.s5": "Exporting",
+ "card.watch": "Watch", "card.dl": "Download", "card.redo": "Edit again", "card.voice": "Add voiceover", "card.voiceSet": "Voiceover: ", "card.loc": "Voiceover script (ElevenLabs)", "card.copy": "Copy script", "card.copied": "Copied", "card.locMissing": "Ask the agent: \"write the voiceover for video {n}\".",
+ "card.noDl": "This viewer can't download files. Open the studio in a desktop browser.", "card.dlFail": "Could not save the file right now. Try again in a moment.", "card.badAudio": "Could not read that audio. Upload an MP3 or WAV.",
+ "err.not_granted": "You didn't allow the agent on this page. Reload and allow it to continue.", "err.sampling_disabled": "The agent isn't available for this account.", "err.rate_limited": "Too many requests in a row. Wait a bit and try again.", "err.session_expired": "Your session expired. Please sign in again.", "err.upstream": "The editing server is unstable right now. Try again in a moment.", "err.invalid_json": "The plan came back incomplete. Try again, maybe with fewer videos.", "err.refused": "I can't do that request. Try rewording it.", "err.prompt_too_large": "The conversation got too long. Reload the page and ask again.",
+ "app.new": "New chat", "app.recent": "Recent", "app.newTitle": "New chat", "app.homeH": "What are we editing today{n}?", "app.homeP": "Attach your property footage and describe the idea however you like. I build, edit and deliver it ready to advertise.",
+ "app.inpPh": "Attach your clips and describe the videos you want…", "app.attach": "Attach videos or audio", "app.hint": "Video clips and voiceover audio", "app.foot": "Videos are edited live in this tab. Keep the page open until they finish.",
+ "app.defaultAsk": "Make 3 launch videos with these clips.", "app.needTakes": "Attach the property footage with the paperclip button and tell me the idea. To just see how it works, use the demo scenes.", "app.useDemo": "Try with demo scenes", "app.demoLoaded": "Demo scenes loaded. Now tell me what you want.",
+ "app.voiceOn": "Adding the voiceover to video {n}. It will be edited again with the voice over the soundtrack.", "app.voiceSaved": "Audio received. I'll use this voiceover on the next video I edit.", "app.reopenNote": "To generate this video again, attach the clips in this chat.", "app.regen": "Generate again", "app.queue": "Queued",
+ "app.voiceHint": "To add the voiceover: generate the audio in ElevenLabs, attach it here and mention the video number.",
+ "app.sugs": [["Reels-style motion", "Make 3 MOTION videos with the clips I sent, words appearing one by one, left-aligned. Property: [NAME], in [CITY]. Launch date [DATE]. Put the words [WORD 1] and [WORD 2] in an orange highlight box. Add a twist with a crossed-out word and an italic answer. Huge typed date at the end and close with \"comment WANT\"."], ["Bold ad", "Create 3 bold 30s Meta ads for [NAME] ([CITY]). Strong hook in the first 3 seconds, beat-synced cuts, short all-caps copy. Offer (use exactly): [OFFER]. Closing call: \"Tap Learn More and sign up\". Firm male voiceover."], ["Elegant lifestyle", "I want 2 calm, sophisticated widescreen videos for couples and families: sunsets, amenities and peace. Property [NAME]. No prices. Short elegant lines. Warm female voiceover."], ["Feature list", "Make 1 motion video showing the highlights, one per block, with the main word highlighted: [HIGHLIGHT 1], [HIGHLIGHT 2], [HIGHLIGHT 3]. End with [NAME] and the date [DATE] huge."], ["Countdown", "Make 1 countdown video for the [NAME] launch on [DATE]: 3, 2, 1 with impact, name reveal and the date highlighted at the end. Bold style."], ["Fine-tune", "Redo video [N] keeping everything the same. Only change: [WHAT TO CHANGE]."]], "card.motion": "motion",
+ "plan.credits": "{n} videos per month included", "pack.label": "+{n} videos",
+ "credits.badge": "{n} credits", "credits.title": "Monthly allowance: {p} · Top-ups: {x}", "credits.low": "{n} credits left. Top up so you don't stop mid-campaign.", "credits.cut": "Your credits only covered part of the request: {n} video(s) were left out. Top up to generate the rest.",
+ "gate.send": "Email me an access link", "gate.sent": "We sent an access link to {e}. Open the email on this device.", "gate.notFound": "We couldn't find a subscription for this email. Use the same email you purchased with.", "gate.logout": "Sign out",
+ "gate.login.h": "Sign in to Flamefields", "gate.login.p": "Enter the email you purchased with. You'll get an access link, no password needed.",
+ "gate.sem_assinatura.h": "You don't have access yet", "gate.sem_assinatura.p": "Get lifetime access to unlock the studio with 1,000 videos included. Access is enabled as soon as payment is confirmed.",
+ "gate.expirado.h": "Your subscription expired", "gate.expirado.p": "Renew to keep editing. Your top-up credits stay saved.",
+ "gate.bloqueado.h": "Access suspended", "gate.bloqueado.p": "This order was refunded or disputed. Contact support to reactivate.",
+ "gate.sem_creditos.h": "You're out of credits", "gate.sem_creditos.p": "Subscribe to monthly credits to get new videos every month, or buy a top-up to continue now. Credits are added as soon as payment is confirmed.",
+ "gate.limite_custo.h": "Plan usage limit reached", "gate.limite_custo.p": "You've used the maximum planned for your plan this period. Top up to continue.",
+ "gate.recarga.p": "Choose how to continue:", "gate.config.h": "Setup pending", "gate.config.p": "Access hasn't been configured yet. Please try again later.",
+ "plan.vitalicio": "Lifetime access", "plan.per.vitalicio": "one-time payment", "plan.vit.eq": "Comes with {n} videos. No mandatory subscription.", "plan.vit.f1": "{n} videos included (credits never expire)", "plan.vit.f2": "Studio access forever", "plan.vit.f3": "Style identifier: send a reference and the agent copies it", "plan.vit.cta": "Get lifetime access",
+ "plan.creditos_mensal": "Monthly credits", "plan.per.creditos_mensal": "/month", "plan.mon.unit": "videos every month", "plan.mon.eq": "Optional. Subscribe from inside the studio anytime.", "plan.mon.f1": "+{n} videos added every month", "plan.mon.f2": "Credits stack and never expire", "plan.mon.f3": "Added automatically on every payment", "plan.mon.cta": "Subscribe inside the studio",
+ "plan.packs": "Top-ups", "plan.packs.p": "Need more now? Buy instantly inside the studio.", "plan.style": "Style analysis: {n} credits",
+ "mon.btn": "Subscribe +{n} videos/month", "mon.active": "Monthly credits active", "credits.info": "You have {n} credits. Each video uses 1 credit and each style analysis uses 5. Subscribe to monthly credits so you never run out.",
+ "style.copy": "Copy prompt", "style.btn": "Identify the style of a reference video", "style.active": "Style: {n}", "style.unnamed": "Reference style", "style.mus.l": "launch soundtrack", "style.mus.e": "epic soundtrack", "style.prompt": "Ready-made prompt", "style.use": "Use this style", "style.useSaved": "Use style: {n}", "style.charged": "Style analysis: {n} credits.",
+ "style.watching": "Watching the reference", "style.reading": "Identifying pace, typography and highlights", "style.readFail": "I couldn't read that video. Send an MP4.", "style.need": "Style analysis uses {n} credits and your balance doesn't cover it.", "style.done": "I identified the style \"{n}\". The prompt is ready: fill in the brackets and send it with your clips.", "style.userMsg": "Identify the style of this video", "style.title": "Reference style", "style.turnUser": "Analyze the style of the reference video I sent.",
+ "idle.1": "READY TO\nEDIT", "idle.2": "Ask in the chat",
+ "demo.t1": "YOUR LAUNCH", "demo.t2": "DESERVES\nVIDEOS LIKE THIS", "demo.t3": "CUT ON THE BEAT", "demo.t4": "ORIGINAL MUSIC", "demo.t5": "COPY THAT SELLS", "demo.t6": "IN 30 SECONDS", "demo.t7": "BOLD OR\nCALM", "demo.t8": "JUST ASK", "demo.t10": "AI VIDEO EDITING"
+}};
+let LANG = store.get("lang", null) || ((navigator.language || "pt").toLowerCase().startsWith("pt") ? "pt" : "en");
+const t = (k, vars) => { let s = (I18N[LANG] && I18N[LANG][k]) ?? I18N.pt[k] ?? k; if (vars && typeof s === "string") for (const [a, b] of Object.entries(vars)) s = s.split("{" + a + "}").join(b); return s; };
+function applyI18n() {
+  document.documentElement.lang = LANG === "pt" ? "pt-BR" : "en";
+  document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = t(el.dataset.i18n); });
+  document.querySelectorAll("[data-i18n-html]").forEach(el => { el.innerHTML = t(el.dataset.i18nHtml); });
+  document.querySelectorAll("[data-i18n-ph]").forEach(el => { el.placeholder = t(el.dataset.i18nPh); });
+  document.querySelectorAll("[data-i18n-title]").forEach(el => { el.title = t(el.dataset.i18nTitle); el.setAttribute("aria-label", t(el.dataset.i18nTitle)); });
+  document.querySelectorAll("[data-lang]").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === LANG ? "true" : "false"));
+  [...$("#lPlano").options].forEach(o => { const pr = o.value === "vitalicio" ? PLANS[0].price : MONTHLY.price; o.textContent = t("plan." + o.value) + (pr ? " · " + money(pr) : ""); });
+  renderPlans(); renderChips(); if (window.__onLang) window.__onLang();
+}
+document.querySelectorAll("[data-lang]").forEach(b => b.addEventListener("click", () => { LANG = b.dataset.lang; store.set("lang", LANG); applyI18n(); }));
+
+/* ======================= preços ======================= */
+const CFG = window.FF_CONFIG || {};
+const PLANS = [{ id: "vitalicio", price: 1190.90, credits: 1000, tag: "popular" }];
+const MONTHLY = { id: "creditos_mensal", price: +(CFG.MONTHLY_PRICE || 0), credits: +(CFG.MONTHLY_CREDITS || 300) };
+const STYLE_COST = +(CFG.STYLE_COST || 5);
+const PACKS = [{ id: "recarga100", price: 49.90, credits: 100 }, { id: "recarga300", price: 119.90, credits: 300 }];
+let ME = null;
+function checkoutUrl(id) { const u = (CFG.CHECKOUT || {})[id]; if (!u) return ""; const em = ME && ME.email; return em ? u + (u.includes("?") ? "&" : "?") + "email=" + encodeURIComponent(em) : u; }
+const money = v => new Intl.NumberFormat(LANG === "pt" ? "pt-BR" : "en-US", { style: "currency", currency: "BRL" }).format(v);
+function renderPlans() {
+  const box = $("#plans"); box.innerHTML = "";
+  const V = PLANS[0];
+  const card = (hl, badge, title, price, per, eq, feats, cta, onclick) => {
+    const el = document.createElement("div"); el.className = "plan" + (hl ? " hl" : "");
+    el.innerHTML = `${badge ? `<span class="badge-top"></span>` : ""}<h3></h3><div class="price"><b></b><span></span></div><p class="eq"></p><ul></ul><button class="btn block ${hl ? "pri" : ""}" type="button"></button>`;
+    if (badge) el.querySelector(".badge-top").textContent = badge;
+    el.querySelector("h3").textContent = title; el.querySelector(".price b").textContent = price; el.querySelector(".price span").textContent = per;
+    el.querySelector(".eq").textContent = eq;
+    const ul = el.querySelector("ul"); feats.forEach(f => { const li = document.createElement("li"); li.textContent = f; ul.append(li); });
+    const bt = el.querySelector("button"); bt.textContent = cta; bt.onclick = onclick; box.append(el); return el;
+  };
+  const go = id => () => { const u = checkoutUrl(id); if (u) { location.href = u; return; } $("#lPlano").value = id; document.getElementById("contato").scrollIntoView({ behavior: "smooth" }); setTimeout(() => $("#lNome").focus({ preventScroll: true }), 500); };
+  card(true, t("plan.popular"), t("plan.vitalicio"), money(V.price), t("plan.per.vitalicio"), t("plan.vit.eq", { n: V.credits.toLocaleString(LANG === "pt" ? "pt-BR" : "en-US") }),
+    [t("plan.vit.f1", { n: V.credits.toLocaleString(LANG === "pt" ? "pt-BR" : "en-US") }), t("plan.vit.f2"), t("plan.vit.f3"), t("plan.f1"), t("plan.f4"), t("plan.f5")], t("plan.vit.cta"), go("vitalicio"));
+  card(false, "", t("plan.creditos_mensal"), MONTHLY.price ? money(MONTHLY.price) : "+" + MONTHLY.credits, MONTHLY.price ? t("plan.per.creditos_mensal") : t("plan.mon.unit"), t("plan.mon.eq"),
+    [t("plan.mon.f1", { n: MONTHLY.credits }), t("plan.mon.f2"), t("plan.mon.f3")], t("plan.mon.cta"), () => { location.href = "/app"; });
+  const packs = document.createElement("div"); packs.className = "plan";
+  packs.innerHTML = `<h3></h3><p class="eq"></p><ul></ul>`; packs.querySelector("h3").textContent = t("plan.packs"); packs.querySelector(".eq").textContent = t("plan.packs.p");
+  PACKS.forEach(pk => { const li = document.createElement("li"); li.textContent = t("pack.label", { n: pk.credits }) + " · " + money(pk.price); packs.querySelector("ul").append(li); });
+  const sl = document.createElement("li"); sl.textContent = t("plan.style", { n: STYLE_COST }); packs.querySelector("ul").append(sl);
+  if (PACKS.some(pk => checkoutUrl(pk.id))) box.append(packs);
+  else { const sl2 = document.createElement("p"); sl2.className = "plan-note"; sl2.style.gridColumn = "1/-1"; sl2.textContent = t("plan.style", { n: STYLE_COST }); box.append(sl2); }
+}
+
+/* ======================= roteamento ======================= */
+function route() {
+  const h = location.hash.replace("#", "");
+  const inApp = /\/app\/?$/.test(location.pathname) || h === "app";
+  $("#site").hidden = inApp; $("#app").hidden = !inApp;
+  if (inApp) { enterApp(); window.scrollTo(0, 0); heroPause(); }
+  else { heroResume(); if (h && h !== "inicio") { const el = document.getElementById(h); if (el) el.scrollIntoView(); } else if (h === "inicio") window.scrollTo(0, 0); }
+}
+window.addEventListener("hashchange", route);
+
+/* ======================= cenas geradas (sem takes reais) ======================= */
+function rng(seed) { let s = seed; return () => (s = (s * 16807) % 2147483647) / 2147483647; }
+const SYN = {
+  mar: { desc: "Cena gerada: pôr do sol no mar, sol baixo no horizonte, água brilhando.", paint(g, t) {
+    const sky = g.createLinearGradient(0, 0, 0, 430); sky.addColorStop(0, "#1c2a55"); sky.addColorStop(.55, "#e0703a"); sky.addColorStop(1, "#ffd27a");
+    g.fillStyle = sky; g.fillRect(0, 0, 1280, 430);
+    const sy = 380 + t * 4; const glow = g.createRadialGradient(640, sy, 10, 640, sy, 260); glow.addColorStop(0, "rgba(255,240,190,1)"); glow.addColorStop(.25, "rgba(255,190,90,.6)"); glow.addColorStop(1, "rgba(255,150,60,0)");
+    g.fillStyle = glow; g.fillRect(0, 0, 1280, 430); g.fillStyle = "#fff4d0"; g.beginPath(); g.arc(640, sy, 46, 0, 7); g.fill();
+    const sea = g.createLinearGradient(0, 430, 0, 720); sea.addColorStop(0, "#d9894a"); sea.addColorStop(.3, "#5a4a6a"); sea.addColorStop(1, "#141c34");
+    g.fillStyle = sea; g.fillRect(0, 430, 1280, 290);
+    for (let i = 0; i < 46; i++) { const y = 436 + i * i * .14; const w = 30 + 260 * (1 - i / 46) * (.6 + .4 * Math.sin(t * 2 + i)); g.fillStyle = `rgba(255,220,150,${.55 - i / 100})`; g.fillRect(640 - w / 2 + Math.sin(t * 1.5 + i * .7) * 14, y, w, 2 + i * .08); }
+  } },
+  cidade: { desc: "Cena gerada: vista aérea de bairro planejado ao entardecer, ruas iluminadas, câmera avançando.", paint(g, t) {
+    const sky = g.createLinearGradient(0, 0, 0, 200); sky.addColorStop(0, "#26306b"); sky.addColorStop(1, "#f19356"); g.fillStyle = sky; g.fillRect(0, 0, 1280, 200);
+    const gr = g.createLinearGradient(0, 200, 0, 720); gr.addColorStop(0, "#3a2e3a"); gr.addColorStop(1, "#0d1220"); g.fillStyle = gr; g.fillRect(0, 200, 1280, 520);
+    const hz = 200, cx = 640, sp = (t * .18) % 1;
+    g.strokeStyle = "rgba(255,190,120,.55)"; g.lineWidth = 2;
+    for (let i = -14; i <= 14; i++) { g.beginPath(); g.moveTo(cx + i * 6, hz); g.lineTo(cx + i * 150, 720); g.stroke(); }
+    for (let j = 0; j < 14; j++) { const d = ((j + sp) / 14); const y = hz + Math.pow(d, 2.2) * 520; g.strokeStyle = `rgba(255,200,140,${.15 + d * .5})`; g.lineWidth = 1 + d * 2; g.beginPath(); g.moveTo(0, y); g.lineTo(1280, y); g.stroke(); }
+    const r = rng(7);
+    for (let k = 0; k < 260; k++) { const x0 = (r() - .5) * 2, d0 = r(); const d = (d0 + sp * .5) % 1; const y = hz + Math.pow(d, 2.2) * 520; const x = cx + x0 * (20 + d * 900); const s = .8 + d * 4; g.fillStyle = r() > .7 ? "rgba(255,255,240,.95)" : "rgba(255,180,90,.9)"; g.fillRect(x, y - s, s * 1.6, s); }
+  } },
+  noite: { desc: "Cena gerada: bairro à noite, luzes da cidade desfocadas, clima elegante.", paint(g, t) {
+    const bg = g.createLinearGradient(0, 0, 0, 720); bg.addColorStop(0, "#0a1230"); bg.addColorStop(1, "#1d1636"); g.fillStyle = bg; g.fillRect(0, 0, 1280, 720);
+    const r = rng(3);
+    for (let k = 0; k < 70; k++) { const x = (r() * 1400 + t * (10 + r() * 30)) % 1400 - 60, y = 260 + r() * 420, rad = 8 + r() * 46, hue = r() > .5 ? "255,190,110" : "120,170,255"; const gg = g.createRadialGradient(x, y, 0, x, y, rad); gg.addColorStop(0, `rgba(${hue},${.35 + r() * .3})`); gg.addColorStop(1, `rgba(${hue},0)`); g.fillStyle = gg; g.fillRect(x - rad, y - rad, rad * 2, rad * 2); }
+  } },
+  avenida: { desc: "Cena gerada: avenida principal com faixas e árvores passando, movimento rápido.", paint(g, t) {
+    const sky = g.createLinearGradient(0, 0, 0, 330); sky.addColorStop(0, "#3a2f6e"); sky.addColorStop(1, "#ff9a5a"); g.fillStyle = sky; g.fillRect(0, 0, 1280, 330);
+    g.fillStyle = "#1a1f2e"; g.fillRect(0, 330, 1280, 390);
+    g.fillStyle = "#2a3042"; g.beginPath(); g.moveTo(600, 330); g.lineTo(680, 330); g.lineTo(1180, 720); g.lineTo(100, 720); g.fill();
+    const sp = (t * .9) % 1;
+    for (let j = 0; j < 10; j++) { const d = (j + sp) / 10, y = 330 + Math.pow(d, 2) * 390, h = 4 + d * 46; g.fillStyle = "rgba(255,230,160,.9)"; g.fillRect(640 - 2 - d * 6, y, 4 + d * 12, h); }
+    for (let j = 0; j < 8; j++) { const d = (j + sp) / 8, y = 330 + Math.pow(d, 2) * 390, s = 10 + d * 190; for (const side of [-1, 1]) { const x = 640 + side * (60 + d * 640); g.fillStyle = "rgba(20,40,30,.95)"; g.beginPath(); g.arc(x, y - s * .6, s * .5, 0, 7); g.fill(); g.fillStyle = "#e6669a"; g.globalAlpha = .55; g.beginPath(); g.arc(x + s * .1, y - s * .75, s * .25, 0, 7); g.fill(); g.globalAlpha = 1; } }
+  } },
+  luz: { desc: "Cena gerada: abstrata com feixes de luz dourada e azul, boa para revelação e textos.", paint(g, t) {
+    g.fillStyle = "#070c1a"; g.fillRect(0, 0, 1280, 720);
+    g.globalCompositeOperation = "lighter";
+    for (let k = 0; k < 7; k++) { const x = ((k * 230 + t * 160) % 1700) - 200; const gr = g.createLinearGradient(-120, 0, 120, 0); const c = k % 2 ? "21,93,251" : "243,195,74"; gr.addColorStop(0, `rgba(${c},0)`); gr.addColorStop(.5, `rgba(${c},.45)`); gr.addColorStop(1, `rgba(${c},0)`); g.save(); g.translate(x, 360); g.rotate(-.5); g.fillStyle = gr; g.fillRect(-120, -700, 240, 1400); g.restore(); }
+    g.globalCompositeOperation = "source-over";
+  } }
+};
+function synthClip(id) {
+  const c = document.createElement("canvas"); c.width = 320; c.height = 180;
+  const g = c.getContext("2d"); g.scale(.25, .25); SYN[id].paint(g, 2);
+  return { id, synth: true, dur: 8, w: 1280, h: 720, desc: SYN[id].desc, thumb: c.toDataURL("image/jpeg", .8), blob: null, user: false };
+}
+
+/* ======================= trilha ======================= */
+const PROG = {
+  dark: [[57, 60, 64], [53, 57, 60], [52, 55, 59], [52, 56, 59]],
+  warm: [[50, 53, 57, 60], [55, 58, 62, 65], [48, 52, 55, 59], [53, 57, 60, 64]],
+  minor: [[57, 60, 64], [53, 57, 60], [48, 52, 55], [55, 59, 62]]
+};
+const hz = m => 440 * Math.pow(2, (m - 69) / 12);
+async function makeMusic(style, bpm, cuts, hits, dropAt, sfx) {
+  if (style === "trap" || style === "drill") style = "epico";
+  const sr = 44100, oc = new OfflineAudioContext(2, sr * DUR, sr);
+  const comp = oc.createDynamicsCompressor(); comp.threshold.value = -16; comp.ratio.value = 4; comp.attack.value = .003; comp.release.value = .2;
+  const master = oc.createGain(); master.gain.value = .85; master.connect(comp); comp.connect(oc.destination);
+  const drum = oc.createGain(); drum.gain.value = .95; drum.connect(master);
+  const mus = oc.createGain(); mus.connect(master);
+  const fx = oc.createGain(); fx.gain.value = .9; fx.connect(master);
+  const nb = oc.createBuffer(1, sr * 2, sr); const nd = nb.getChannelData(0); for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
+  const sat = oc.createWaveShaper(); { const c = new Float32Array(1024); for (let i = 0; i < 1024; i++) { const x = i / 512 - 1; c[i] = Math.tanh(x * 2.4); } sat.curve = c; } sat.connect(master);
+  const noise = (t, len, type, f, q, gainPeak, decay, bus, attack = .001) => {
+    const s = oc.createBufferSource(); s.buffer = nb;
+    const bq = oc.createBiquadFilter(); bq.type = type; bq.frequency.value = f; bq.Q.value = q;
+    const g = oc.createGain(); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(gainPeak, t + attack); g.gain.exponentialRampToValueAtTime(.0008, t + decay);
+    s.connect(bq); bq.connect(g); g.connect(bus); s.start(t, Math.random() * 1.2); s.stop(t + len);
+    return bq;
+  };
+  const kicks = [];
+  const kick = (t, p = 1) => {
+    const o = oc.createOscillator(); o.type = "sine";
+    o.frequency.setValueAtTime(45 + 140 * p, t); o.frequency.exponentialRampToValueAtTime(45, t + .11);
+    const g = oc.createGain(); g.gain.setValueAtTime(1.1, t); g.gain.exponentialRampToValueAtTime(.001, t + .42);
+    o.connect(g); g.connect(drum); o.start(t); o.stop(t + .45);
+    noise(t, .02, "highpass", 3000, .7, .35, .012, drum); kicks.push(t);
+  };
+  const snare = t => { noise(t, .3, "bandpass", 2200, .6, .7, .16, drum); const o = oc.createOscillator(); o.type = "triangle"; o.frequency.value = 185; const g = oc.createGain(); g.gain.setValueAtTime(.45, t); g.gain.exponentialRampToValueAtTime(.001, t + .09); o.connect(g); g.connect(drum); o.start(t); o.stop(t + .1); };
+  const clap = t => { [0, .011, .023].forEach((o, i) => noise(t + o, .3, "bandpass", 1500, .8, .6, i < 2 ? .02 : .14, drum)); };
+  const hat = (t, open, v = 1) => noise(t, open ? .3 : .07, "highpass", 7500, .5, .22 * v, open ? .1 : .025, drum);
+  const bass = (t, midi, len, v = .75) => {
+    const o = oc.createOscillator(); o.type = "sine"; const f = hz(midi);
+    o.frequency.setValueAtTime(f * 1.7, t); o.frequency.exponentialRampToValueAtTime(f, t + .04);
+    const g = oc.createGain(); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + .005); g.gain.setTargetAtTime(0, t + len * .35, len * .25);
+    o.connect(g); g.connect(sat); o.start(t); o.stop(t + len + .5);
+  };
+  const pad = (t, ms, len, cut, v) => {
+    const lp = oc.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = cut; lp.Q.value = .5;
+    const g = oc.createGain(); const a = Math.min(.4, len / 3);
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + a); g.gain.setValueAtTime(v, t + len - a); g.gain.linearRampToValueAtTime(0, t + len);
+    lp.connect(g); g.connect(mus);
+    for (const m of ms) for (const d of [-8, 8]) { const o = oc.createOscillator(); o.type = "sawtooth"; o.frequency.value = hz(m); o.detune.value = d; const og = oc.createGain(); og.gain.value = 1 / (ms.length * 2); o.connect(og); og.connect(lp); o.start(t); o.stop(t + len + .05); }
+  };
+  const pluck = (t, m, v) => { const o = oc.createOscillator(); o.type = "triangle"; o.frequency.value = hz(m); const g = oc.createGain(); g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(.001, t + .5); o.connect(g); g.connect(mus); o.start(t); o.stop(t + .55); };
+  const whoosh = t => { const s = oc.createBufferSource(); s.buffer = nb; const bq = oc.createBiquadFilter(); bq.type = "bandpass"; bq.Q.value = 1.4; bq.frequency.setValueAtTime(400, t); bq.frequency.exponentialRampToValueAtTime(5200, t + .28); bq.frequency.exponentialRampToValueAtTime(500, t + .55); const g = oc.createGain(); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.55, t + .28); g.gain.linearRampToValueAtTime(0, t + .56); s.connect(bq); bq.connect(g); g.connect(fx); s.start(t, Math.random()); s.stop(t + .6); };
+  const boom = t => { const o = oc.createOscillator(); o.frequency.setValueAtTime(110, t); o.frequency.exponentialRampToValueAtTime(28, t + .9); const g = oc.createGain(); g.gain.setValueAtTime(1, t); g.gain.exponentialRampToValueAtTime(.001, t + 1.8); o.connect(g); g.connect(sat); o.start(t); o.stop(t + 1.9); noise(t, 1, "lowpass", 700, .5, .6, .5, fx); };
+  const riser = (t0, t1) => { const s = oc.createBufferSource(); s.buffer = nb; s.loop = true; const bq = oc.createBiquadFilter(); bq.type = "bandpass"; bq.Q.value = 1.2; bq.frequency.setValueAtTime(300, t0); bq.frequency.exponentialRampToValueAtTime(7000, t1); const g = oc.createGain(); g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(.32, t1 - .05); g.gain.linearRampToValueAtTime(0, t1); s.connect(bq); bq.connect(g); g.connect(fx); s.start(t0); s.stop(t1); };
+
+  const beat = 60 / bpm, bar = beat * 4;
+  const drop = dropAt != null ? dropAt : bar * 2;
+  const LUX = [[50, 54, 57, 61], [47, 50, 54, 57], [43, 47, 50, 54], [45, 49, 52, 55]];
+  const prog = style === "lancamento" ? LUX : style === "epico" ? PROG.dark : style === "cinema" ? PROG.warm : PROG.minor;
+  const softKick = (t, v = .5) => { const o = oc.createOscillator(); o.frequency.setValueAtTime(95, t); o.frequency.exponentialRampToValueAtTime(48, t + .12); const g = oc.createGain(); g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(.001, t + .35); o.connect(g); g.connect(drum); o.start(t); o.stop(t + .4); kicks.push(t); };
+  const sub = (t, midi, len, v = .28) => { const o = oc.createOscillator(); o.frequency.value = hz(midi); const g = oc.createGain(); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + .05); g.gain.setValueAtTime(v, t + len - .2); g.gain.linearRampToValueAtTime(0, t + len); o.connect(g); g.connect(mus); o.start(t); o.stop(t + len + .05); };
+  const taiko = (t, v = .7) => { const o = oc.createOscillator(); o.frequency.setValueAtTime(110, t); o.frequency.exponentialRampToValueAtTime(42, t + .25); const g = oc.createGain(); g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(.001, t + .7); o.connect(g); g.connect(drum); o.start(t); o.stop(t + .75); noise(t, .3, "lowpass", 900, .7, .35 * v, .18, drum); kicks.push(t); };
+  const braam = (t, midi) => { const lp = oc.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.setValueAtTime(300, t); lp.frequency.linearRampToValueAtTime(1400, t + .25); lp.frequency.exponentialRampToValueAtTime(400, t + 2.2); const g = oc.createGain(); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.22, t + .08); g.gain.exponentialRampToValueAtTime(.001, t + 2.6); lp.connect(g); g.connect(mus); for (const m of [midi, midi + 12, midi + 7]) for (const d of [-12, 0, 12]) { const o = oc.createOscillator(); o.type = "sawtooth"; o.frequency.value = hz(m); o.detune.value = d; o.connect(lp); o.start(t); o.stop(t + 2.7); } };
+  const shaker = (t, v = 1) => noise(t, .06, "highpass", 6500, .6, .07 * v, .03, drum);
+  const pop = (t, v = 1) => { const o = oc.createOscillator(); o.type = "sine"; o.frequency.setValueAtTime(1500, t); o.frequency.exponentialRampToValueAtTime(700, t + .05); const g = oc.createGain(); g.gain.setValueAtTime(.16 * v, t); g.gain.exponentialRampToValueAtTime(.001, t + .09); o.connect(g); g.connect(fx); o.start(t); o.stop(t + .1); };
+  const tick = t => noise(t, .02, "highpass", 3500, .7, .09, .012, fx);
+  const swish = t => { const s2 = oc.createBufferSource(); s2.buffer = nb; const bq = oc.createBiquadFilter(); bq.type = "bandpass"; bq.Q.value = 1; bq.frequency.setValueAtTime(1200, t); bq.frequency.exponentialRampToValueAtTime(5500, t + .25); const g = oc.createGain(); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.22, t + .12); g.gain.linearRampToValueAtTime(0, t + .28); s2.connect(bq); bq.connect(g); g.connect(fx); s2.start(t, Math.random()); s2.stop(t + .3); };
+  for (let b = 0; b * bar < DUR; b++) {
+    const t0 = b * bar, ch = prog[b % 4], root = ch[0] - 24, live = t0 >= drop - 1e-6;
+    if (style === "lancamento") {
+      pad(t0, [...ch, ch[0] + 12], bar + .15, live ? 1900 : 1100, .11);
+      sub(t0, root, bar, live ? .26 : .16);
+      for (let i = 0; i < 8; i++) pluck(t0 + i * beat / 2, ch[[0, 2, 1, 3, 2, 1, 3, 2][i] % ch.length] + 12, live ? .13 : .09);
+      if (live) { softKick(t0, .42); softKick(t0 + 2 * beat, .34); for (let i = 0; i < 8; i++) shaker(t0 + i * beat / 2, i % 2 ? .6 : 1); }
+      continue;
+    }
+    if (style === "epico") {
+      pad(t0, [ch[0] - 12, ...ch], bar + .2, live ? 2600 : 900, .13);
+      for (let i = 0; i < 8; i++) pluck(t0 + i * beat / 2, ch[i % 2 ? 1 : 0] + 24, live ? .06 : .045);
+      if (live) { taiko(t0, .75); taiko(t0 + 1.5 * beat, .45); taiko(t0 + 2.5 * beat, .6); if (b % 4 === 0) braam(t0, root + 12); }
+      continue;
+    }
+    pad(t0, [...ch, ch[0] + 12], bar + .15, live ? 2400 : 900, style === "cinema" ? .16 : .1);
+    if (style === "cinema") {
+      for (let i = 0; i < 8; i++) pluck(t0 + i * beat / 2, ch[i % ch.length] + 12, live ? .16 : .1);
+      if (live) { boom(t0); kicks.push(t0); snare(t0 + 2 * beat); for (let i = 0; i < 4; i++) hat(t0 + i * beat + beat / 2, false, .7); bass(t0, root, bar, .6); }
+      continue;
+    }
+    if (!live) { for (let i = 0; i < 8; i++) hat(t0 + i * beat / 2, false, .55); continue; }
+    if (style === "house") {
+      for (let i = 0; i < 4; i++) { kick(t0 + i * beat, .8); hat(t0 + i * beat + beat / 2, true, .9); bass(t0 + i * beat + beat / 2, root + 12, beat * .45, .5); }
+      clap(t0 + beat); clap(t0 + 3 * beat);
+    } else {
+      const kp = style === "trap" ? [0, 1.5, 2.75] : [0, .75, 2.5, 3.25];
+      kp.forEach(k => kick(t0 + k * beat));
+      bass(t0, root, beat * 2.4); bass(t0 + 2.5 * beat, root + (style === "drill" ? 3 : 0), beat * 1.4);
+      if (style === "trap") clap(t0 + 2 * beat); else { snare(t0 + 1.5 * beat); snare(t0 + 3.5 * beat); }
+      const st = beat / 4;
+      for (let i = 0; i < 16; i++) {
+        if (b % 2 === 1 && i >= 12) { hat(t0 + i * st, false, .8); hat(t0 + i * st + st / 2, false, .6); }
+        else if (i % 2 === 0 || style === "drill") hat(t0 + i * st, false, i % 4 === 0 ? 1 : .65);
+      }
+    }
+  }
+  kicks.sort((a, b) => a - b);
+  mus.gain.setValueAtTime(1, 0);
+  const duck = style === "lancamento" ? .7 : style === "epico" ? .55 : .35;
+  for (const k of kicks) { mus.gain.setValueAtTime(duck, k); mus.gain.linearRampToValueAtTime(1, k + .22); }
+  (sfx || []).forEach(e => { if (e.t < 0 || e.t > DUR - .1) return; if (e.k === "pop") pop(e.t, e.v || 1); else if (e.k === "tick") tick(e.t); else if (e.k === "swish") swish(e.t); });
+  if (drop > 1.5) riser(.2, drop - .02);
+  cuts.forEach(c => (style === "lancamento" ? swish(Math.max(0, c - .12)) : whoosh(Math.max(0, c - .28))));
+  hits.forEach(h => boom(h));
+  master.gain.setValueAtTime(.85, DUR - 1.3); master.gain.linearRampToValueAtTime(0, DUR);
+  return oc.startRendering();
+}
+
+/* ======================= motor ======================= */
+const TR = { corte: 0, fade: .45, branco: .15, preto: .5, slide: .3, zoom: .35, glitch: .15 };
+const GRADE = { punchy: "contrast(1.1) saturate(1.22)", warm: "sepia(.12) saturate(1.2) contrast(1.06)", teal: "saturate(1.12) contrast(1.08) hue-rotate(-4deg)", dark: "contrast(1.18) brightness(.94) saturate(1.1)", film: "contrast(1.05) saturate(1.04) sepia(.08)" };
+const ease = p => p * p * (3 - 2 * p);
+const vign = (() => { const c = document.createElement("canvas"); c.width = W; c.height = H; const g = c.getContext("2d"); const r = g.createRadialGradient(W / 2, H / 2, H * .25, W / 2, H / 2, H * .75); r.addColorStop(0, "rgba(0,0,0,0)"); r.addColorStop(1, "rgba(0,0,0,.55)"); g.fillStyle = r; g.fillRect(0, 0, W, H); return c; })();
+const grain = (() => { const c = document.createElement("canvas"); c.width = 256; c.height = 256; const g = c.getContext("2d"); const im = g.createImageData(256, 256); for (let i = 0; i < im.data.length; i += 4) { const v = Math.random() * 255; im.data[i] = im.data[i + 1] = im.data[i + 2] = v; im.data[i + 3] = 255; } g.putImageData(im, 0, 0); return c; })();
+
+function normalize(v, catalog) {
+  const bpm = [90, 100, 120, 128, 140].includes(+v.bpm) ? +v.bpm : 120;
+  const beat = 60 / bpm, calm = v.pegada === "tranquilo";
+  const ids = [...catalog.keys()];
+  const scenes = []; let t = 0;
+  for (const c of (v.cenas || [])) {
+    if (t >= DUR - .3) break;
+    const clip = catalog.get(c.clip) || catalog.get(ids[scenes.length % ids.length]);
+    if (!clip) continue;
+    const dur = Math.max(.25, (+c.batidas || 4) * beat);
+    let td = TR[c.trans] != null ? TR[c.trans] : (calm ? .6 : .15);
+    if (calm && c.trans === "fade") td = .7;
+    scenes.push({ clip, dur, start: t, mov: c.mov || "in", trans: TR[c.trans] != null ? c.trans : (calm ? "fade" : "branco"), td, vel: Math.min(1.6, Math.max(.6, +c.vel || 1)), inicio: c.inicio, cx: c.cx });
+    t += dur;
+  }
+  if (!scenes.length) throw new Error("plano sem cenas");
+  const last = scenes[scenes.length - 1]; last.dur = DUR - last.start; last.td = 0;
+  for (const s of scenes) {
+    if (s.clip.synth) { s.inicio = +s.inicio || 0; continue; }
+    const need = (s.dur + s.td) * s.vel;
+    if (need > s.clip.dur - .05) s.vel = Math.max(.5, (s.clip.dur - .05) / (s.dur + s.td));
+    const n2 = (s.dur + s.td) * s.vel;
+    const st = s.inicio != null ? +s.inicio : Math.max(0, (s.clip.dur - n2) / 2);
+    s.inicio = Math.max(0, Math.min(st, s.clip.dur - n2 - .02));
+  }
+  const mo = v.pegada === "motion";
+  const textos = (v.textos || []).map(x => ({ de: +x.de || 0, ate: Math.min(DUR, +x.ate || 2), texto: String(x.texto || ""), y: Math.min(.86, Math.max(.06, +x.y || .3)), tam: x.tam || "g", cor: x.cor || "branco", caixa: !!x.caixa, anim: x.anim || (mo ? "palavra" : calm ? "fade" : "sobe"), peso: x.peso || (calm ? "leve" : "forte"), estilo: x.estilo === "serif" ? "serif" : "", alinha: x.alinha === "centro" ? "centro" : x.alinha === "esquerda" ? "esquerda" : (mo ? "esquerda" : "centro"), marca: x.marca || "", risco: !!x.risco, conta: !!x.conta, ritmo: x.ritmo })).filter(x => x.texto && x.ate > x.de);
+  return { escurecer: Math.min(.8, Math.max(0, v.escurecer != null ? +v.escurecer : (mo ? .5 : 0))), brilho: v.brilho != null ? !!v.brilho : mo, pontos: v.pontos != null ? !!v.pontos : mo, titulo: v.titulo || "Vídeo", pegada: mo ? "motion" : calm ? "tranquilo" : "agressivo", musica: ["lancamento", "epico", "house", "cinema"].includes(v.musica) ? v.musica : (v.musica === "trap" || v.musica === "drill") ? "epico" : (mo ? "lancamento" : calm ? "cinema" : "epico"), bpm, cor: GRADE[v.cor] ? v.cor : (calm ? "warm" : "punchy"), layout: v.layout === "cinema" ? "cinema" : "cheio", scenes, textos, cuts: scenes.slice(1).map(s => s.start), impactos: (v.impactos || []).map(Number).filter(n => n >= 0 && n < DUR), drop: v.drop, locucao: v.locucao || "", destaque: /^#[0-9a-f]{6}$/i.test(v.destaque || "") ? v.destaque : ($("#bCor") ? $("#bCor").value : "#f3c34a") };
+}
+function motion(s, lt) {
+  const T = Math.min(lt / (s.dur + s.td), 1), E = ease(T), cx = s.cx != null ? +s.cx : .5;
+  let z = 1.02, px = cx, py = .5;
+  switch (s.mov) {
+    case "in": z = 1 + .16 * E; break;
+    case "out": z = 1.16 - .16 * E; break;
+    case "left": z = 1.14; px = Math.min(cx + .35, 1) * (1 - .7 * E); break;
+    case "right": { const a = Math.max(cx - .35, 0); z = 1.14; px = a + .7 * E * (1 - a); break; }
+    case "up": z = 1.16; py = .9 - .8 * E; break;
+    case "punch": z = 1 + .05 * E + .28 * Math.exp(-lt * 9); break;
+    case "shake": z = 1.12; px = cx + .06 * Math.sin(lt * 31) * Math.exp(-lt * 1.5) + .02 * Math.sin(lt * 11); py = .5 + .08 * Math.sin(lt * 37 + 1) * Math.exp(-lt * 1.5); break;
+  }
+  return { z, px: Math.max(0, Math.min(1, px)), py: Math.max(0, Math.min(1, py)) };
+}
+function makeRenderer(canvas) {
+  const ctx = canvas.getContext("2d");
+  function drawScene(s, lt, R, extra = 1, alpha = 1, dx = 0, dy = 0) {
+    let src = s.el;
+    if (s.clip.synth) { const g = s.el.getContext("2d"); g.setTransform(1, 0, 0, 1, 0, 0); SYN[s.clip.id].paint(g, s.inicio + lt * s.vel); }
+    else if (!src || src.readyState < 2) return;
+    const vw = s.clip.synth ? 1280 : src.videoWidth, vh = s.clip.synth ? 720 : src.videoHeight; if (!vw) return;
+    const m = motion(s, lt), k = Math.max(R.w / vw, R.h / vh), zz = m.z * extra;
+    const sw = R.w / (k * zz), sh = R.h / (k * zz);
+    ctx.globalAlpha = alpha;
+    ctx.drawImage(src, (vw - sw) * m.px, (vh - sh) * m.py, sw, sh, R.x + dx, R.y + dy, R.w, R.h);
+    ctx.globalAlpha = 1;
+  }
+  const SIZE = { gg: 98, g: 68, m: 48, p: 33, xg: 230 };
+  const hexA = (hex, a) => { const n = parseInt(hex.slice(1), 16); return `rgba(${n >> 16 & 255},${n >> 8 & 255},${n & 255},${a})`; };
+  function drawText(x, t, accent) {
+    const lt = t - x.de;
+    const perWord = x.anim === "palavra" || x.anim === "digita";
+    let a = Math.min(1, (x.ate - t) / .2) * (perWord ? 1 : Math.min(1, lt / .25));
+    if (x.anim === "pisca" && lt < .35) a *= (Math.floor(lt * 24) % 2 ? .15 : 1);
+    if (a <= 0) return;
+    let texto = x.texto;
+    if (x.conta) { const m = texto.match(/^([^\d]*)(\d+(?:[.,]\d+)?)(.*)$/s); if (m) { const target = parseFloat(m[2].replace(",", ".")); const v = target * ease(Math.min(1, lt / .9)); const dec = (m[2].split(/[.,]/)[1] || "").length; texto = m[1] + v.toFixed(dec).replace(".", m[2].includes(",") ? "," : ".") + m[3]; } }
+    const yOff = x.anim === "sobe" ? 34 * Math.pow(1 - Math.min(1, lt / .35), 3) : 0;
+    const serif = x.estilo === "serif";
+    const weight = serif ? 400 : x.peso === "leve" ? 300 : (x.tam === "p" || x.tam === "m" ? 600 : 800);
+    let size = (SIZE[x.tam] || 68) * (serif ? 1.2 : 1) * (x.tam === "gg" ? 1.08 : 1);
+    const font = sz => serif ? `italic 400 ${sz}px "Instrument Serif", "TeX Gyre Termes", "Times New Roman", serif` : `${weight} ${sz}px "Inter Tight", "Inter Display", Inter, system-ui, sans-serif`;
+    const track = sz => { try { ctx.letterSpacing = serif ? "0px" : (-(weight >= 800 ? .045 : .02) * sz).toFixed(1) + "px"; } catch (e) {} };
+    const left = x.alinha === "esquerda", MX = W * .075;
+    const WHITE = "#f4efe8", GREY = "#d2ccc4";
+    const lines = texto.split("\n").map(l => l.split(/\s+/).filter(Boolean));
+    ctx.font = font(size); track(size);
+    const maxW = W * (left ? .85 : x.caixa ? .8 : .88);
+    const lineW = () => lines.map(ws => ctx.measureText(ws.join(" ")).width);
+    while (size > 16 && Math.max(...lineW()) > maxW) { size *= .93; ctx.font = font(size); track(size); }
+    const sp = ctx.measureText(" ").width, lh = size * (serif ? 1.05 : 1.1), total = lh * lines.length;
+    const marks = String(x.marca || "").toLowerCase().split(/[\s,]+/).filter(Boolean);
+    const isMark = w => marks.includes(w.toLowerCase().replace(/[.,!?;:"“”]/g, ""));
+    const nWords = lines.reduce((s, ws) => s + ws.length, 0) || 1;
+    const step = x.ritmo ? +x.ritmo : Math.min(.22, Math.max(.08, (x.ate - x.de) * .45 / nWords));
+    let shown = Infinity; if (x.anim === "digita") shown = Math.floor(lt / .045);
+    let blurIn = x.anim === "desfoca" ? Math.max(0, 1 - lt / .35) : 0;
+    ctx.textAlign = "left"; ctx.textBaseline = "middle";
+    let k = 0, charCount = 0, caret = null;
+    const bounds = [];
+    lines.forEach((ws, li) => {
+      const widths = ws.map(w => ctx.measureText(w).width);
+      const lw = widths.reduce((s, v) => s + v, 0) + sp * Math.max(0, ws.length - 1);
+      let cx = left ? MX : W / 2 - lw / 2; const y = x.y * H - total / 2 + lh * (li + .5) + yOff;
+      bounds.push({ x0: cx, x1: cx + lw, y });
+      if (x.caixa && !marks.length) { ctx.globalAlpha = a; ctx.fillStyle = accent; ctx.beginPath(); const pd = size * .2; if (ctx.roundRect) ctx.roundRect(cx - pd, y - lh / 2 + size * .04, lw + pd * 2, lh * .96, size * .12); else ctx.rect(cx - pd, y - lh / 2, lw + pd * 2, lh); ctx.fill(); }
+      ws.forEach((w, wi) => {
+        let wa = a, sc = 1, yo = 0, bl = blurIn;
+        if (x.anim === "palavra") { const wt = lt - k * step; if (wt < 0) { k++; cx += widths[wi] + sp; return; } const e = ease(Math.min(1, wt / .2)); wa = a * e; sc = 1 + .22 * (1 - e); yo = 12 * (1 - e); bl = 1 - e; }
+        let txt = w;
+        if (x.anim === "digita") { const rem = shown - charCount; if (rem <= 0) { k++; cx += widths[wi] + sp; charCount += w.length + 1; return; } txt = w.slice(0, rem); charCount += w.length + 1; }
+        const mark = isMark(w);
+        ctx.save(); ctx.globalAlpha = Math.max(0, wa);
+        const tw = ctx.measureText(txt).width, cxw = cx + tw / 2;
+        ctx.translate(cxw, y + yo); ctx.scale(sc, sc); ctx.translate(-cxw, -(y + yo));
+        if (bl > .02) ctx.filter = `blur(${(bl * 8).toFixed(1)}px)`;
+        if (mark && x.caixa) { ctx.fillStyle = accent; const pad = size * .14; ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(cx - pad, y + yo - lh / 2 + size * .06, tw + pad * 2, lh * .92, size * .12); else ctx.rect(cx - pad, y + yo - lh / 2, tw + pad * 2, lh); ctx.fill(); }
+        const boxed = x.caixa && (!marks.length || mark);
+        ctx.shadowColor = boxed ? "transparent" : "rgba(0,0,0,.5)"; ctx.shadowBlur = 18; ctx.shadowOffsetY = 3;
+        ctx.fillStyle = boxed ? "#fff8f1" : (mark || x.cor === "destaque") ? accent : x.cor === "cinza" ? GREY : WHITE;
+        ctx.font = font(size); track(size); ctx.fillText(txt, cx, y + yo + (serif ? size * .05 : 0));
+        ctx.restore();
+        if (x.anim === "digita") caret = { x: cx + tw + 4, y };
+        cx += widths[wi] + sp; k++;
+      });
+    });
+    if (caret && Math.floor(t * 2.5) % 2 === 0) { ctx.globalAlpha = a; ctx.fillStyle = accent; ctx.fillRect(caret.x, caret.y - size * .42, size * .42, size * .84); ctx.globalAlpha = 1; }
+    if (x.risco) {
+      const done = x.anim === "palavra" ? nWords * step + .2 : x.anim === "digita" ? charCount * .045 + .1 : .3;
+      const p = ease(Math.max(0, Math.min(1, (lt - done) / .3)));
+      if (p > 0) { ctx.globalAlpha = a; ctx.fillStyle = accent; bounds.forEach(b => ctx.fillRect(b.x0 - size * .08, b.y - size * .05, (b.x1 - b.x0 + size * .16) * p, Math.max(4, size * .1))); }
+    }
+    ctx.globalAlpha = 1; ctx.filter = "none"; try { ctx.letterSpacing = "0px"; } catch (e) {}
+  }
+  function frame(P, t) {
+    const R = P.layout === "cinema" ? { x: 0, y: Math.round((H - W / 2.39) / 2), w: W, h: Math.round(W / 2.39) } : { x: 0, y: 0, w: W, h: H };
+    ctx.fillStyle = "#000"; ctx.fillRect(0, 0, W, H);
+    let i = 0; while (i < P.scenes.length - 1 && P.scenes[i + 1].start <= t) i++;
+    const cur = P.scenes[i], prev = P.scenes[i - 1], lt = t - cur.start;
+    ctx.save(); ctx.beginPath(); ctx.rect(R.x, R.y, R.w, R.h); ctx.clip();
+    ctx.filter = GRADE[P.cor] || "none";
+    if (prev && lt < prev.td) {
+      const p = lt / prev.td, e = ease(p), plt = t - prev.start;
+      switch (prev.trans) {
+        case "fade": drawScene(prev, plt, R); drawScene(cur, lt, R, 1, p); break;
+        case "slide": drawScene(prev, plt, R, 1, 1, 0, -e * R.h); drawScene(cur, lt, R, 1, 1, 0, (1 - e) * R.h); break;
+        case "zoom": drawScene(prev, plt, R, 1 + e * .5, 1 - e); drawScene(cur, lt, R, 1.3 - .3 * e, e); break;
+        case "glitch": drawScene(cur, lt, R); ctx.filter = "none"; for (let k = 0; k < 9; k++) { const y = Math.random() * R.h + R.y, h = 10 + Math.random() * 70, off = (Math.random() - .5) * 120; ctx.drawImage(canvas, 0, y, W, h, off, y, W, h); } ctx.globalCompositeOperation = "screen"; ctx.fillStyle = "rgba(255,0,60,.18)"; ctx.fillRect(R.x + 8, R.y, R.w, R.h); ctx.fillStyle = "rgba(0,220,255,.14)"; ctx.fillRect(R.x - 8, R.y, R.w, R.h); ctx.globalCompositeOperation = "source-over"; break;
+        default: if (p < .5) drawScene(prev, plt, R); else drawScene(cur, lt, R);
+          ctx.filter = "none"; ctx.fillStyle = prev.trans === "preto" ? "#000" : "#fff"; ctx.globalAlpha = 1 - Math.abs(2 * p - 1); ctx.fillRect(R.x, R.y, R.w, R.h); ctx.globalAlpha = 1;
+      }
+    } else drawScene(cur, lt, R);
+    ctx.filter = "none";
+    for (const h of P.impactos) { const d = t - h; if (d >= 0 && d < .3) { ctx.fillStyle = "#fff"; ctx.globalAlpha = .35 * (1 - d / .3); ctx.fillRect(R.x, R.y, R.w, R.h); ctx.globalAlpha = 1; } }
+    if (P.escurecer) { ctx.fillStyle = `rgba(6,8,14,${P.escurecer})`; ctx.fillRect(R.x, R.y, R.w, R.h); }
+    if (P.pontos) { ctx.globalAlpha = .5; for (let gx = 0; gx < W; gx += 36) for (let gy = 0; gy < H; gy += 36) { ctx.fillStyle = "rgba(255,255,255,.07)"; ctx.fillRect(gx, gy, 2, 2); } ctx.globalAlpha = 1; }
+    if (P.brilho) { const gl = ctx.createRadialGradient(W / 2, H * .78, 10, W / 2, H * .78, H * .55); gl.addColorStop(0, hexA(P.destaque, .22)); gl.addColorStop(1, hexA(P.destaque, 0)); ctx.fillStyle = gl; ctx.fillRect(R.x, R.y, R.w, R.h); }
+    ctx.drawImage(vign, 0, 0);
+    if (P.cor === "film") { ctx.globalAlpha = .07; ctx.globalCompositeOperation = "overlay"; const ox = Math.random() * 256, oy = Math.random() * 256; for (let gx = -ox; gx < W; gx += 256) for (let gy = -oy; gy < H; gy += 256) ctx.drawImage(grain, gx, gy); ctx.globalCompositeOperation = "source-over"; ctx.globalAlpha = 1; }
+    ctx.restore();
+    for (const x of P.textos) if (t >= x.de && t <= x.ate) drawText(x, t, P.destaque);
+  }
+  async function prepare(P) {
+    for (const s of P.scenes) {
+      if (s.clip.synth) { const c = document.createElement("canvas"); c.width = 1280; c.height = 720; s.el = c; continue; }
+      const v = document.createElement("video"); v.muted = true; v.playsInline = true; v.preload = "auto"; v.src = s.clip.url; s.el = v;
+    }
+    await Promise.all(P.scenes.filter(s => !s.clip.synth).map(async s => { await waitEv(s.el, "loadeddata", 10000); const p = waitEv(s.el, "seeked", 5000); s.el.currentTime = s.inicio; await p; s.el.playbackRate = s.vel; }));
+  }
+  function release(P) { P.scenes.forEach(s => { s.started = s.stopped = false; if (!s.clip.synth && s.el) { s.el.pause(); s.el.removeAttribute("src"); s.el.load(); } }); }
+  function tickVideos(P, t) {
+    P.scenes.forEach(s => {
+      if (s.clip.synth) return;
+      if (!s.started && t >= s.start - .04) { s.started = true; s.el.play().catch(() => {}); }
+      if (s.started && !s.stopped && t > s.start + s.dur + s.td + .1) { s.stopped = true; s.el.pause(); }
+    });
+  }
+  return { ctx, frame, prepare, release, tickVideos, drawText };
+}
+function waitEv(el, ev, ms) { return new Promise(r => { let d = false; const f = () => { if (!d) { d = true; el.removeEventListener(ev, f); r(); } }; el.addEventListener(ev, f); setTimeout(f, ms); }); }
+
+let actx = null;
+function audioCtx() { if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)(); if (actx.state === "suspended") actx.resume(); return actx; }
+function pickMime() { for (const o of ["video/mp4;codecs=avc1.42E01F,mp4a.40.2", "video/mp4;codecs=avc1,mp4a", "video/mp4", "video/webm;codecs=vp9,opus", "video/webm;codecs=vp8,opus", "video/webm"]) if (window.MediaRecorder && MediaRecorder.isTypeSupported(o)) return o; return ""; }
+function textSfx(P) {
+  const ev = [];
+  for (const x of P.textos) {
+    const words = x.texto.split(/\s+/).filter(Boolean); const n = words.length || 1;
+    if (x.anim === "palavra") { const step = x.ritmo ? +x.ritmo : Math.min(.22, Math.max(.08, (x.ate - x.de) * .45 / n)); words.forEach((w, i) => ev.push({ t: x.de + i * step, k: "pop", v: x.marca && x.marca.toLowerCase().includes(w.toLowerCase().replace(/[.,!?]/g, "")) ? 1.4 : .7 })); }
+    else if (x.anim === "digita") { const chars = x.texto.replace(/\s/g, "").length; for (let i = 0; i < chars; i++) ev.push({ t: x.de + i * .045 + i * 0, k: "tick" }); }
+    else ev.push({ t: x.de, k: x.caixa ? "pop" : "swish", v: 1 });
+    if (x.risco) ev.push({ t: x.de + (x.anim === "palavra" ? n * (x.ritmo ? +x.ritmo : Math.min(.22, Math.max(.08, (x.ate - x.de) * .45 / n))) + .2 : .3), k: "swish" });
+  }
+  return ev;
+}
+function whooshTimes(P) { return P.pegada === "tranquilo" ? P.cuts.filter((c, i) => P.scenes[i].td >= .3) : P.cuts.filter((c, i) => P.scenes[i].td >= .15 && i % 2 === 0); }
+
+
+
+/* ======================= demo do site ======================= */
+function demoPlan() {
+  return { titulo: "Demo", pegada: "agressivo", musica: "epico", bpm: 120, cor: "punchy",
+    cenas: [["luz", 4, "punch", "branco"], ["cidade", 4, "in", "branco"], ["mar", 2, "punch", "branco"], ["avenida", 2, "in", "glitch"], ["noite", 2, "punch", "branco"], ["cidade", 2, "right", "branco"], ["mar", 4, "out", "branco"], ["avenida", 4, "in", "glitch"], ["noite", 4, "left", "branco"], ["cidade", 8, "in", "zoom"], ["luz", 24, "in", "corte"]].map(([clip, batidas, mov, trans]) => ({ clip, batidas, mov, trans })),
+    textos: [{ de: .15, ate: 3.85, texto: t("demo.t1"), y: .3, tam: "m" }, { de: .3, ate: 3.85, texto: t("demo.t2"), y: .39, tam: "gg", cor: "destaque" },
+      { de: 4.05, ate: 5.95, texto: t("demo.t3"), y: .33, tam: "g", anim: "pisca" }, { de: 6.05, ate: 7.95, texto: t("demo.t4"), y: .33, tam: "g", anim: "pisca" }, { de: 8.05, ate: 9.95, texto: t("demo.t5"), y: .33, tam: "g", anim: "pisca" },
+      { de: 10.1, ate: 13.8, texto: t("demo.t6"), y: .33, tam: "g", caixa: true }, { de: 14.1, ate: 17.8, texto: t("demo.t7"), y: .33, tam: "g" }, { de: 18.1, ate: 21.8, texto: t("demo.t8"), y: .33, tam: "gg", cor: "destaque" },
+      { de: 22.2, ate: 29.7, texto: "FLAME\nFIELDS", y: .4, tam: "gg" }, { de: 23.2, ate: 29.7, texto: t("demo.t10"), y: .62, tam: "m", caixa: true }],
+    impactos: [0, 4, 22], destaque: "#f3c34a" };
+}
+const heroR = makeRenderer($("#heroCv"));
+const SYNCAT = new Map(Object.keys(SYN).map(k => [k, synthClip(k)]));
+let heroP = null, heroT0 = performance.now(), heroRun = true, heroVisible = true, heroAudio = null, heroMusic = null;
+function heroBuild() { const P = normalize(demoPlan(), SYNCAT); return heroR.prepare(P).then(() => { heroP = P; }); }
+heroBuild().then(() => requestAnimationFrame(heroTick));
+const pipes = () => document.querySelectorAll("#pipeline .pipe");
+function heroTick(now) {
+  if (heroP && heroRun && heroVisible && !$("#site").hidden) {
+    let tt;
+    if (heroAudio) { tt = heroAudio.ctx.currentTime - heroAudio.t0; if (tt >= DUR) { stopHeroAudio(); heroT0 = now; tt = 0; } }
+    else tt = ((now - heroT0) / 1000) % DUR;
+    heroR.frame(heroP, Math.max(0, Math.min(DUR - .001, tt)));
+    const stage = Math.min(4, Math.floor(tt / 6)); pipes().forEach((p, i) => p.classList.toggle("on", i <= stage));
+  }
+  requestAnimationFrame(heroTick);
+}
+function heroPause() { heroRun = false; stopHeroAudio(); }
+function heroResume() { heroRun = true; }
+function stopHeroAudio() { if (heroAudio) { try { heroAudio.src.stop(); } catch (e) {} heroAudio = null; } $("#heroSound").textContent = t("sound.on"); }
+try { new IntersectionObserver(es => { heroVisible = es[0].isIntersecting; }).observe($("#heroCv")); } catch (e) {}
+$("#heroSound").onclick = async () => {
+  if (heroAudio) { stopHeroAudio(); heroT0 = performance.now(); return; }
+  const ac = audioCtx(); $("#heroSound").textContent = t("sound.wait");
+  heroMusic = heroMusic || await makeMusic(heroP.musica, heroP.bpm, whooshTimes(heroP), heroP.impactos, heroP.drop);
+  const src = ac.createBufferSource(); src.buffer = heroMusic; src.connect(ac.destination);
+  const t0 = ac.currentTime + .1; src.start(t0); heroAudio = { ctx: ac, src, t0 };
+  $("#heroSound").textContent = t("sound.off");
+};
+(() => { const w = $("#wave"); for (let i = 0; i < 48; i++) { const b = document.createElement("i"); b.style.height = (18 + 82 * Math.abs(Math.sin(i * .55) * Math.cos(i * .21))) + "%"; w.append(b); } })();
+
+/* leads */
+$("#leadForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const lead = { nome: $("#lNome").value.trim(), empresa: $("#lEmpresa").value.trim(), whatsapp: $("#lZap").value.trim(), plano: $("#lPlano").value, valor: $("#lPlano").value === "vitalicio" ? PLANS[0].price : MONTHLY.price, idioma: LANG, quando: new Date().toISOString() };
+  $("#leadErr").hidden = true;
+  let ok = false;
+  try { const r = await fetch("/api/lead", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(lead) }); ok = r.ok; } catch (err) {}
+  if (ok) { $("#leadOk").hidden = false; $("#leadForm").querySelector('button[type="submit"]').disabled = true; } else $("#leadErr").hidden = false;
+});
+
+/* ======================= app (chat) ======================= */
+const R = makeRenderer($("#cv"));
+const clips = new Map();
+const JOBS = [];
+let appReady = false, firstName = "", pendingVoice = null;
+let conv = null; const turns = [];
+const CK = "ff_convs";
+const thread = $("#thread"), inp = $("#inp");
+
+/* ---- login, assinatura e créditos ---- */
+const SB = (window.supabase && CFG.SUPABASE_URL) ? window.supabase.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY) : null;
+let gateState = null;
+async function token() { if (!SB) return null; const { data } = await SB.auth.getSession(); return data && data.session ? data.session.access_token : null; }
+async function api(path, opts = {}) {
+  const tk = await token();
+  const r = await fetch(path, { ...opts, headers: { "Content-Type": "application/json", ...(tk ? { Authorization: "Bearer " + tk } : {}), ...(opts.headers || {}) } });
+  let data = null; try { data = await r.json(); } catch (e) {}
+  return { ok: r.ok, status: r.status, data: data || {} };
+}
+function showGate(kind) {
+  gateState = kind; const on = !!kind;
+  $("#gate").hidden = !on; $("#thread").hidden = on; $("#dock").hidden = on;
+  if (!on) return;
+  $("#gateH").textContent = t("gate." + kind + ".h"); $("#gateP").textContent = t("gate." + kind + ".p");
+  $("#loginForm").hidden = kind !== "login"; $("#gateNote").textContent = "";
+  const box = $("#gateBtns"); box.innerHTML = "";
+  if (kind === "sem_assinatura" || kind === "expirado") PLANS.forEach(p => { const a = document.createElement("a"); a.className = "btn block" + (p.tag === "popular" ? " pri" : ""); a.href = checkoutUrl(p.id) || "/#planos"; a.textContent = t("plan." + p.id) + " · " + money(p.price); box.append(a); });
+  if (kind === "sem_creditos" || kind === "limite_custo") monthlyBtn(box, "btn block pri");
+  if (kind === "sem_creditos" || kind === "limite_custo") PACKS.filter(p => checkoutUrl(p.id)).forEach((p, i) => { const a = document.createElement("a"); a.className = "btn block" + (i === 1 ? " pri" : ""); a.href = checkoutUrl(p.id) || "/#planos"; a.textContent = t("pack.label", { n: p.credits }) + " · " + money(p.price); box.append(a); });
+  if (kind !== "login") { const out = document.createElement("button"); out.type = "button"; out.className = "btn block"; out.textContent = t("gate.logout"); out.onclick = async () => { if (SB) await SB.auth.signOut(); location.reload(); }; box.append(out); }
+}
+$("#loginForm").addEventListener("submit", async e => {
+  e.preventDefault(); const email = $("#loginEmail").value.trim().toLowerCase(); if (!email || !SB) return;
+  const b = $("#loginForm button"); b.disabled = true;
+  const { error } = await SB.auth.signInWithOtp({ email, options: { shouldCreateUser: false, emailRedirectTo: location.origin + "/app" } });
+  b.disabled = false;
+  $("#gateNote").textContent = error ? t("gate.notFound") : t("gate.sent", { e: email });
+});
+$("#credits").addEventListener("click", () => { if ($("#home").hidden === false) $("#home").hidden = true; const b = agentNote(t("credits.info", { n: (ME && ME.profile && ME.profile.credits) || 0 })); upsell(b, "recarga"); });
+function paintCredits() {
+  const el = $("#credits"); if (!ME || !ME.profile) { el.hidden = true; return; }
+  const c = ME.profile.credits || 0; el.hidden = false;
+  el.textContent = t("credits.badge", { n: c }); el.className = "credits" + (c <= 0 ? " zero" : c <= 20 ? " low" : "");
+  el.title = t("credits.title", { p: ME.profile.plan_credits || 0, x: ME.profile.extra_credits || 0 });
+}
+function applyMe(d) {
+  ME = d; paintCredits();
+  const nm = (d.profile && d.profile.name) || d.email || "";
+  if (nm) { $("#acctName").removeAttribute("data-i18n"); $("#acctName").textContent = nm; $("#av").textContent = nm.trim().split(/[\s@.]+/).filter(Boolean).map(w => w[0]).slice(0, 2).join("").toUpperCase(); firstName = (d.profile && d.profile.name ? d.profile.name.split(" ")[0] : ""); }
+}
+function monthlyBtn(parent, cls) {
+  const active = ME && ME.profile && ME.profile.monthly_active;
+  const a = document.createElement("a"); a.className = cls; a.href = checkoutUrl("creditos_mensal") || "#";
+  a.textContent = active ? t("mon.active") : t("mon.btn", { n: MONTHLY.credits }) + (MONTHLY.price ? " · " + money(MONTHLY.price) + t("plan.per.creditos_mensal") : "");
+  if (active) a.removeAttribute("href");
+  parent.append(a); return a;
+}
+function upsell(body, reason) {
+  const box = document.createElement("div"); box.className = "upsell";
+  const p = document.createElement("div"); p.textContent = t("gate." + reason + ".p"); box.append(p);
+  const row = document.createElement("div"); row.className = "row";
+  if (reason === "sem_creditos" || reason === "limite_custo" || reason === "recarga") monthlyBtn(row, "btn sm pri");
+  const list = reason === "sem_creditos" || reason === "limite_custo" || reason === "recarga" ? PACKS : PLANS;
+  list.filter(x => list === PLANS || checkoutUrl(x.id)).forEach((x, i) => { const a = document.createElement("a"); a.className = "btn sm" + (list === PLANS ? " pri" : ""); a.href = checkoutUrl(x.id) || "/#planos"; a.textContent = (x.credits && list === PACKS ? t("pack.label", { n: x.credits }) : t("plan." + x.id)) + " · " + money(x.price); row.append(a); });
+  box.append(row); body.append(box);
+}
+async function enterApp() {
+  if (appReady) return; appReady = true;
+  if (!SB) { showGate("config"); return; }
+  const tk = await token();
+  if (!tk) { showGate("login"); return; }
+  const r = await api("/api/me");
+  if (r.status === 401) { showGate("login"); return; }
+  applyMe(r.data);
+  if (!r.data.access || !r.data.access.ok) {
+    const why = (r.data.access && r.data.access.reason) || "sem_assinatura";
+    if (why === "sem_creditos" || why === "limite_custo") { showGate(null); newConv(); const b = agentNote(t("gate." + why + ".h")); upsell(b, why); }
+    else showGate(why);
+  } else { showGate(null); newConv(); }
+  setTimeout(() => inp.focus(), 50);
+}
+if (SB) SB.auth.onAuthStateChange((ev) => { if (ev === "SIGNED_IN" && gateState === "login") { appReady = false; enterApp(); } });
+function homeTitle() { $("#homeH").textContent = t("app.homeH", { n: firstName ? ", " + firstName : "" }); }
+function renderChips() {
+  const box = $("#sugs"); if (!box) return; box.innerHTML = "";
+  if (!clips.size) { const d = document.createElement("button"); d.type = "button"; d.className = "sug hot"; d.textContent = t("app.useDemo"); d.onclick = loadDemo; box.append(d); }
+  store.get(SK, []).slice(0, 3).forEach(st => { const b = document.createElement("button"); b.type = "button"; b.className = "sug hot"; b.textContent = t("style.useSaved", { n: st.nome }); b.title = st.resumo || ""; b.onclick = () => { setActiveStyle(st); inp.value = st.prompt || ""; autosize(); updSend(); inp.focus(); }; box.append(b); });
+  t("app.sugs").forEach(s => { const lab = Array.isArray(s) ? s[0] : s, val = Array.isArray(s) ? s[1] : s; const b = document.createElement("button"); b.type = "button"; b.className = "sug"; b.textContent = lab; b.title = val; b.onclick = () => { inp.value = val; autosize(); updSend(); inp.focus(); const i = val.indexOf("["); if (i >= 0) inp.setSelectionRange(i, val.indexOf("]", i) + 1); }; box.append(b); });
+}
+function loadDemo() { for (const [k, v] of SYNCAT) clips.set(k, v); renderChips(); agentNote(t("app.demoLoaded")); }
+
+/* conversas */
+const convs = () => store.get(CK, []);
+function saveConv() {
+  if (!conv || !conv.msgs.length) return;
+  const all = convs().filter(c => c.id !== conv.id);
+  all.unshift({ id: conv.id, title: conv.title, quando: Date.now(), msgs: conv.msgs, estilo: conv.estilo || null });
+  store.set(CK, all.slice(0, 40)); renderConvList();
+}
+function renderConvList() {
+  const box = $("#convList"); box.innerHTML = "";
+  for (const c of convs()) { const b = document.createElement("button"); b.type = "button"; b.className = "conv"; b.textContent = c.title || t("app.newTitle"); b.title = b.textContent; b.setAttribute("aria-current", conv && conv.id === c.id ? "true" : "false"); b.onclick = () => openConv(c.id); box.append(b); }
+}
+function resetThread() { thread.querySelectorAll(".m-user,.m-agent").forEach(n => n.remove()); $("#home").hidden = false; }
+function newConv() {
+  conv = { id: Date.now(), title: "", msgs: [], vids: [], estilo: null }; turns.length = 0; pendingVoice = null; setActiveStyle(null);
+  resetThread(); homeTitle(); renderChips(); $("#convTitle").textContent = t("app.newTitle"); renderConvList();
+}
+function openConv(id) {
+  const c = convs().find(x => x.id === id); if (!c) return;
+  conv = { id: c.id, title: c.title, msgs: c.msgs.slice(), vids: [], estilo: c.estilo || null }; turns.length = 0; setActiveStyle(conv.estilo);
+  resetThread(); $("#home").hidden = true; $("#convTitle").textContent = c.title;
+  for (const m of c.msgs) {
+    if (m.role === "user") { renderUser(m.text, (m.atts || []).map(a => ({ kind: a.kind, id: a.name }))); turns.push({ role: "user", content: m.text || t("app.defaultAsk") }); }
+    else { const body = agentShell(); body.querySelector(".txt").textContent = m.text; if (m.estiloRef) styleCard(body, m.estiloRef, 0); if (m.plans && m.plans.length) { const grid = vidGrid(body); m.plans.forEach(p => { const j = videoCard(grid, p); j.setWait(t("app.reopenNote")); j.allowRegen(); }); } turns.push({ role: "assistant", content: JSON.stringify({ resposta: m.text, videos: m.plans || [] }).slice(0, 60000) }); }
+  }
+  renderConvList(); scrollEnd();
+}
+$("#newChat").onclick = $("#newChatM").onclick = () => { newConv(); inp.focus(); };
+
+/* render de mensagens */
+function scrollEnd() { requestAnimationFrame(() => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" })); }
+function renderUser(text, atts) {
+  $("#home").hidden = true;
+  const w = document.createElement("div"); w.className = "m-user";
+  if (atts && atts.length) { const a = document.createElement("div"); a.className = "atts"; atts.forEach(x => a.append(attEl(x))); w.append(a); }
+  if (text) { const b = document.createElement("div"); b.className = "bub"; b.textContent = text; w.append(b); }
+  thread.append(w); scrollEnd();
+}
+function attEl(x, removable) {
+  const d = document.createElement("div"); d.className = "att" + (x.kind === "audio" ? " audio" : "");
+  if (x.kind === "audio") { d.textContent = "♪ " + x.id; }
+  else if (x.thumb) { const img = document.createElement("img"); img.src = x.thumb; img.alt = x.id; const s = document.createElement("span"); s.textContent = x.id; d.append(img, s); }
+  else { d.classList.add("audio"); d.textContent = "▶ " + x.id; }
+  if (removable) { const b = document.createElement("button"); b.type = "button"; b.textContent = "×"; b.setAttribute("aria-label", "remove " + x.id); b.onclick = removable; d.append(b); }
+  return d;
+}
+function agentShell() {
+  $("#home").hidden = true;
+  const w = document.createElement("div"); w.className = "m-agent";
+  w.innerHTML = `<svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><use href="#ffmark"/></svg><div class="body"><div class="txt"></div></div>`;
+  thread.append(w); scrollEnd(); return w.querySelector(".body");
+}
+function agentNote(text) { const b = agentShell(); b.querySelector(".txt").textContent = text; return b; }
+function vidGrid(body) { const g = document.createElement("div"); g.className = "vids"; body.append(g); return g; }
+
+/* anexos */
+const pending = [];
+function renderPend() { const box = $("#pend"); box.innerHTML = ""; pending.forEach((p, i) => box.append(attEl(p, () => { pending.splice(i, 1); renderPend(); updSend(); }))); }
+async function addFiles(files) {
+  for (const f of files) {
+    const isV = f.type.startsWith("video/"), isA = f.type.startsWith("audio/");
+    if (!isV && !isA) continue;
+    let id = slug(f.name), n = 2; while (clips.has(id) || pending.some(p => p.id === id)) id = slug(f.name) + "_" + n++;
+    const p = { kind: isV ? "video" : "audio", file: f, id, url: URL.createObjectURL(f) };
+    pending.push(p); renderPend(); updSend();
+    if (isV) { const m = await probe(p.url); Object.assign(p, m); renderPend(); }
+  }
+}
+$("#attach").onclick = () => $("#fileIn").click();
+$("#fileIn").onchange = e => { const fs = [...e.target.files]; if (fs.length) addFiles(fs); e.target.value = ""; };
+const comp = $("#composer");
+["dragenter", "dragover"].forEach(ev => document.addEventListener(ev, e => { if (!$("#app").hidden && e.dataTransfer && [...e.dataTransfer.types].includes("Files")) { e.preventDefault(); comp.classList.add("drag"); } }));
+["dragleave", "drop"].forEach(ev => document.addEventListener(ev, e => { comp.classList.remove("drag"); }));
+document.addEventListener("drop", e => { if ($("#app").hidden) return; if (e.dataTransfer && e.dataTransfer.files.length) { e.preventDefault(); addFiles([...e.dataTransfer.files]); } });
+function slug(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/\.[^.]+$/, "").replace(/[^a-zA-Z0-9]+/g, "_").replace(/^_|_$/g, "").slice(0, 24) || "take"; }
+async function probe(url) {
+  const v = document.createElement("video"); v.muted = true; v.preload = "auto"; v.playsInline = true; v.src = url;
+  await waitEv(v, "loadedmetadata", 10000);
+  const dur = v.duration || 8; const p = waitEv(v, "seeked", 6000); v.currentTime = Math.min(1.2, dur / 2); await p;
+  const c = document.createElement("canvas"); c.width = 320; c.height = 180; try { c.getContext("2d").drawImage(v, 0, 0, 320, 180); } catch (e) {}
+  return { dur, w: v.videoWidth || 1280, h: v.videoHeight || 720, thumb: c.toDataURL("image/jpeg", .75), blob: await new Promise(r => c.toBlob(r, "image/jpeg", .8)) };
+}
+
+/* caixa de texto */
+function autosize() { inp.style.height = "auto"; inp.style.height = Math.min(200, inp.scrollHeight) + "px"; }
+function updSend() { const zero = ME && ME.profile && ME.profile.credits <= 0; $("#send").disabled = busyAsk || zero || (!inp.value.trim() && !pending.length); }
+inp.addEventListener("input", () => { autosize(); updSend(); });
+inp.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); comp.requestSubmit(); } });
+comp.addEventListener("submit", e => { e.preventDefault(); send(); });
+
+/* ---- identificador de estilo ---- */
+const SK = "ff_styles";
+function setActiveStyle(st) {
+  conv.estilo = st || null; const chip = $("#styleChip");
+  if (!st) { chip.hidden = true; chip.innerHTML = ""; saveConv(); return; }
+  chip.hidden = false; chip.innerHTML = ""; const sp = document.createElement("span"); sp.textContent = t("style.active", { n: st.nome }); const x = document.createElement("button"); x.type = "button"; x.textContent = "×"; x.setAttribute("aria-label", "remove"); x.onclick = () => setActiveStyle(null); chip.append(sp, x); saveConv();
+}
+async function extractRef(file) {
+  const url = URL.createObjectURL(file); const v = document.createElement("video"); v.muted = true; v.preload = "auto"; v.playsInline = true; v.src = url;
+  await waitEv(v, "loadedmetadata", 12000);
+  const dur = v.duration || 10, vw = v.videoWidth || 720, vh = v.videoHeight || 1280;
+  const seek = tt => new Promise(r => { const f = () => { v.removeEventListener("seeked", f); r(); }; v.addEventListener("seeked", f); v.currentTime = tt; setTimeout(f, 2500); });
+  const c = document.createElement("canvas"); c.width = 360; c.height = Math.round(360 * vh / vw); const g = c.getContext("2d");
+  const frames = [], N = 12;
+  for (let i = 0; i < N; i++) { await seek((i + .5) / N * dur); g.drawImage(v, 0, 0, c.width, c.height); frames.push(c.toDataURL("image/jpeg", .72)); }
+  const sc = document.createElement("canvas"); sc.width = 24; sc.height = 42; const sg = sc.getContext("2d", { willReadFrequently: true });
+  let prev = null, cuts = 0; const lim = Math.min(dur, 40);
+  for (let tt = 0; tt < lim; tt += .34) { await seek(tt); sg.drawImage(v, 0, 0, 24, 42); const d = sg.getImageData(0, 0, 24, 42).data; if (prev) { let s2 = 0; for (let i = 0; i < d.length; i += 4) s2 += Math.abs(d[i] - prev[i]) + Math.abs(d[i + 1] - prev[i + 1]); if (s2 / (d.length / 2) > 30) cuts++; } prev = d; }
+  const total = Math.round(cuts * dur / lim);
+  URL.revokeObjectURL(url);
+  return { frames, duracao: dur, cortes: total, plano: dur / (total + 1), formato: vh > vw ? "9:16" : vh === vw ? "1:1" : "16:9", thumb: frames[Math.floor(N / 3)] };
+}
+function styleCard(body, st, cost) {
+  const c = document.createElement("div"); c.className = "scard";
+  const h = document.createElement("h3"); h.textContent = st.nome || t("style.unnamed");
+  const p = document.createElement("div"); p.textContent = st.resumo || "";
+  const chips = document.createElement("div"); chips.className = "chips2";
+  const R = st.receita || {};
+  [R.pegada, R.musica && ({ lancamento: t("style.mus.l"), epico: t("style.mus.e"), cinema: "cinema", house: "house" })[R.musica], R.alinha, R.destaque, ...(R.recursos || [])].filter(Boolean).slice(0, 10).forEach(x => { const s2 = document.createElement("span"); s2.textContent = x; chips.append(s2); });
+  c.append(h, p, chips);
+  if (Array.isArray(R.estrutura) && R.estrutura.length) { const ol = document.createElement("ol"); R.estrutura.slice(0, 8).forEach(x => { const li = document.createElement("li"); li.textContent = x; ol.append(li); }); c.append(ol); }
+  const lab = document.createElement("b"); lab.textContent = t("style.prompt"); const pre = document.createElement("pre"); pre.textContent = st.prompt || ""; c.append(lab, pre);
+  if (st.limites) { const n = document.createElement("div"); n.className = "note"; n.textContent = st.limites; c.append(n); }
+  const row = document.createElement("div"); row.className = "row";
+  const use1 = document.createElement("button"); use1.type = "button"; use1.className = "btn sm pri"; use1.textContent = t("style.use"); use1.onclick = () => { setActiveStyle(st); inp.value = st.prompt || ""; autosize(); updSend(); inp.focus(); const i = inp.value.indexOf("["); if (i >= 0) inp.setSelectionRange(i, inp.value.indexOf("]", i) + 1); };
+  const cp = document.createElement("button"); cp.type = "button"; cp.className = "btn sm"; cp.textContent = t("style.copy"); cp.onclick = async () => { try { await navigator.clipboard.writeText(st.prompt || ""); cp.textContent = t("card.copied"); } catch (e) {} };
+  row.append(use1, cp); c.append(row);
+  if (cost) { const n = document.createElement("div"); n.className = "note"; n.textContent = t("style.charged", { n: cost }); c.append(n); }
+  body.append(c);
+}
+async function analyzeStyle(file, note) {
+  $("#home").hidden = true; audioCtx();
+  const body0 = agentShell(); const txt = body0.querySelector(".txt");
+  const th = document.createElement("div"); th.className = "thinking"; th.innerHTML = `<span class="dots"><i></i><i></i><i></i></span><span></span>`; body0.insertBefore(th, txt); txt.hidden = true;
+  const lab = th.querySelector("span:last-child"); lab.textContent = t("style.watching");
+  busyAsk = true; updSend();
+  const end = () => { th.remove(); txt.hidden = false; busyAsk = false; updSend(); };
+  let meta; try { meta = await extractRef(file); } catch (e) { end(); txt.textContent = t("style.readFail"); return; }
+  lab.textContent = t("style.reading");
+  const r = await api("/api/style", { method: "POST", body: JSON.stringify({ lang: LANG, nota: note || "", frames: meta.frames, duracao: meta.duracao, cortes: meta.cortes, plano: meta.plano, formato: meta.formato }) }).catch(() => ({ ok: false, status: 0, data: {} }));
+  end();
+  if (r.data && r.data.profile) { ME = { ...(ME || {}), profile: r.data.profile }; paintCredits(); }
+  if (!r.ok) {
+    if (r.status === 402) { txt.textContent = r.data.need ? t("style.need", { n: r.data.need }) : t("gate." + (r.data.error || "sem_creditos") + ".h"); upsell(body0, "sem_creditos"); return; }
+    if (r.status === 401) { showGate("login"); return; }
+    txt.textContent = (I18N[LANG] && I18N[LANG]["err." + r.data.error]) || t("chat.fail"); return;
+  }
+  const st = r.data.estilo; st.id = Date.now();
+  txt.textContent = t("style.done", { n: st.nome || "" });
+  styleCard(body0, st, r.data.cost);
+  const saved = store.get(SK, []); saved.unshift(st); store.set(SK, saved.slice(0, 20));
+  conv.msgs.push({ role: "assistant", text: txt.textContent, estiloRef: st }); saveConv();
+  turns.push({ role: "user", content: t("style.turnUser") }, { role: "assistant", content: JSON.stringify({ resposta: txt.textContent, estilo: { nome: st.nome, resumo: st.resumo, receita: st.receita } }).slice(0, 8000) });
+  renderChips(); scrollEnd();
+}
+$("#styleBtn").onclick = () => $("#refIn").click();
+$("#refIn").onchange = e => { const f = e.target.files[0]; e.target.value = ""; if (!f) return; const note = inp.value.trim(); inp.value = ""; autosize(); renderUser(note || t("style.userMsg"), [{ kind: "video", id: slug(f.name) }]); conv.msgs.push({ role: "user", text: note || t("style.userMsg"), atts: [{ kind: "video", name: slug(f.name) }] }); if (!conv.title) { conv.title = t("style.title"); $("#convTitle").textContent = conv.title; } analyzeStyle(f, note); };
+
+let busyAsk = false;
+async function send() {
+  const text = inp.value.trim(); const atts = pending.splice(0); renderPend();
+  if (!text && !atts.length) return;
+  const vidAtts = atts.filter(a => a.kind === "video");
+  if (vidAtts.length === 1 && /estilo|refer[eê]ncia|igual a (esse|este)|mesmo jeito|copi[ae]|identifi|style|reference|same (look|vibe)/i.test(text)) {
+    inp.value = ""; autosize(); renderUser(text, atts); conv.msgs.push({ role: "user", text, atts: atts.map(a => ({ kind: a.kind, name: a.id })) });
+    if (!conv.title) { conv.title = text.slice(0, 52); $("#convTitle").textContent = conv.title; }
+    return analyzeStyle(vidAtts[0].file, text);
+  }
+  inp.value = ""; autosize(); audioCtx();
+  for (const a of atts) if (a.kind === "video") clips.set(a.id, { id: a.id, url: a.url, desc: "", user: true, synth: false, dur: a.dur || 8, w: a.w, h: a.h, thumb: a.thumb, blob: a.blob });
+  if ([...clips.values()].some(c => !c.synth)) [...clips.values()].filter(c => c.synth).forEach(c => clips.delete(c.id));
+  renderUser(text, atts);
+  conv.msgs.push({ role: "user", text, atts: atts.map(a => ({ kind: a.kind, name: a.id })) });
+  if (!conv.title) { conv.title = (text || atts.map(a => a.id).join(", ")).slice(0, 52); $("#convTitle").textContent = conv.title; }
+  const audio = atts.find(a => a.kind === "audio");
+  if (audio) {
+    let buf = null; try { buf = await audioCtx().decodeAudioData(await audio.file.arrayBuffer()); } catch (e) {}
+    if (!buf) { agentNote(t("card.badAudio")); saveConv(); updSend(); return; }
+    const mm = text.match(/v[ií]deo\s*(\d+)|video\s*#?(\d+)/i);
+    const target = mm ? conv.vids[(+(mm[1] || mm[2])) - 1] : conv.vids[conv.vids.length - 1];
+    const onlyVoice = !atts.some(a => a.kind === "video") && (!text || text.length < 60);
+    if (target && onlyVoice) {
+      target.voice = buf; const msg = t("app.voiceOn", { n: target.num }); agentNote(msg); conv.msgs.push({ role: "assistant", text: msg }); saveConv();
+      target.resetForRedo(); enqueue(target); updSend(); return;
+    }
+    pendingVoice = buf;
+    if (onlyVoice) { const msg = t("app.voiceSaved"); agentNote(msg); conv.msgs.push({ role: "assistant", text: msg }); saveConv(); updSend(); return; }
+  }
+  if (!clips.size) { const b = agentNote(t("app.needTakes")); const btn = document.createElement("button"); btn.type = "button"; btn.className = "btn sm"; btn.textContent = t("app.useDemo"); btn.style.justifySelf = "start"; btn.onclick = () => { btn.remove(); loadDemo(); }; b.append(btn); saveConv(); updSend(); return; }
+  await ask(text || t("app.defaultAsk"));
+}
+
+/* fila de edição */
+const queue = []; let busy = false;
+function enqueue(job) { if (!queue.includes(job)) queue.push(job); job.setWait(t("app.queue")); pump(); }
+async function pump() {
+  if (busy) return; const job = queue.shift(); if (!job) return;
+  busy = true;
+  try { job.blob = await renderJob(job); job.ready(); }
+  catch (e) { console.error(e); job.setWait(t("card.error")); job.allowRegen(); }
+  busy = false; pump();
+}
+async function renderJob(job) {
+  const P = normalize(job.plan, clips.size ? clips : SYNCAT);
+  job.attachCanvas();
+  await R.prepare(P);
+  const music = await makeMusic(P.musica, P.bpm, whooshTimes(P), P.impactos, P.drop, textSfx(P));
+  const ac = audioCtx(), dest = ac.createMediaStreamDestination();
+  const mg = ac.createGain(); mg.gain.value = job.voice ? .42 : 1; mg.connect(dest); mg.connect(ac.destination);
+  const src = ac.createBufferSource(); src.buffer = music; src.connect(mg);
+  let vsrc = null;
+  if (job.voice) { vsrc = ac.createBufferSource(); vsrc.buffer = job.voice; const vg = ac.createGain(); vg.gain.value = 1.15; vsrc.connect(vg); vg.connect(dest); vg.connect(ac.destination); }
+  const stream = $("#cv").captureStream(30); dest.stream.getAudioTracks().forEach(tr => stream.addTrack(tr));
+  const mime = pickMime(), chunks = [];
+  let rec = null; try { rec = new MediaRecorder(stream, mime ? { mimeType: mime, videoBitsPerSecond: 9e6, audioBitsPerSecond: 192e3 } : undefined); } catch (e) {}
+  if (rec) rec.ondataavailable = e => { if (e.data && e.data.size) chunks.push(e.data); };
+  R.frame(P, 0);
+  const t0 = ac.currentTime + .35; src.start(t0); if (vsrc) vsrc.start(t0 + .3, 0, DUR - .6);
+  if (rec) rec.start(250);
+  job.setLive(true);
+  await new Promise(res => { const tick = () => { const s = ac.currentTime - t0; if (s >= 0) R.tickVideos(P, s); R.frame(P, Math.max(0, Math.min(DUR - .001, s))); job.progress(Math.max(0, Math.min(1, s / DUR))); if (s >= DUR) return res(); requestAnimationFrame(tick); }; requestAnimationFrame(tick); });
+  const blob = await new Promise(r => { if (!rec) return r(null); rec.onstop = () => r(new Blob(chunks, { type: (mime || "video/webm").split(";")[0] })); setTimeout(() => rec.state !== "inactive" && rec.stop(), 120); });
+  try { src.stop(); } catch (e) {}
+  R.release(P); stream.getTracks().forEach(tr => tr.stop());
+  job.setLive(false);
+  return blob;
+}
+
+/* cartão de vídeo */
+let downloads = null;
+function videoCard(grid, plan) {
+  const num = conv.vids.length + 1; const calm = plan.pegada === "tranquilo";
+  const c = document.createElement("div"); c.className = "vcard";
+  c.innerHTML = `<div class="vframe"><div class="wait"></div><span class="vbadge" hidden><i></i><span></span></span><div class="vprog"><b></b></div></div>
+    <div class="vinfo"><div class="t"></div><div class="tags"><span class="chipt ${calm ? "calmo" : "agro"}"></span><span class="chipt mus"></span></div>
+    <div class="vact"><button class="btn sm pri" data-a="dl" type="button" hidden></button><button class="btn sm" data-a="redo" type="button" hidden></button></div>
+    <details class="loc"><summary></summary><p></p><button class="btn sm" data-a="copy" type="button"></button></details></div>`;
+  grid.append(c);
+  const q = s => c.querySelector(s), frame = q(".vframe"), wait = q(".wait"), badge = q(".vbadge"), bar = q(".vprog b");
+  q(".mus").textContent = (({ lancamento: "lançamento", epico: "épica", cinema: "cinema", house: "house" })[plan.musica] || "lançamento") + " · " + (plan.bpm || 120) + " bpm";
+  const job = { plan, num, voice: null, blob: null, url: null, waitKey: null, waitText: "",
+    paint() {
+      q(".t").textContent = num + ". " + (plan.titulo || "Video");
+      q(".chipt." + (calm ? "calmo" : "agro")).textContent = t(calm ? "card.calm" : plan.pegada === "motion" ? "card.motion" : "card.agro");
+      q('[data-a="dl"]').textContent = t("card.dl"); q('[data-a="redo"]').textContent = t(job.blob || job.waitText ? "app.regen" : "card.redo");
+      q("summary").textContent = t("card.loc"); q('[data-a="copy"]').textContent = t("card.copy");
+      q(".loc p").textContent = (plan.locucao || t("card.locMissing", { n: num })) + "\n\n" + t("app.voiceHint");
+      badge.querySelector("span").textContent = t(badge.classList.contains("live") ? "badge.live" : "badge.done");
+    },
+    setWait(txt) { job.waitText = txt; wait.hidden = false; wait.textContent = txt; },
+    attachCanvas() { const cv = $("#cv"); wait.hidden = true; frame.querySelectorAll("video").forEach(v => v.remove()); frame.prepend(cv); cv.hidden = false; badge.hidden = false; },
+    setLive(on) { badge.classList.toggle("live", on); badge.hidden = !on; job.paint(); },
+    progress(p) { bar.style.width = (p * 100).toFixed(1) + "%"; },
+    resetForRedo() { if (job.url) URL.revokeObjectURL(job.url); job.url = null; job.blob = null; frame.querySelectorAll("video").forEach(v => v.remove()); job.progress(0); q('[data-a="dl"]').hidden = true; q('[data-a="redo"]').hidden = true; },
+    allowRegen() { q('[data-a="redo"]').hidden = false; job.paint(); },
+    ready() {
+      const cv = $("#cv"); cv.hidden = true; document.body.append(cv);
+      job.url = job.blob ? URL.createObjectURL(job.blob) : null;
+      if (job.url) { const v = document.createElement("video"); v.src = job.url; v.controls = true; v.playsInline = true; frame.prepend(v); }
+      job.progress(1); bar.parentElement.hidden = true;
+      q('[data-a="dl"]').hidden = !job.blob; q('[data-a="redo"]').hidden = false; job.waitText = ""; job.paint();
+    }
+  };
+  q('[data-a="dl"]').onclick = async () => {
+    if (!job.blob) return;
+    const a = document.createElement("a"); a.href = job.url; a.download = "flamefields_" + num + "_" + slug(plan.titulo || "video") + "." + (job.blob.type.includes("mp4") ? "mp4" : "webm"); document.body.append(a); a.click(); a.remove();
+  };
+  q('[data-a="redo"]').onclick = () => { if (!clips.size) { agentNote(t("app.reopenNote")); return; } audioCtx(); bar.parentElement.hidden = false; job.resetForRedo(); enqueue(job); };
+  q('[data-a="copy"]').onclick = async () => { const txt = plan.locucao || ""; try { await navigator.clipboard.writeText(txt); q('[data-a="copy"]').textContent = t("card.copied"); } catch (e) { const r = document.createRange(); r.selectNodeContents(q(".loc p")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); } };
+  conv.vids.push(job); job.paint(); return job;
+}
+
+/* cérebro (servidor Flamefields) */
+async function ask(text) {
+  busyAsk = true; updSend();
+  const body = agentShell(); const txt = body.querySelector(".txt");
+  const th = document.createElement("div"); th.className = "thinking"; th.innerHTML = `<span class="dots"><i></i><i></i><i></i></span><span></span>`; body.insertBefore(th, txt); txt.hidden = true;
+  let si = 1; const lab = th.querySelector("span:last-child"); lab.textContent = t("think.1");
+  const iv = setInterval(() => { si = Math.min(5, si + 1); lab.textContent = t("think." + si); }, 4000);
+  const done = () => { clearInterval(iv); th.remove(); txt.hidden = false; busyAsk = false; updSend(); };
+  turns.push({ role: "user", content: text }); while (turns.length > 14) turns.shift(); if (turns[0].role !== "user") turns.shift();
+  const all = [...clips.values()];
+  const payload = { lang: LANG, turns, catalog: all.map(c => ({ id: c.id, dur: c.dur, synth: !!c.synth, desc: c.synth ? c.desc : "" })), images: all.some(c => !c.synth) ? all.slice(0, 20).map(c => c.synth ? "" : (c.thumb || "")).filter(Boolean) : [], feitos: conv.vids.map(j => j.plan.titulo || ""), estilo: conv.estilo ? { nome: conv.estilo.nome, resumo: conv.estilo.resumo, receita: conv.estilo.receita } : null };
+  let r; try { r = await api("/api/agent", { method: "POST", body: JSON.stringify(payload) }); } catch (e) { r = { ok: false, status: 0, data: {} }; }
+  done();
+  if (r.data && r.data.profile) { ME = { ...(ME || {}), profile: r.data.profile }; paintCredits(); }
+  if (!r.ok) {
+    turns.pop();
+    if (r.status === 401) { txt.textContent = t("gate.login.p"); showGate("login"); return; }
+    if (r.status === 402) { const why = r.data.error || "sem_creditos"; txt.textContent = t("gate." + why + ".h"); upsell(body, why); return; }
+    txt.textContent = (I18N[LANG] && I18N[LANG]["err." + r.data.error]) || t("chat.fail"); return;
+  }
+  const vids = Array.isArray(r.data.videos) ? r.data.videos : [];
+  let reply = r.data.resposta || (vids.length ? t("chat.go") : t("chat.ok"));
+  if (r.data.cut) reply += "\n\n" + t("credits.cut", { n: r.data.cut });
+  txt.textContent = reply;
+  turns.push({ role: "assistant", content: JSON.stringify({ resposta: reply, videos: vids }).slice(0, 60000) });
+  conv.msgs.push({ role: "assistant", text: reply, plans: vids }); saveConv();
+  if (vids.length) { const grid = vidGrid(body); vids.forEach(v => { const j = videoCard(grid, v); if (pendingVoice) { j.voice = pendingVoice; pendingVoice = null; } enqueue(j); }); }
+  const c = ME && ME.profile ? ME.profile.credits : null;
+  if (c != null && c <= 20) { if (c <= 0) upsell(body, "sem_creditos"); else { const n = document.createElement("div"); n.className = "note"; n.textContent = t("credits.low", { n: c }); body.append(n); } }
+  scrollEnd();
+}
+
+window.__onLang = () => {
+  paintCredits(); if (gateState) showGate(gateState); homeTitle(); renderChips(); if (conv && !conv.title) $("#convTitle").textContent = t("app.newTitle");
+  conv && conv.vids.forEach(j => j.paint());
+  if (!$("#heroSound").textContent || !heroAudio) $("#heroSound").textContent = t(heroAudio ? "sound.off" : "sound.on");
+  if (heroP) heroBuild();
+  updSend();
+};
+(async () => { try { await Promise.all(["900", "800", "600", "300"].map(w => document.fonts.load(w + " 40px Inter")).concat([document.fonts.load("italic 400 40px \"Instrument Serif\""), document.fonts.load("800 40px \"Inter Tight\""), document.fonts.load("600 40px \"Inter Tight\"")])); } catch (e) {} applyI18n(); renderConvList(); route(); })();
+})();
+</script>
+
+</body>
+</html>

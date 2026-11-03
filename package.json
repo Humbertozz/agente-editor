@@ -1,0 +1,6 @@
+{
+  "name": "flamefields",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" }
+}

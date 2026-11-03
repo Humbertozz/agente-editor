@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Flamefields · Painel do produtor</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+:root{--bg:#060b16;--bg2:#0a1222;--card:rgba(255,255,255,.03);--line:rgba(255,255,255,.09);--fg:#f8fafc;--mist:#94a3b8;--ok:#34d399;--warn:#fbbf24;--bad:#fb7185;--brand:#ff5a1f;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.5 Inter,system-ui,sans-serif;padding:24px max(16px,env(safe-area-inset-left,0px))}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:15px;margin:0 0 10px}
+.wrap{max-width:1200px;margin:0 auto;display:grid;gap:18px}
+.card{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:16px;min-width:0}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.kpi b{display:block;font-size:24px;font-weight:800;font-variant-numeric:tabular-nums}.kpi span{color:var(--mist);font-size:12.5px}
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap;font-variant-numeric:tabular-nums}
+th{color:var(--mist);font-weight:600;font-size:12px}
+.pill{font-size:11.5px;padding:2px 8px;border-radius:99px;border:1px solid var(--line)}
+.pill.ok{color:var(--ok);border-color:rgba(52,211,153,.4)}.pill.warn{color:var(--warn);border-color:rgba(251,191,36,.4)}.pill.bad{color:var(--bad);border-color:rgba(251,113,133,.4)}
+form{display:flex;gap:8px;flex-wrap:wrap;align-items:end}
+label{display:grid;gap:3px;font-size:12px;color:var(--mist)}
+input,select{background:var(--bg2);border:1px solid var(--line);border-radius:8px;padding:8px 10px;color:var(--fg);font:inherit}
+button{background:var(--brand);border:0;color:#fff;border-radius:8px;padding:9px 14px;font:inherit;font-weight:600;cursor:pointer}
+button.ghost{background:transparent;border:1px solid var(--line)}
+.note{color:var(--mist);font-size:12.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div><h1>Painel do produtor</h1><p class="note" id="who">Carregando…</p></div>
+  <div id="login" class="card" hidden>
+    <h2>Entrar</h2>
+    <form id="lf"><label>E-mail de administrador<input id="le" type="email" required></label><button type="submit">Receber link</button></form>
+    <p class="note" id="ln"></p>
+  </div>
+  <div id="main" hidden style="display:grid;gap:18px">
+    <div class="kpis">
+      <div class="card kpi"><b id="kAtivos">0</b><span>clientes ativos</span></div>
+      <div class="card kpi"><b id="kPago">R$ 0</b><span>faturado (total)</span></div>
+      <div class="card kpi"><b id="kCusto">R$ 0</b><span>custo de API (total)</span></div>
+      <div class="card kpi"><b id="kLucro">R$ 0</b><span>lucro bruto</span></div>
+      <div class="card kpi"><b id="kVid">0</b><span>vídeos gerados</span></div>
+    </div>
+    <div class="card">
+      <h2>Liberar acesso manual (venda por Pix, cortesia)</h2>
+      <form id="gf">
+        <label>E-mail<input id="ge" type="email" required></label>
+        <label>Nome<input id="gn"></label>
+        <label>Plano ou recarga<select id="gk"><option value="mensal">Mensal</option><option value="trimestral">Trimestral</option><option value="anual">Anual</option><option value="recarga100">Recarga 100</option><option value="recarga300">Recarga 300</option></select></label>
+        <button type="submit">Liberar</button>
+      </form>
+      <p class="note" id="gnote"></p>
+    </div>
+    <div class="card"><h2>Clientes</h2><div class="tbl"><table><thead><tr><th>E-mail</th><th>Plano</th><th>Situação</th><th>Vence</th><th>Créditos (mês + recarga)</th><th>Vídeos</th><th>Pago</th><th>Custo API</th><th>Uso do pago</th><th></th></tr></thead><tbody id="rows"></tbody></table></div></div>
+    <div class="card"><h2>Leads do site</h2><div class="tbl"><table><thead><tr><th>Data</th><th>Nome</th><th>Empresa</th><th>WhatsApp</th><th>Plano</th></tr></thead><tbody id="leads"></tbody></table></div></div>
+  </div>
+</div>
+<script src="/config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+const C = window.FF_CONFIG, SB = supabase.createClient(C.SUPABASE_URL, C.SUPABASE_ANON_KEY);
+const $ = s => document.querySelector(s);
+const brl = c => (c / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+async function tk() { const { data } = await SB.auth.getSession(); return data.session && data.session.access_token; }
+async function api(method, body) { const r = await fetch("/api/admin", { method, headers: { "Content-Type": "application/json", Authorization: "Bearer " + await tk() }, body: body ? JSON.stringify(body) : undefined }); return { ok: r.ok, status: r.status, data: await r.json().catch(() => ({})) }; }
+async function load() {
+  if (!(await tk())) { $("#login").hidden = false; $("#who").textContent = "Entre com o e-mail de administrador."; return; }
+  const r = await api("GET");
+  if (r.status === 403) { $("#who").textContent = "Este e-mail não é administrador (confira ADMIN_EMAILS na Vercel)."; return; }
+  $("#main").hidden = false; $("#login").hidden = true; $("#who").textContent = "Atualizado " + new Date().toLocaleTimeString("pt-BR");
+  const T = r.data.totals; $("#kAtivos").textContent = T.ativos; $("#kPago").textContent = brl(T.paid); $("#kCusto").textContent = brl(T.cost); $("#kLucro").textContent = brl(T.paid - T.cost); $("#kVid").textContent = T.videos;
+  const rows = $("#rows"); rows.innerHTML = "";
+  for (const p of r.data.profiles) {
+    const active = p.status !== "bloqueado" && p.period_end && new Date(p.period_end) > new Date();
+    const pct = p.paid_cents > 0 ? Math.round(p.cost_cents / p.paid_cents * 100) : 0;
+    const tr = document.createElement("tr");
+    const cells = [p.email, p.plan || "—", null, p.period_end ? new Date(p.period_end).toLocaleDateString("pt-BR") : "—", `${p.plan_credits} + ${p.extra_credits}`, p.videos_total, brl(+p.paid_cents), brl(+p.cost_cents), pct + "%"];
+    cells.forEach((c, i) => { const td = document.createElement("td"); if (i === 2) { const s = document.createElement("span"); s.className = "pill " + (p.status === "bloqueado" ? "bad" : active ? "ok" : "warn"); s.textContent = p.status === "bloqueado" ? "bloqueado" : active ? p.status : "vencido"; td.append(s); } else td.textContent = c; tr.append(td); });
+    const td = document.createElement("td");
+    const add = document.createElement("button"); add.className = "ghost"; add.textContent = "+50 créditos"; add.onclick = async () => { await api("POST", { action: "credits", email: p.email, add: 50 }); load(); };
+    const bl = document.createElement("button"); bl.className = "ghost"; bl.textContent = "Bloquear"; bl.style.marginLeft = "6px"; bl.onclick = async () => { const ok = bl.dataset.ok; if (!ok) { bl.dataset.ok = 1; bl.textContent = "Confirmar bloqueio"; return; } await api("POST", { action: "block", email: p.email }); load(); };
+    td.append(add, bl); tr.append(td); rows.append(tr);
+  }
+  const L = $("#leads"); L.innerHTML = "";
+  for (const l of r.data.leads) { const tr = document.createElement("tr"); [new Date(l.created_at).toLocaleString("pt-BR"), l.nome, l.empresa, l.whatsapp, l.plano].forEach(v => { const td = document.createElement("td"); td.textContent = v || ""; tr.append(td); }); L.append(tr); }
+}
+$("#lf").onsubmit = async e => { e.preventDefault(); const { error } = await SB.auth.signInWithOtp({ email: $("#le").value.trim(), options: { emailRedirectTo: location.origin + "/admin" } }); $("#ln").textContent = error ? "Erro: " + error.message : "Link enviado. Abra o e-mail."; };
+$("#gf").onsubmit = async e => { e.preventDefault(); const r = await api("POST", { action: "grant", email: $("#ge").value.trim(), name: $("#gn").value.trim(), key: $("#gk").value }); $("#gnote").textContent = r.ok ? "Acesso liberado e convite enviado." : "Erro: " + (r.data.error || r.status); load(); };
+SB.auth.onAuthStateChange(ev => { if (ev === "SIGNED_IN") load(); });
+load();
+</script>
+</body>
+</html>
