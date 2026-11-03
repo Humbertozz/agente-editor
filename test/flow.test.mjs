@@ -77,9 +77,11 @@ assert.equal((await kiwi({ order_id: "x", webhook_event_type: "order_approved", 
 console.log("✓ webhook com assinatura falsa é recusado (401)");
 
 // 3) cliente sem compra não usa
-assert.equal((await agentReq("tok-cliente")).status, 402);
+{ const r0 = await agentReq("tok-cliente"); const d0 = await r0.json();
+  assert.equal(r0.status, 200); assert.equal(d0.videos.length, 3); assert.equal(d0.profile.plan, "teste"); assert.equal(d0.profile.credits, 0); }
+{ const r1 = await agentReq("tok-cliente"); assert.equal(r1.status, 402); assert.equal((await r1.json()).error, "expirado"); }
 assert.equal((await agentReq("tok-invalido")).status, 401);
-console.log("✓ sem compra = bloqueado (402); sem login = 401");
+console.log("✓ cadastro grátis: e-mail novo gera 3 vídeos de teste, depois bloqueia e pede compra; sem login = 401");
 
 // 4) compra aprovada libera 120 créditos
 let r = await kiwi({ order_id: "o1", webhook_event_type: "order_approved", order_status: "paid", Customer: { email: "Cliente@Imob.com", full_name: "Ana Corretora" }, Product: { product_id: "prod-mensal", product_name: "Flamefields Mensal" } });

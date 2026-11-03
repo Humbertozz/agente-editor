@@ -2,6 +2,14 @@
 
 Tempo estimado: 40 a 60 minutos, uma vez só. Você vai precisar de 4 contas: **Anthropic Console**, **Supabase**, **Vercel** e **Hypercash**.
 
+## Cadastro grátis (3 vídeos)
+
+Qualquer pessoa clica em **Teste grátis** no site, cria a conta com nome, e-mail e senha e ganha **3 vídeos** (variável `TRIAL_VIDEOS` na Vercel e `TRIAL_VIDEOS` no `config.js`).
+- Com o Supabase ligado: a pessoa confirma o e-mail e o servidor libera os 3 vídeos uma única vez por e-mail. O cadastro aparece no `/admin` com o plano "teste". Gasto máximo de IA por conta de teste: `TRIAL_MAX_COST_CENTS` (padrão 300 = R$ 3).
+- Sem o Supabase: a conta fica guardada só no navegador da pessoa e os vídeos são gerados pela demonstração. Funciona para mostrar, mas você não recebe os contatos e quem limpar o navegador consegue testar de novo.
+
+Domínio próprio (ex.: flamefieldai.online): na Vercel, em **Settings > Domains**, adicione o domínio e crie no seu registrador os registros DNS que ela mostrar. Depois troque `SITE_URL` e, no Supabase, a Site URL e as Redirect URLs para `https://flamefieldai.online/?app=1`.
+
 ## Como funciona depois de pronto
 
 1. O cliente entra no seu site e compra o **Acesso vitalício (R$ 1.190,90, pagamento único)** na Hypercash.

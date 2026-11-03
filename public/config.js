@@ -20,6 +20,7 @@ window.FF_CONFIG = {
   OWNER: { name: "José Humberto", email: "humbertooliviera21@gmail.com", salt: "q0rtWWI+Jft2KEfx5s53gQ==", hash: "0uhSuN5/IJX3pSagmNNH60MUjR99wN9gGS/SlkR+/gA=", iter: 310000, demoVideos: 3,
     alt: [{ salt: "qxpQlzoHjzMYYzq7HHXSYA==", hash: "mMQKr5Eg5fdz+Iv4sR0+p6S/WGGwDOKaSbsBIBjry24=" }] },
 
+  TRIAL_VIDEOS: 3,       // vídeos grátis para quem se cadastra sozinho no site
   MONTHLY_PRICE: 0,      // preço da assinatura mensal de créditos (ex.: 197.90). 0 = não mostra o preço
   MONTHLY_CREDITS: 300,  // vídeos somados a cada mês pago
   STYLE_COST: 5          // créditos por análise de estilo

@@ -1,5 +1,5 @@
 // POST /api/agent — o cérebro do Flamefields. Usa a SUA chave da Anthropic e desconta créditos do cliente.
-import { env, json, authEmail, db, accessState, accessFor, publicProfile, costCents } from "./_lib.js";
+import { env, json, authEmail, db, accessState, accessFor, publicProfile, costCents, ensureTrial } from "./_lib.js";
 import { STYLE_NOTES } from "./_style.js";
 
 export const maxDuration = 120;
@@ -69,6 +69,7 @@ export async function POST(request) {
   if (!email) return json({ error: "login" }, 401);
   let p = (await db.rpc("ff_refill", { p_email: email })).data;
   if (!p || !p.email) p = await db.profile(email);
+  p = await ensureTrial(email, p);
   const st = accessFor(email, p);
   if (!st.ok) return json({ error: st.reason, profile: publicProfile(p) }, 402);
 

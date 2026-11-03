@@ -98,8 +98,17 @@ export function accessState(p) {
   if (!active && (p.extra_credits || 0) <= 0) return { ok: false, reason: "expirado" };
   const cap = +env("COST_CAP_RATIO", 0.3);
   if (p.paid_cents > 0 && +p.cost_cents > cap * p.paid_cents) return { ok: false, reason: "limite_custo", credits };
+  if (!(p.paid_cents > 0) && p.plan === "teste" && +p.cost_cents > +env("TRIAL_MAX_COST_CENTS", 300)) return { ok: false, reason: "expirado", credits };
   if (credits <= 0) return { ok: false, reason: "sem_creditos", credits: 0 };
   return { ok: true, credits };
+}
+// Cadastro grátis: o primeiro acesso de um e-mail novo (já confirmado) ganha TRIAL_VIDEOS vídeos, uma única vez.
+export async function ensureTrial(email, p) {
+  const n = +env("TRIAL_VIDEOS", 3);
+  if (p || !(n > 0) || isAdminEmail(email)) return p;
+  const row = { email: email.toLowerCase(), plan: "teste", status: "ativo", period_end: null, extra_credits: n, plan_credits: 0, paid_cents: 0 };
+  await db.upsertProfile(row);
+  return (await db.profile(email)) || row;
 }
 export function publicProfile(p) {
   if (!p) return null;

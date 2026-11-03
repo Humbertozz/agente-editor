@@ -285,6 +285,8 @@ button.credits{cursor:pointer}
 .gate-card .mark{width:52px;height:52px}
 .gate-card h2{font-size:24px;font-weight:800}
 .gate-card p{color:var(--mist)}
+.trialnav{border-color:rgba(255,106,31,.6)!important;color:#ffb27a!important}
+.trialbtn{border-color:rgba(255,106,31,.55)!important;color:#ffb27a!important}
 .gate-form{display:grid;gap:10px;width:100%}
 .gate-form input{background:rgba(6,11,22,.7);border:1px solid var(--line2);border-radius:10px;padding:12px;width:100%;color:var(--fg);font-size:15px}
 .gate-btns{display:grid;gap:8px;width:100%}
@@ -308,7 +310,7 @@ button.credits{cursor:pointer}
       </nav>
       <div class="nav-r">
         <div class="lang" role="group" aria-label="Idioma / Language"><button type="button" data-lang="pt">PT</button><button type="button" data-lang="en">EN</button></div>
-        <a class="btn sm hide-s" href="?app=1" data-i18n="nav.login"></a>
+        <a class="btn sm hide-s" href="?app=1" data-i18n="nav.login"></a><a class="btn sm trialnav" href="?app=1&amp;cadastro=1" data-i18n="trial.nav"></a>
         <a class="btn sm pri" href="#planos" data-i18n="nav.start"></a>
       </div>
     </div>
@@ -320,7 +322,7 @@ button.credits{cursor:pointer}
         <span class="announce"><b data-i18n="hero.new"></b><span data-i18n="hero.announce"></span></span>
         <h1 data-i18n-html="hero.h1"></h1>
         <p class="lead" data-i18n="hero.lead"></p>
-        <div class="ctas"><a class="btn pri lg" href="#planos" data-i18n="hero.cta1"></a><a class="btn lg" href="#como" data-i18n="hero.cta2"></a></div>
+        <div class="ctas"><a class="btn pri lg" href="?app=1&amp;cadastro=1" data-i18n="trial.hero"></a><a class="btn lg" href="#planos" data-i18n="hero.cta1"></a></div>
         <div class="facts"><span data-i18n="hero.f1"></span><span data-i18n="hero.f2"></span><span data-i18n="hero.f3"></span></div>
       </div>
       <div class="page">
@@ -463,6 +465,15 @@ button.credits{cursor:pointer}
           <label for="loginPass"><span data-i18n="login.pass"></span><input id="loginPass" type="password" autocomplete="current-password" minlength="6"></label>
           <button class="btn pri" type="submit" data-i18n="login.enter"></button>
           <div class="gate-links"><button type="button" class="linkbtn" id="magicBtn" data-i18n="gate.send"></button><button type="button" class="linkbtn" id="forgotBtn" data-i18n="login.forgot"></button></div>
+          <button type="button" class="btn block trialbtn" id="toSignup" data-i18n="trial.cta"></button>
+        </form>
+        <form class="gate-form" id="signupForm" hidden>
+          <label for="suName"><span data-i18n="trial.name"></span><input id="suName" required autocomplete="name" maxlength="80"></label>
+          <label for="suEmail"><span data-i18n="login.email"></span><input id="suEmail" type="email" required autocomplete="email" placeholder="voce@empresa.com.br"></label>
+          <label for="suZap"><span data-i18n="trial.zap"></span><input id="suZap" inputmode="tel" autocomplete="tel" maxlength="30" placeholder="(79) 9 9999-9999"></label>
+          <label for="suPass"><span data-i18n="trial.pass"></span><input id="suPass" type="password" required autocomplete="new-password" minlength="6"></label>
+          <button class="btn pri" type="submit" data-i18n="trial.submit"></button>
+          <div class="gate-links"><button type="button" class="linkbtn" id="toLogin" data-i18n="trial.haveAccount"></button></div>
         </form>
         <form class="gate-form" id="newPassForm" hidden>
           <label for="newPass"><span data-i18n="login.newPass"></span><input id="newPass" type="password" autocomplete="new-password" minlength="8" required></label>
@@ -504,7 +515,7 @@ button.credits{cursor:pointer}
 </div>
 <canvas id="cv" width="720" height="1280" hidden></canvas>
 
-<script src="config.js?v=20261103e"></script>
+<script src="config.js?v=20261103f"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 (() => {
@@ -616,6 +627,10 @@ pt: {
  "demo.locM": "[voz feminina calma e acolhedora] Esse lugar que você tá vendo agora não é um resort. É o seu bairro. Aqui o pôr do sol vira rotina, o lazer fica a poucos passos e tudo o que você precisa está perto. {n}. Lançamento: {d}. Quer saber mais? Comenta quero que eu te mando tudo.",
  "demo.locI": "[voz masculina grave e firme] Para tudo. Olha onde você pode morar. Lazer completo, localização privilegiada e um projeto pensado para quem não quer abrir mão de nada. {n}. Lançamento: {d}. Toque em Saiba Mais e garanta o seu cadastro antes de todo mundo.",
  "demo.locL": "[voz feminina calma e acolhedora] Existe um lugar onde o fim de tarde vira rotina e a vida acontece devagar. Um lugar para viver com calma, perto de quem você ama. {n}. Lançamento: {d}. Toque em Saiba Mais e conheça.",
+ "trial.nav": "Teste grátis", "trial.hero": "Teste grátis: 3 vídeos", "trial.cta": "Criar conta grátis e ganhar 3 vídeos", "trial.name": "Seu nome", "trial.zap": "WhatsApp (opcional)", "trial.pass": "Crie uma senha", "trial.submit": "Criar conta e começar", "trial.haveAccount": "Já tenho conta: entrar",
+ "trial.fill": "Preencha nome, e-mail e uma senha de pelo menos 6 caracteres.", "trial.creating": "Criando sua conta…", "trial.exists": "Este e-mail já tem conta. Entre com a sua senha.", "trial.isOwner": "Esta é a conta do produtor. Entre com a sua senha.", "trial.err": "Não consegui criar a conta agora. Tente de novo em instantes.", "trial.noAccount": "E-mail não encontrado. Crie sua conta grátis abaixo.",
+ "trial.badge": "Teste grátis: {n}/{m} vídeos", "trial.acct": "Teste grátis", "trial.welcome": "Bem-vindo, {name}! Sua conta está liberada com {n} vídeos grátis. Anexe os takes do empreendimento (ou use as cenas de demonstração) e escreva como quer os vídeos.", "trial.info": "Você tem {n} de {m} vídeos grátis. Quando acabarem, escolha um plano para continuar:", "trial.over": "Seus {m} vídeos grátis acabaram. Para continuar editando, escolha um plano:",
+ "gate.trialfim.h": "Seus 3 vídeos grátis acabaram", "gate.trialfim.p": "Gostou? Escolha um plano para continuar editando:", "gate.cadastro.h": "Crie sua conta grátis", "gate.cadastro.p": "Cadastre-se e ganhe 3 vídeos editados pelo Flamefields, sem cartão.", "gate.confirme.h": "Confirme seu e-mail", "gate.confirme.p": "Enviamos um link para {e}. Clique nele para ativar a conta e liberar seus 3 vídeos grátis.",
  "idle.1": "PRONTO PARA\nEDITAR", "idle.2": "Peça no chat",
  "demo.t1": "SEU LANÇAMENTO", "demo.t2": "MERECE\nVÍDEO ASSIM", "demo.t3": "CORTE NA BATIDA", "demo.t4": "TRILHA PRÓPRIA", "demo.t5": "TEXTO QUE VENDE", "demo.t6": "EM 30 SEGUNDOS", "demo.t7": "AGRESSIVO OU\nTRANQUILO", "demo.t8": "VOCÊ SÓ PEDE", "demo.t10": "EDIÇÃO COM IA"
 },
@@ -720,6 +735,10 @@ en: {
  "demo.locM": "[calm, warm female voice] This place you're looking at isn't a resort. It's your neighborhood. Here sunsets are routine, leisure is steps away and everything you need is close. {n}. Launch: {d}. Want to know more? Comment want and I'll send you everything.",
  "demo.locI": "[deep, firm male voice] Stop scrolling. Look where you could live. Full amenities, prime location and a project made for people who won't settle. {n}. Launch: {d}. Tap Learn More and sign up before everyone else.",
  "demo.locL": "[calm, warm female voice] There is a place where sunsets become routine and life slows down. A place to live calmly, close to the people you love. {n}. Launch: {d}. Tap Learn More to discover it.",
+ "trial.nav": "Free trial", "trial.hero": "Free trial: 3 videos", "trial.cta": "Create a free account and get 3 videos", "trial.name": "Your name", "trial.zap": "WhatsApp (optional)", "trial.pass": "Create a password", "trial.submit": "Create account and start", "trial.haveAccount": "I have an account: sign in",
+ "trial.fill": "Fill in name, email and a password with at least 6 characters.", "trial.creating": "Creating your account…", "trial.exists": "This email already has an account. Sign in with your password.", "trial.isOwner": "This is the producer account. Sign in with your password.", "trial.err": "Couldn't create the account right now. Try again shortly.", "trial.noAccount": "Email not found. Create your free account below.",
+ "trial.badge": "Free trial: {n}/{m} videos", "trial.acct": "Free trial", "trial.welcome": "Welcome, {name}! Your account is active with {n} free videos. Attach the project's clips (or use the demo scenes) and describe the videos you want.", "trial.info": "You have {n} of {m} free videos. When they run out, pick a plan to continue:", "trial.over": "Your {m} free videos are used up. To keep editing, pick a plan:",
+ "gate.trialfim.h": "Your 3 free videos are used up", "gate.trialfim.p": "Liked it? Pick a plan to keep editing:", "gate.cadastro.h": "Create your free account", "gate.cadastro.p": "Sign up and get 3 videos edited by Flamefields, no card needed.", "gate.confirme.h": "Confirm your email", "gate.confirme.p": "We sent a link to {e}. Click it to activate the account and unlock your 3 free videos.",
  "idle.1": "READY TO\nEDIT", "idle.2": "Ask in the chat",
  "demo.t1": "YOUR LAUNCH", "demo.t2": "DESERVES\nVIDEOS LIKE THIS", "demo.t3": "CUT ON THE BEAT", "demo.t4": "ORIGINAL MUSIC", "demo.t5": "COPY THAT SELLS", "demo.t6": "IN 30 SECONDS", "demo.t7": "BOLD OR\nCALM", "demo.t8": "JUST ASK", "demo.t10": "AI VIDEO EDITING"
 }};
@@ -1229,11 +1248,34 @@ async function ownerCheck(email, pass) {
   }
   return false;
 }
-const DEMO_MAX = (CFG.OWNER && +CFG.OWNER.demoVideos) || 3;
-function demoLeft() { const v = store.get("ff_demo_left", null); return v == null ? DEMO_MAX : Math.max(0, +v); }
-function setDemoLeft(n) { store.set("ff_demo_left", n); if (ME && ME.profile) { ME.profile.credits = n; ME.profile.extra_credits = n; } paintCredits(); updSend(); }
+let DEMO_MAX = (CFG.OWNER && +CFG.OWNER.demoVideos) || 3, DEMO_KEY = "ff_demo_left";
+function demoLeft() { const v = store.get(DEMO_KEY, null); return v == null ? DEMO_MAX : Math.max(0, +v); }
+function setDemoLeft(n) { store.set(DEMO_KEY, n); if (ME && ME.profile) { ME.profile.credits = n; ME.profile.extra_credits = n; } paintCredits(); updSend(); }
+/* cadastro grátis sem servidor: conta guardada neste navegador, com TRIAL_VIDEOS vídeos */
+const TRIAL_MAX = +(CFG.TRIAL_VIDEOS != null ? CFG.TRIAL_VIDEOS : 3);
+async function pwHash(pass, saltB64) {
+  const salt = saltB64 ? b64(saltB64) : crypto.getRandomValues(new Uint8Array(16));
+  const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(pass), "PBKDF2", false, ["deriveBits"]);
+  const bits = new Uint8Array(await crypto.subtle.deriveBits({ name: "PBKDF2", hash: "SHA-256", salt, iterations: 120000 }, key, 256));
+  const enc = u => btoa(String.fromCharCode(...u)); return { salt: enc(salt), hash: enc(bits) };
+}
+function enterTrial(email) {
+  const u = (store.get("ff_users", {}) || {})[email] || {};
+  OWNER_MODE = true; DEMO_MAX = TRIAL_MAX; DEMO_KEY = "ff_trial_left:" + email; try { sessionStorage.setItem("ff_trial", email); } catch (e) {}
+  const n = demoLeft();
+  applyMe({ email, demo: true, trial: true, access: { ok: true }, profile: { email, name: u.name || "", plan: "teste", credits: n, plan_credits: 0, extra_credits: n } });
+  showGate(null); newConv(); setTimeout(() => inp.focus(), 50);
+  if (n > 0) trialWelcome(n, (u.name || "").split(" ")[0] || "");
+}
+function trialWelcome(n, name) {
+  const b = agentNote(t("trial.welcome", { n, name }).replace(/ ,/, ",").replace(/, !/, "!"));
+  if (!clips.size) { const d = document.createElement("button"); d.type = "button"; d.className = "btn sm"; d.style.justifySelf = "start"; d.textContent = t("app.useDemo"); d.onclick = () => { d.remove(); loadDemo(); }; b.append(d); }
+}
+function sendLead(name, email, zap) {
+  try { fetch(BASE + "/api/lead", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ nome: name, empresa: email, whatsapp: zap, plano: "teste grátis", idioma: LANG, quando: new Date().toISOString() }) }).catch(() => {}); } catch (e) {}
+}
 function enterOwner(email) {
-  OWNER_MODE = true; try { sessionStorage.setItem("ff_owner", email); } catch (e) {}
+  OWNER_MODE = true; DEMO_MAX = (CFG.OWNER && +CFG.OWNER.demoVideos) || 3; DEMO_KEY = "ff_demo_left"; try { sessionStorage.setItem("ff_owner", email); } catch (e) {}
   const n = demoLeft();
   applyMe({ email, demo: true, access: { ok: true }, profile: { email, name: (CFG.OWNER && CFG.OWNER.name) || "Produtor", plan: "demo", credits: n, plan_credits: 0, extra_credits: n } });
   showGate(null); newConv(); setTimeout(() => inp.focus(), 50);
@@ -1250,22 +1292,46 @@ function showGate(kind) {
   $("#gate").hidden = !on; $("#thread").hidden = on; $("#dock").hidden = on;
   if (!on) return;
   $("#gateH").textContent = t("gate." + kind + ".h"); $("#gateP").textContent = t("gate." + kind + ".p");
-  $("#loginForm").hidden = kind !== "login"; $("#newPassForm").hidden = kind !== "senha"; $("#gateNote").textContent = "";
+  $("#loginForm").hidden = kind !== "login"; $("#signupForm").hidden = kind !== "cadastro"; $("#newPassForm").hidden = kind !== "senha"; $("#gateNote").textContent = "";
   const box = $("#gateBtns"); box.innerHTML = "";
-  if (kind === "sem_assinatura" || kind === "expirado") PLANS.forEach(p => { const a = document.createElement("a"); a.className = "btn block" + (p.tag === "popular" ? " pri" : ""); a.href = checkoutUrl(p.id) || "./#planos"; a.textContent = t("plan." + p.id) + " · " + money(p.price); box.append(a); });
+  if (kind === "sem_assinatura" || kind === "expirado" || kind === "trialfim") PLANS.forEach(p => { const a = document.createElement("a"); a.className = "btn block" + (p.tag === "popular" ? " pri" : ""); a.href = checkoutUrl(p.id) || "./#planos"; a.textContent = t("plan." + p.id) + " · " + money(p.price); box.append(a); });
   if (kind === "sem_creditos" || kind === "limite_custo") monthlyBtn(box, "btn block pri");
   if (kind === "sem_creditos" || kind === "limite_custo") PACKS.filter(p => checkoutUrl(p.id)).forEach((p, i) => { const a = document.createElement("a"); a.className = "btn block" + (i === 1 ? " pri" : ""); a.href = checkoutUrl(p.id) || "./#planos"; a.textContent = t("pack.label", { n: p.credits }) + " · " + money(p.price); box.append(a); });
-  if (kind !== "login" && kind !== "config" && kind !== "senha") { const out = document.createElement("button"); out.type = "button"; out.className = "btn block"; out.textContent = t("gate.logout"); out.onclick = async () => { if (SB) await SB.auth.signOut(); location.reload(); }; box.append(out); }
+  if (kind !== "login" && kind !== "config" && kind !== "senha" && kind !== "cadastro" && kind !== "confirme") { const out = document.createElement("button"); out.type = "button"; out.className = "btn block"; out.textContent = t("gate.logout"); out.onclick = async () => { try { sessionStorage.removeItem("ff_trial"); sessionStorage.removeItem("ff_owner"); } catch (e) {} if (SB) await SB.auth.signOut(); location.reload(); }; box.append(out); }
 }
 $("#loginForm").addEventListener("submit", async e => {
   e.preventDefault(); const email = $("#loginEmail").value.trim().toLowerCase(), pass = $("#loginPass").value; if (!email) return;
   if (!pass) { $("#gateNote").textContent = t("login.needPass"); $("#loginPass").focus(); return; }
   const b = $('#loginForm button[type="submit"]'); b.disabled = true; $("#gateNote").textContent = t("login.entering");
-  if (!SB) { let ok = await ownerCheck(email, pass); if (!ok) { await freshConfig(); ok = await ownerCheck(email, pass); } b.disabled = false; if (ok) enterOwner(email); else $("#gateNote").textContent = t("login.wrongPreview"); return; }
+  if (!SB) { let ok = await ownerCheck(email, pass); if (!ok) { await freshConfig(); ok = await ownerCheck(email, pass); } b.disabled = false; if (ok) { enterOwner(email); return; }
+    const u = (store.get("ff_users", {}) || {})[email];
+    if (u && (await pwHash(pass, u.salt)).hash === u.hash) { enterTrial(email); return; }
+    $("#gateNote").textContent = u ? t("login.wrongPreview") : t("trial.noAccount"); return; }
   const { error } = await SB.auth.signInWithPassword({ email, password: pass });
   b.disabled = false;
   if (error) { $("#gateNote").textContent = t("login.wrong"); return; }
   appReady = false; enterApp();
+});
+$("#toSignup").addEventListener("click", () => { showGate("cadastro"); $("#suEmail").value = $("#loginEmail").value; $("#suName").focus(); });
+$("#toLogin").addEventListener("click", () => { showGate("login"); $("#loginEmail").value = $("#suEmail").value; $("#loginEmail").focus(); });
+$("#signupForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const name = $("#suName").value.trim(), email = $("#suEmail").value.trim().toLowerCase(), zap = $("#suZap").value.trim(), pass = $("#suPass").value;
+  if (!name || !email || pass.length < 6) { $("#gateNote").textContent = t("trial.fill"); return; }
+  const b = $('#signupForm button[type="submit"]'); b.disabled = true; $("#gateNote").textContent = t("trial.creating");
+  if (CFG.OWNER && email === String(CFG.OWNER.email).toLowerCase()) { b.disabled = false; showGate("login"); $("#loginEmail").value = email; $("#gateNote").textContent = t("trial.isOwner"); return; }
+  if (!SB) {
+    const users = store.get("ff_users", {}) || {};
+    if (users[email]) { b.disabled = false; showGate("login"); $("#loginEmail").value = email; $("#gateNote").textContent = t("trial.exists"); return; }
+    users[email] = { name, zap, ...(await pwHash(pass)), criado: Date.now() }; store.set("ff_users", users);
+    sendLead(name, email, zap); b.disabled = false; enterTrial(email); return;
+  }
+  const { data, error } = await SB.auth.signUp({ email, password: pass, options: { data: { name, whatsapp: zap }, emailRedirectTo: APP_URL } });
+  b.disabled = false;
+  if (error) { $("#gateNote").textContent = /registered|exists/i.test(error.message) ? t("trial.exists") : t("trial.err"); return; }
+  sendLead(name, email, zap);
+  if (data && data.session) { appReady = false; enterApp(); return; }
+  showGate("confirme"); $("#gateP").textContent = t("gate.confirme.p", { e: email });
 });
 $("#magicBtn").addEventListener("click", async () => {
   const email = $("#loginEmail").value.trim().toLowerCase(); if (!SB) { $("#gateNote").textContent = t("login.previewOnly"); return; } if (!email) { $("#gateNote").textContent = t("login.needEmail"); $("#loginEmail").focus(); return; }
@@ -1287,6 +1353,7 @@ $("#credits").addEventListener("click", () => { if (ME && ME.demo) { if ($("#hom
 function paintCredits() {
   const el = $("#credits"); if (!ME || !ME.profile) { el.hidden = true; return; }
   const c = ME.profile.credits || 0; el.hidden = false;
+  if (ME.trial) { el.textContent = t("trial.badge", { n: c, m: DEMO_MAX }); el.className = "credits" + (c <= 0 ? " zero" : " free"); el.title = t("trial.badge", { n: c, m: DEMO_MAX }); const ac = document.querySelector(".acct span"); if (ac) { ac.removeAttribute("data-i18n"); ac.textContent = t("trial.acct"); } return; }
   if (ME.demo) { el.textContent = t("demo.badge", { n: c, m: DEMO_MAX }); el.className = "credits" + (c <= 0 ? " zero" : " free"); el.title = t("demo.title"); const ac = document.querySelector(".acct span"); if (ac) { ac.removeAttribute("data-i18n"); ac.textContent = t("demo.acct"); } return; }
   const free = ME.admin || (ME.access && ME.access.admin) || ME.profile.plan === "produtor";
   if (free) { el.textContent = t("credits.free"); el.className = "credits free"; el.title = t("credits.freeTitle"); const ac = document.querySelector(".acct span"); if (ac) { ac.removeAttribute("data-i18n"); ac.textContent = t("acct.free"); } return; }
@@ -1316,17 +1383,18 @@ function upsell(body, reason) {
 }
 async function enterApp() {
   if (appReady) return; appReady = true;
-  if (!SB) { let em = null; try { em = sessionStorage.getItem("ff_owner"); } catch (e) {} if (em) { enterOwner(em); return; } showGate("login"); return; }
+  const wantSignup = new URLSearchParams(location.search).has("cadastro");
+  if (!SB) { let em = null, tr = null; try { em = sessionStorage.getItem("ff_owner"); tr = sessionStorage.getItem("ff_trial"); } catch (e) {} if (em) { enterOwner(em); return; } if (tr) { enterTrial(tr); return; } showGate(wantSignup ? "cadastro" : "login"); return; }
   const tk = await token();
-  if (!tk) { showGate("login"); return; }
+  if (!tk) { showGate(wantSignup ? "cadastro" : "login"); return; }
   const r = await api("/api/me");
   if (r.status === 401) { showGate("login"); return; }
   applyMe(r.data);
   if (!r.data.access || !r.data.access.ok) {
     const why = (r.data.access && r.data.access.reason) || "sem_assinatura";
     if (why === "sem_creditos" || why === "limite_custo") { showGate(null); newConv(); const b = agentNote(t("gate." + why + ".h")); upsell(b, why); }
-    else showGate(why);
-  } else { showGate(null); newConv(); }
+    else showGate(why === "expirado" && r.data.profile && r.data.profile.plan === "teste" ? "trialfim" : why);
+  } else { showGate(null); newConv(); if (r.data.profile && r.data.profile.plan === "teste" && r.data.profile.credits > 0) trialWelcome(r.data.profile.credits, firstName || ""); }
   setTimeout(() => inp.focus(), 50);
 }
 if (SB) SB.auth.onAuthStateChange((ev) => { if (ev === "PASSWORD_RECOVERY") { showGate("senha"); return; } if (ev === "SIGNED_IN" && gateState === "login") { appReady = false; enterApp(); } });
@@ -1611,7 +1679,13 @@ function videoCard(grid, plan) {
 }
 
 /* modo pré-visualização: sem servidor de IA ligado, monta um vídeo modelo com os takes */
-function demoInfo() {
+function demoInfo(into) {
+  if (ME && ME.trial) {
+    const b = into || agentNote(demoLeft() > 0 ? t("trial.info", { n: demoLeft(), m: DEMO_MAX }) : t("trial.over", { m: DEMO_MAX }));
+    const row = document.createElement("div"); row.className = "gate-btns"; row.style.justifyItems = "start";
+    PLANS.forEach(p => { const a = document.createElement("a"); a.className = "btn sm" + (p.tag === "popular" ? " pri" : ""); a.href = checkoutUrl(p.id) || "./#planos"; a.textContent = t("plan." + p.id) + " · " + money(p.price) + (p.id === "mensal" ? t("plan.per.mensal") : ""); row.append(a); });
+    b.append(row); return;
+  }
   const b = agentNote(t("demo.info", { n: demoLeft(), m: DEMO_MAX }));
   const btn = document.createElement("button"); btn.type = "button"; btn.className = "btn sm"; btn.style.justifySelf = "start"; btn.textContent = t("demo.reset", { m: DEMO_MAX });
   btn.onclick = () => { setDemoLeft(DEMO_MAX); btn.remove(); agentNote(t("demo.resetDone", { m: DEMO_MAX })); };
@@ -1675,7 +1749,7 @@ function demoPlans(text, n) {
 function previewDemo(body, txt, text) {
   if (OWNER_MODE && ME && ME.demo) {
     const left = demoLeft();
-    if (left <= 0) { txt.textContent = t("demo.over", { m: DEMO_MAX }); demoInfo(); return; }
+    if (left <= 0) { txt.textContent = t(ME.trial ? "trial.over" : "demo.over", { m: DEMO_MAX }); if (ME.trial) demoInfo(body); else demoInfo(); return; }
     const m = String(text).match(/\b(\d+)\s*v[ií]deos?|\b(um|uma|dois|duas|tr[eê]s)\s+v[ií]deos?/i);
     const words = { um: 1, uma: 1, dois: 2, duas: 2, "três": 3, tres: 3 };
     let n = m ? (+m[1] || words[(m[2] || "").toLowerCase()] || 3) : 3; n = Math.max(1, Math.min(n, left, 5));
@@ -1685,7 +1759,7 @@ function previewDemo(body, txt, text) {
     turns.push({ role: "assistant", content: JSON.stringify({ resposta: txt.textContent, videos: list }).slice(0, 60000) });
     setDemoLeft(left - list.length);
     const grid = vidGrid(body); list.forEach(v => enqueue(videoCard(grid, v)));
-    if (demoLeft() <= 0) { const nn = document.createElement("div"); nn.className = "note"; nn.textContent = t("demo.lastOnes", { m: DEMO_MAX }); body.append(nn); }
+    if (demoLeft() <= 0) { if (ME.trial) setTimeout(demoInfo, 400); else { const nn = document.createElement("div"); nn.className = "note"; nn.textContent = t("demo.lastOnes", { m: DEMO_MAX }); body.append(nn); } }
     scrollEnd(); return;
   }
   const ids = [...clips.keys()]; const pick = i => ids[i % ids.length];
