@@ -1334,8 +1334,7 @@ function homeTitle() { $("#homeH").textContent = t("app.homeH", { n: firstName ?
 function renderChips() {
   const box = $("#sugs"); if (!box) return; box.innerHTML = "";
   if (!clips.size) { const d = document.createElement("button"); d.type = "button"; d.className = "sug hot"; d.textContent = t("app.useDemo"); d.onclick = loadDemo; box.append(d); }
-  store.get(SK, []).slice(0, 3).forEach(st => { const b = document.createElement("button"); b.type = "button"; b.className = "sug hot"; b.textContent = t("style.useSaved", { n: st.nome }); b.title = st.resumo || ""; b.onclick = () => { setActiveStyle(st); inp.value = st.prompt || ""; autosize(); updSend(); inp.focus(); }; box.append(b); });
-  t("app.sugs").forEach(s => { const lab = Array.isArray(s) ? s[0] : s, val = Array.isArray(s) ? s[1] : s; const b = document.createElement("button"); b.type = "button"; b.className = "sug"; b.textContent = lab; b.title = val; b.onclick = () => { inp.value = val; autosize(); updSend(); inp.focus(); const i = val.indexOf("["); if (i >= 0) inp.setSelectionRange(i, val.indexOf("]", i) + 1); }; box.append(b); });
+  store.get(SK, []).slice(0, 3).forEach(st => { const b = document.createElement("button"); b.type = "button"; b.className = "sug hot"; b.textContent = t("style.useSaved", { n: st.nome }); b.title = st.resumo || ""; b.onclick = () => { setActiveStyle(st); autosize(); updSend(); inp.focus(); }; box.append(b); });
 }
 function loadDemo() { for (const [k, v] of SYNCAT) clips.set(k, v); renderChips(); agentNote(t("app.demoLoaded")); }
 
@@ -1463,7 +1462,7 @@ function styleCard(body, st, cost) {
   const lab = document.createElement("b"); lab.textContent = t("style.prompt"); const pre = document.createElement("pre"); pre.textContent = st.prompt || ""; c.append(lab, pre);
   if (st.limites) { const n = document.createElement("div"); n.className = "note"; n.textContent = st.limites; c.append(n); }
   const row = document.createElement("div"); row.className = "row";
-  const use1 = document.createElement("button"); use1.type = "button"; use1.className = "btn sm pri"; use1.textContent = t("style.use"); use1.onclick = () => { setActiveStyle(st); inp.value = st.prompt || ""; autosize(); updSend(); inp.focus(); const i = inp.value.indexOf("["); if (i >= 0) inp.setSelectionRange(i, inp.value.indexOf("]", i) + 1); };
+  const use1 = document.createElement("button"); use1.type = "button"; use1.className = "btn sm pri"; use1.textContent = t("style.use"); use1.onclick = () => { setActiveStyle(st); updSend(); inp.focus(); };
   const cp = document.createElement("button"); cp.type = "button"; cp.className = "btn sm"; cp.textContent = t("style.copy"); cp.onclick = async () => { try { await navigator.clipboard.writeText(st.prompt || ""); cp.textContent = t("card.copied"); } catch (e) {} };
   row.append(use1, cp); c.append(row);
   if (cost) { const n = document.createElement("div"); n.className = "note"; n.textContent = t("style.charged", { n: cost }); c.append(n); }
