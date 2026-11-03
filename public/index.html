@@ -1619,7 +1619,7 @@ function demoPlans(text, n) {
   const nm = T.match(/(?:residencial|condom[ií]nio|empreendimento|lan[cç]amento d[oa]|do|da|para o|para a)\s+((?:[A-ZÁÉÍÓÚÂÊÔÃÕÇ][\wÀ-ú'-]*\s*){1,4})/) || T.match(/"([^"]{3,40})"/);
   let name = nm ? nm[1].trim().replace(/\s+(em|no|na|com|para|dia)$/i, "") : t("demo.defName");
   const cm = T.match(/\bem\s+([A-ZÁÉÍÓÚ][\wÀ-ú]+(?:\s+(?:d[aoe]s?|de)\s+[A-ZÁÉÍÓÚ][\wÀ-ú]+)?)/); const city = cm ? cm[1] : "";
-  const wants = /motion|tipogra|reels/i.test(T) ? ["motion"] : /agressiv|impacto|forte|urg[eê]n/i.test(T) ? ["impacto"] : /tranquil|elegan|lifestyle|sofistic|calm/i.test(T) ? ["lifestyle"] : ["motion", "impacto", "lifestyle"];
+  const wants = /vitrine/i.test(T) && /cartaz/i.test(T) ? ["vitrine", "cartaz"] : /vitrine/i.test(T) ? ["vitrine"] : /cartaz|p[oô]ster/i.test(T) ? ["cartaz"] : /motion|tipogra|reels/i.test(T) ? ["motion"] : /agressiv|impacto|forte|urg[eê]n/i.test(T) ? ["impacto"] : /tranquil|elegan|lifestyle|sofistic|calm/i.test(T) ? ["lifestyle"] : ["motion", "impacto", "lifestyle"];
   const ids = [...clips.keys()]; const pick = i => ids[(i + ids.length * 7) % ids.length];
   const NAME = name.toUpperCase(), D = date || t("demo.soon");
   const MK = {
@@ -1640,6 +1640,23 @@ function demoPlans(text, n) {
         { de: 17, ate: 29.8, texto: t("demo.m10").toUpperCase(), y: .40, tam: "m", cor: "cinza" }, { de: 17.6, ate: 29.8, texto: D, y: .50, tam: date ? "xg" : "gg", anim: "digita", cor: "destaque" },
         { de: 20.5, ate: 29.8, texto: t("demo.i6"), y: .64, tam: "g", caixa: true }],
       impactos: [0, 3, 12.8, 17.6], locucao: t("demo.locI", { n: name, d: D }) }),
+    vitrine: k => ({ titulo: "Vitrine", pegada: "tranquilo", musica: "cinema", bpm: 90, cor: "warm", layout: "vitrine", destaque: "#ff7a1a",
+      cenas: [7, 6, 7, 6, 7, 12].map((b, i) => ({ clip: pick(i + k + 1), batidas: b, mov: ["in", "right", "out", "left", "in", "in"][i], trans: i === 5 ? "corte" : "fade" })),
+      textos: [{ de: .2, ate: 29.8, texto: (t("demo.m10") + " · " + D).toUpperCase(), y: .07, tam: "p", cor: "cinza", alinha: "centro", anim: "fade" },
+        { de: .5, ate: 9.2, texto: t("demo.l1"), y: .135, tam: "g", alinha: "centro", anim: "desfoca" }, { de: 9.4, ate: 18.6, texto: t("demo.l2"), y: .135, tam: "g", alinha: "centro", anim: "desfoca" },
+        { de: 18.8, ate: 29.8, texto: name, y: .135, tam: "g", alinha: "centro", anim: "desfoca", estilo: "serif" },
+        { de: 1.2, ate: 29.8, texto: city || t("demo.m9"), y: .905, tam: "p", cor: "cinza", alinha: "centro", anim: "fade" }, { de: 22, ate: 29.8, texto: t("demo.i6").toLowerCase(), y: .945, tam: "p", cor: "destaque", alinha: "centro", anim: "fade" }],
+      impactos: [], locucao: t("demo.locL", { n: name, d: D }) }),
+    cartaz: k => ({ titulo: "Cartaz", pegada: "agressivo", musica: "lancamento", bpm: 120, cor: "punchy", layout: "cartaz", destaque: "#ff5a1f", fundo: "#ff5a1f",
+      cenas: [6, 6, 6, 6, 6, 8, 22].map((b, i) => ({ clip: pick(i + k + 2), batidas: b, mov: ["in", "punch", "in", "out", "in", "in", "in"][i], trans: i % 2 ? "zoom" : "corte" })),
+      textos: [{ de: .1, ate: 2.9, texto: t("demo.i1"), y: .13, tam: "gg", cor: "preto", alinha: "centro", anim: "sobe" },
+        { de: 3, ate: 5.9, texto: "01 / 03", y: .04, tam: "p", cor: "preto", alinha: "centro" }, { de: 3, ate: 5.9, texto: t("demo.i4"), y: .17, tam: "gg", alinha: "centro", anim: "palavra" },
+        { de: 6, ate: 8.9, texto: "02 / 03", y: .04, tam: "p", cor: "preto", alinha: "centro" }, { de: 6, ate: 8.9, texto: t("demo.i5"), y: .17, tam: "gg", cor: "preto", alinha: "centro", anim: "palavra" },
+        { de: 9, ate: 11.9, texto: "03 / 03", y: .04, tam: "p", cor: "preto", alinha: "centro" }, { de: 9, ate: 11.9, texto: (city || t("demo.m9")).toUpperCase(), y: .15, tam: "g", alinha: "centro", anim: "palavra" },
+        { de: 12, ate: 17.9, texto: NAME, y: .13, tam: name.length > 14 ? "g" : "gg", cor: "preto", alinha: "centro", anim: "sobe" },
+        { de: 18, ate: 29.8, texto: t("demo.m10").toUpperCase(), y: .065, tam: "m", cor: "preto", alinha: "centro" }, { de: 18.4, ate: 29.8, texto: D, y: .175, tam: date ? "xg" : "gg", alinha: "centro", anim: "digita" },
+        { de: 21, ate: 29.8, texto: t("demo.i6"), y: .29, tam: "m", alinha: "centro", caixa: true }],
+      impactos: [0, 12, 18.4], locucao: t("demo.locI", { n: name, d: D }) }),
     lifestyle: k => ({ titulo: t("demo.tLife"), pegada: "tranquilo", musica: "cinema", bpm: 90, cor: "warm", layout: "cinema", destaque: "#f3c34a",
       cenas: [7, 6, 7, 6, 7, 12].map((b, i) => ({ clip: pick(i + k + 4), batidas: b, mov: ["in", "right", "out", "left", "in", "in"][i], trans: i === 5 ? "corte" : i % 2 ? "preto" : "fade" })),
       textos: [{ de: .6, ate: 4.4, texto: t("demo.l1"), y: .27, tam: "m", peso: "leve", alinha: "centro" }, { de: 5, ate: 9.2, texto: t("demo.l2"), y: .27, tam: "m", peso: "leve", alinha: "centro" },
