@@ -3,6 +3,10 @@ window.FF_CONFIG = {
   SUPABASE_URL: "https://SEU-PROJETO.supabase.co",
   SUPABASE_ANON_KEY: "COLE_AQUI_A_ANON_KEY",
 
+  // Endereço do servidor na Vercel (ex.: "https://flamefields.vercel.app").
+  // Deixe vazio se o site estiver hospedado na própria Vercel. Preencha se o site estiver no GitHub Pages.
+  API_BASE: "",
+
   // Links de pagamento (Hypercash). O e-mail do cliente logado é adicionado automaticamente quando possível.
   CHECKOUT: {
     vitalicio:       "https://pay.hypercash.com.br/pt/checkout/COLE_O_LINK_DO_ACESSO_VITALICIO",   // R$ 1.190,90 pagamento único

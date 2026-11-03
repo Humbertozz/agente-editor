@@ -1,5 +1,5 @@
 // POST /api/agent — o cérebro do Flamefields. Usa a SUA chave da Anthropic e desconta créditos do cliente.
-import { env, json, authEmail, db, accessState, publicProfile, costCents } from "./_lib.js";
+import { env, json, authEmail, db, accessState, accessFor, publicProfile, costCents } from "./_lib.js";
 import { STYLE_NOTES } from "./_style.js";
 
 export const maxDuration = 120;
@@ -66,7 +66,7 @@ export async function POST(request) {
   if (!email) return json({ error: "login" }, 401);
   let p = (await db.rpc("ff_refill", { p_email: email })).data;
   if (!p || !p.email) p = await db.profile(email);
-  const st = accessState(p);
+  const st = accessFor(email, p);
   if (!st.ok) return json({ error: st.reason, profile: publicProfile(p) }, 402);
 
   let body; try { body = await request.json(); } catch { return json({ error: "bad_request" }, 400); }
@@ -103,8 +103,9 @@ export async function POST(request) {
   let resposta = String(out.resposta || "");
   let cut = 0;
   if (videos.length > st.credits) { cut = videos.length - st.credits; videos = videos.slice(0, st.credits); }
-  const after = videos.length
+  const after = !p ? null : videos.length
     ? (await db.rpc("ff_debit", { p_email: email, p_videos: videos.length, p_cost: cost, p_in: data.usage?.input_tokens || 0, p_out: data.usage?.output_tokens || 0 })).data
     : (await db.rpc("ff_cost", { p_email: email, p_cost: cost, p_in: data.usage?.input_tokens || 0, p_out: data.usage?.output_tokens || 0 }), await db.profile(email));
-  return json({ resposta, videos, cut, profile: publicProfile(after && after.email ? after : await db.profile(email)) });
+  const prof = after && after.email ? after : await db.profile(email);
+  return json({ resposta, videos, cut, profile: publicProfile(prof) || (st.admin ? { email, credits: st.credits, plan: "produtor" } : null) });
 }

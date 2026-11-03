@@ -32,7 +32,7 @@ button.ghost{background:transparent;border:1px solid var(--line)}
   <div><h1>Painel do produtor</h1><p class="note" id="who">Carregando…</p></div>
   <div id="login" class="card" hidden>
     <h2>Entrar</h2>
-    <form id="lf"><label>E-mail de administrador<input id="le" type="email" required></label><button type="submit">Receber link</button></form>
+    <form id="lf"><label>E-mail<input id="le" type="email" required autocomplete="email"></label><label>Senha<input id="lp" type="password" autocomplete="current-password"></label><button type="submit">Entrar</button><button type="button" class="ghost" id="lm">Entrar com link por e-mail</button></form>
     <p class="note" id="ln"></p>
   </div>
   <div id="main" hidden style="display:grid;gap:18px">
@@ -57,14 +57,15 @@ button.ghost{background:transparent;border:1px solid var(--line)}
     <div class="card"><h2>Leads do site</h2><div class="tbl"><table><thead><tr><th>Data</th><th>Nome</th><th>Empresa</th><th>WhatsApp</th><th>Plano</th></tr></thead><tbody id="leads"></tbody></table></div></div>
   </div>
 </div>
-<script src="/config.js"></script>
+<script src="config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 const C = window.FF_CONFIG, SB = supabase.createClient(C.SUPABASE_URL, C.SUPABASE_ANON_KEY);
 const $ = s => document.querySelector(s);
 const brl = c => (c / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 async function tk() { const { data } = await SB.auth.getSession(); return data.session && data.session.access_token; }
-async function api(method, body) { const r = await fetch("/api/admin", { method, headers: { "Content-Type": "application/json", Authorization: "Bearer " + await tk() }, body: body ? JSON.stringify(body) : undefined }); return { ok: r.ok, status: r.status, data: await r.json().catch(() => ({})) }; }
+const BASE = (C.API_BASE || "").replace(/\/$/, "");
+async function api(method, body) { const r = await fetch(BASE + "/api/admin", { method, headers: { "Content-Type": "application/json", Authorization: "Bearer " + await tk() }, body: body ? JSON.stringify(body) : undefined }); return { ok: r.ok, status: r.status, data: await r.json().catch(() => ({})) }; }
 async function load() {
   if (!(await tk())) { $("#login").hidden = false; $("#who").textContent = "Entre com o e-mail de administrador."; return; }
   const r = await api("GET");
@@ -86,7 +87,8 @@ async function load() {
   const L = $("#leads"); L.innerHTML = "";
   for (const l of r.data.leads) { const tr = document.createElement("tr"); [new Date(l.created_at).toLocaleString("pt-BR"), l.nome, l.empresa, l.whatsapp, l.plano].forEach(v => { const td = document.createElement("td"); td.textContent = v || ""; tr.append(td); }); L.append(tr); }
 }
-$("#lf").onsubmit = async e => { e.preventDefault(); const { error } = await SB.auth.signInWithOtp({ email: $("#le").value.trim(), options: { emailRedirectTo: location.origin + "/admin" } }); $("#ln").textContent = error ? "Erro: " + error.message : "Link enviado. Abra o e-mail."; };
+$("#lf").onsubmit = async e => { e.preventDefault(); const { error } = await SB.auth.signInWithPassword({ email: $("#le").value.trim(), password: $("#lp").value }); if (error) { $("#ln").textContent = "E-mail ou senha incorretos."; return; } load(); };
+$("#lm").onclick = async () => { const { error } = await SB.auth.signInWithOtp({ email: $("#le").value.trim(), options: { emailRedirectTo: location.href } }); $("#ln").textContent = error ? "Erro: " + error.message : "Link enviado. Abra o e-mail."; };
 $("#gf").onsubmit = async e => { e.preventDefault(); const r = await api("POST", { action: "grant", email: $("#ge").value.trim(), name: $("#gn").value.trim(), key: $("#gk").value }); $("#gnote").textContent = r.ok ? "Acesso liberado e convite enviado." : "Erro: " + (r.data.error || r.status); load(); };
 SB.auth.onAuthStateChange(ev => { if (ev === "SIGNED_IN") load(); });
 load();

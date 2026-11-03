@@ -88,6 +88,8 @@ export async function authEmail(request) {
 }
 
 /* ---------------- acesso e saldo ---------------- */
+export function isAdminEmail(email) { return !!email && env("ADMIN_EMAILS", "").toLowerCase().split(/[,\s]+/).filter(Boolean).includes(String(email).toLowerCase()); }
+export function accessFor(email, p) { if (isAdminEmail(email)) return { ok: true, credits: Math.max(999, ((p && p.plan_credits) || 0) + ((p && p.extra_credits) || 0)), admin: true }; return accessState(p); }
 export function accessState(p) {
   if (!p) return { ok: false, reason: "sem_assinatura" };
   if (p.status === "bloqueado") return { ok: false, reason: "bloqueado" };

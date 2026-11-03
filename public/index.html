@@ -164,6 +164,16 @@ footer.ft h4{color:var(--fg);font-size:13px;margin:0 0 10px;font-weight:700}
 footer.ft nav{display:grid;gap:7px}
 footer.ft a:hover{color:var(--fg)}
 
+.mixgrid{display:grid;gap:14px;grid-template-columns:1fr}
+@media (min-width:720px){.mixgrid{grid-template-columns:1fr 1fr}}
+@media (min-width:1080px){.mixgrid{grid-template-columns:repeat(4,1fr)}}
+.mixcard{border:1px solid var(--line);border-radius:18px;padding:22px;background:linear-gradient(170deg,rgba(255,90,31,.08),transparent 55%),var(--card);display:grid;gap:10px;align-content:start}
+.mixcard h3{font-size:18px;font-weight:800}
+.mixcard p{color:var(--mist);font-size:14.5px}
+.mixtag{justify-self:start;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:99px;background:rgba(255,90,31,.14);color:#ffb38f;border:1px solid rgba(255,90,31,.35)}
+.mixeq{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px 14px;margin-top:28px;font-family:var(--f-display);font-weight:700;font-size:clamp(16px,2vw,22px)}
+.mixeq>b{color:var(--mist2)}
+.mixnote{text-align:center;color:var(--mist2);font-size:12px;margin-top:14px;max-width:60em;margin-inline:auto}
 /* app: chat no estilo assistente — barra lateral com conversas, coluna central com mensagens e vídeos dentro da resposta, caixa de texto com anexos */
 .app{display:grid;grid-template-columns:minmax(0,1fr);min-height:100vh;height:100%}
 @media (min-width:980px){.app{grid-template-columns:260px minmax(0,1fr)}}
@@ -270,6 +280,9 @@ button.credits{cursor:pointer}
 .gate-form{display:grid;gap:10px;width:100%}
 .gate-form input{background:rgba(6,11,22,.7);border:1px solid var(--line2);border-radius:10px;padding:12px;width:100%;color:var(--fg);font-size:15px}
 .gate-btns{display:grid;gap:8px;width:100%}
+.gate-form label{display:grid;gap:4px;text-align:left;font-size:12.5px;color:var(--mist)}
+.gate-links{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.linkbtn{border:0;background:transparent;color:var(--brand2);font-size:13px;padding:2px 0;text-decoration:underline;text-underline-offset:3px}
 .upsell{display:grid;gap:8px;border:1px solid rgba(255,90,31,.45);background:rgba(255,90,31,.07);border-radius:14px;padding:14px}
 .upsell .row{display:flex;gap:8px;flex-wrap:wrap}
 </style>
@@ -284,11 +297,11 @@ button.credits{cursor:pointer}
         <span class="wm">Flame<b>fields</b></span>
       </a>
       <nav class="nav-links" aria-label="Seções">
-        <a href="#como" data-i18n="nav.how"></a><a href="#recursos" data-i18n="nav.features"></a><a href="#planos" data-i18n="nav.pricing"></a><a href="#duvidas" data-i18n="nav.faq"></a>
+        <a href="#mix" data-i18n="nav.mix"></a><a href="#como" data-i18n="nav.how"></a><a href="#recursos" data-i18n="nav.features"></a><a href="#planos" data-i18n="nav.pricing"></a><a href="#duvidas" data-i18n="nav.faq"></a>
       </nav>
       <div class="nav-r">
         <div class="lang" role="group" aria-label="Idioma / Language"><button type="button" data-lang="pt">PT</button><button type="button" data-lang="en">EN</button></div>
-        <a class="btn sm hide-s" href="/app" data-i18n="nav.login"></a>
+        <a class="btn sm hide-s" href="?app=1" data-i18n="nav.login"></a>
         <a class="btn sm pri" href="#planos" data-i18n="nav.start"></a>
       </div>
     </div>
@@ -321,6 +334,20 @@ button.credits{cursor:pointer}
             </div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="sec gut" id="mix">
+      <div class="page">
+        <div class="sec-h"><span class="eyebrow" data-i18n="mix.eyebrow"></span><h2 data-i18n="mix.h2"></h2><p data-i18n="mix.p"></p></div>
+        <div class="mixgrid">
+          <div class="mixcard"><span class="mixtag" data-i18n="mix.ae.tag"></span><h3 data-i18n="mix.ae.t"></h3><p data-i18n="mix.ae.p"></p></div>
+          <div class="mixcard"><span class="mixtag" data-i18n="mix.cc.tag"></span><h3 data-i18n="mix.cc.t"></h3><p data-i18n="mix.cc.p"></p></div>
+          <div class="mixcard"><span class="mixtag" data-i18n="mix.dv.tag"></span><h3 data-i18n="mix.dv.t"></h3><p data-i18n="mix.dv.p"></p></div>
+          <div class="mixcard"><span class="mixtag" data-i18n="mix.au.tag"></span><h3 data-i18n="mix.au.t"></h3><p data-i18n="mix.au.p"></p></div>
+        </div>
+        <div class="mixeq"><span data-i18n="mix.eq1"></span><b>+</b><span data-i18n="mix.eq2"></span><b>+</b><span data-i18n="mix.eq3"></span><b>=</b><span class="wm">Flame<b>fields</b></span></div>
+        <p class="mixnote" data-i18n="mix.note"></p>
       </div>
     </section>
 
@@ -398,7 +425,7 @@ button.credits{cursor:pointer}
     <div class="page">
       <div style="display:grid;gap:10px"><span class="logo"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><use href="#ffmark"/></svg><span class="wm">Flame<b>fields</b></span></span><p data-i18n="ft.tag"></p></div>
       <div><h4 data-i18n="ft.product"></h4><nav><a href="#como" data-i18n="nav.how"></a><a href="#recursos" data-i18n="nav.features"></a><a href="#planos" data-i18n="nav.pricing"></a></nav></div>
-      <div><h4 data-i18n="ft.account"></h4><nav><a href="/app" data-i18n="nav.login"></a><a href="#contato" data-i18n="ft.sales"></a><a href="#duvidas" data-i18n="nav.faq"></a></nav></div>
+      <div><h4 data-i18n="ft.account"></h4><nav><a href="?app=1" data-i18n="nav.login"></a><a href="#contato" data-i18n="ft.sales"></a><a href="#duvidas" data-i18n="nav.faq"></a></nav></div>
     </div>
   </footer>
 </div>
@@ -406,7 +433,7 @@ button.credits{cursor:pointer}
 <!-- ======================= APP ======================= -->
 <div id="app" class="app" hidden>
   <aside class="side">
-    <a class="logo" href="/" aria-label="Flamefields"><svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><use href="#ffmark"/></svg><span class="wm">Flame<b>fields</b></span></a>
+    <a class="logo" href="./" aria-label="Flamefields"><svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><use href="#ffmark"/></svg><span class="wm">Flame<b>fields</b></span></a>
     <button class="btn newchat" type="button" id="newChat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span data-i18n="app.new"></span></button>
     <div class="convs"><h4 data-i18n="app.recent"></h4><div id="convList"></div></div>
     <div class="acct"><div class="avatar" id="av">?</div><div style="min-width:0"><b id="acctName" data-i18n="acct.name"></b><span data-i18n="acct.active"></span></div></div>
@@ -416,7 +443,7 @@ button.credits{cursor:pointer}
     <div class="topbar">
       <div class="m-only"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><use href="#ffmark"/></svg><button class="iconbtn" type="button" id="newChatM" aria-label="+"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button></div>
       <div class="ttl" id="convTitle"></div>
-      <div class="row"><div class="lang" role="group" aria-label="Idioma / Language"><button type="button" data-lang="pt">PT</button><button type="button" data-lang="en">EN</button></div><button type="button" class="credits" id="credits" hidden></button><a class="btn sm" href="/" data-i18n="app.site"></a></div>
+      <div class="row"><div class="lang" role="group" aria-label="Idioma / Language"><button type="button" data-lang="pt">PT</button><button type="button" data-lang="en">EN</button></div><button type="button" class="credits" id="credits" hidden></button><a class="btn sm" href="./" data-i18n="app.site"></a></div>
     </div>
 
     <div class="gate" id="gate" hidden>
@@ -424,7 +451,16 @@ button.credits{cursor:pointer}
         <svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><use href="#ffmark"/></svg>
         <h2 id="gateH"></h2>
         <p id="gateP"></p>
-        <form class="gate-form" id="loginForm" hidden><label class="sr" for="loginEmail">E-mail</label><input id="loginEmail" type="email" required autocomplete="email" placeholder="voce@empresa.com.br"><button class="btn pri" type="submit" data-i18n="gate.send"></button></form>
+        <form class="gate-form" id="loginForm" hidden>
+          <label for="loginEmail"><span data-i18n="login.email"></span><input id="loginEmail" type="email" required autocomplete="email" placeholder="voce@empresa.com.br"></label>
+          <label for="loginPass"><span data-i18n="login.pass"></span><input id="loginPass" type="password" autocomplete="current-password" minlength="6"></label>
+          <button class="btn pri" type="submit" data-i18n="login.enter"></button>
+          <div class="gate-links"><button type="button" class="linkbtn" id="magicBtn" data-i18n="gate.send"></button><button type="button" class="linkbtn" id="forgotBtn" data-i18n="login.forgot"></button></div>
+        </form>
+        <form class="gate-form" id="newPassForm" hidden>
+          <label for="newPass"><span data-i18n="login.newPass"></span><input id="newPass" type="password" autocomplete="new-password" minlength="8" required></label>
+          <button class="btn pri" type="submit" data-i18n="login.savePass"></button>
+        </form>
         <div class="gate-btns" id="gateBtns"></div>
         <p class="note" id="gateNote"></p>
       </div>
@@ -461,7 +497,7 @@ button.credits{cursor:pointer}
 </div>
 <canvas id="cv" width="720" height="1280" hidden></canvas>
 
-<script src="/config.js"></script>
+<script src="config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 (() => {
@@ -473,10 +509,10 @@ const store = { get(k, d) { try { const v = localStorage.getItem(k); return v ? 
 /* ======================= i18n ======================= */
 const I18N = {
 pt: {
- "nav.how": "Como funciona", "nav.features": "Recursos", "nav.pricing": "Preços", "nav.faq": "Dúvidas", "nav.login": "Entrar", "nav.start": "Comprar acesso",
+ "nav.mix": "O mix", "nav.how": "Como funciona", "nav.features": "Recursos", "nav.pricing": "Preços", "nav.faq": "Dúvidas", "nav.login": "Entrar", "nav.start": "Comprar acesso",
  "hero.new": "NOVO", "hero.announce": "Envie um vídeo de referência e o agente copia o estilo",
  "hero.h1": "Vídeos de lançamento <em>que vendem</em>, editados por IA em minutos",
- "hero.lead": "Envie os takes do empreendimento, peça no chat e veja o agente montar vídeos verticais de 30 segundos com trilha própria, cortes na batida, textos e chamada final. Prontos para Reels, Stories e Meta Ads.",
+ "hero.lead": "Uma IA que junta o motion do After Effects, o ritmo do CapCut e a cor de cinema. Envie os takes do empreendimento, peça no chat e veja o agente montar vídeos verticais de 30 segundos com trilha própria, cortes na batida, textos e chamada final. Prontos para Reels, Stories e Meta Ads.",
  "hero.cta1": "Comprar acesso vitalício", "hero.cta2": "Ver como funciona",
  "hero.f1": "Não precisa saber editar", "hero.f2": "Trilha sem direitos autorais", "hero.f3": "Pegada agressiva ou tranquila",
  "frame.url": "app.flamefields · estúdio", "frame.you": "Você", "frame.agent": "Agente", "frame.q": "Faz 3 vídeos agressivos para o lançamento, com a data e a chamada para o cadastro.", "frame.a": "Fechado. Trilha de lançamento, texto palavra por palavra e assinatura no final. Editando o 1 de 3.",
@@ -536,28 +572,37 @@ pt: {
  "app.sugs": [["Motion estilo Reels", "Faça 3 vídeos MOTION com os takes que enviei, texto entrando palavra por palavra, alinhado à esquerda. Empreendimento: [NOME], em [CIDADE]. Lançamento dia [DATA]. Destaque em faixa laranja as palavras [PALAVRA 1] e [PALAVRA 2]. Faça uma virada com palavra riscada e a resposta em itálico. Data gigante digitada no final e fechamento \"comenta QUERO\"."], ["Anúncio agressivo", "Crie 3 anúncios agressivos de 30s para Meta Ads do [NOME] ([CIDADE]). Gancho forte nos 3 primeiros segundos, cortes na batida, textos curtos em caixa alta. Oferta (use exatamente assim): [OFERTA]. Chamada final: \"Toque em Saiba Mais e faça seu cadastro\". Locução com voz masculina firme."], ["Lifestyle elegante", "Quero 2 vídeos tranquilos e sofisticados, formato cinema, para casais e famílias: pôr do sol, lazer e tranquilidade. Empreendimento [NOME]. Sem preços. Frases curtas e elegantes. Locução feminina acolhedora."], ["Diferenciais em lista", "Faça 1 vídeo motion mostrando os diferenciais, um por bloco, com a palavra principal em destaque: [DIFERENCIAL 1], [DIFERENCIAL 2], [DIFERENCIAL 3]. Termine com [NOME] e a data [DATA] gigante."], ["Contagem regressiva", "Faça 1 vídeo de contagem regressiva para o lançamento do [NOME] no dia [DATA]: 3, 2, 1 com impacto, revelação do nome e a data em destaque no final. Pegada agressiva."], ["Ajuste fino", "Refaça o vídeo [N] mantendo tudo igual. Mude apenas: [O QUE MUDAR]."]], "card.motion": "motion",
  "plan.credits": "{n} vídeos por mês incluídos", "pack.label": "+{n} vídeos",
  "credits.badge": "{n} créditos", "credits.title": "Franquia do mês: {p} · Recargas: {x}", "credits.low": "Restam {n} créditos. Recarregue para não parar no meio de uma campanha.", "credits.cut": "Seus créditos só cobriam parte do pedido: {n} vídeo(s) ficaram de fora. Recarregue para gerar o resto.",
- "gate.send": "Receber link de acesso", "gate.sent": "Enviamos um link de acesso para {e}. Abra o e-mail neste aparelho.", "gate.notFound": "Não encontramos uma assinatura com este e-mail. Use o mesmo e-mail da compra.", "gate.logout": "Sair",
- "gate.login.h": "Entre no Flamefields", "gate.login.p": "Digite o e-mail usado na compra. Você recebe um link de acesso, sem senha.",
+ "gate.send": "Entrar com link por e-mail", "gate.sent": "Enviamos um link de acesso para {e}. Abra o e-mail neste aparelho.", "gate.notFound": "Não encontramos uma assinatura com este e-mail. Use o mesmo e-mail da compra.", "gate.logout": "Sair",
+ "gate.login.h": "Entre no Flamefields", "gate.login.p": "Entre com o e-mail da compra e sua senha. Primeira vez? Clique em \"Criar ou trocar senha\" ou entre com o link por e-mail.",
  "gate.sem_assinatura.h": "Você ainda não tem acesso", "gate.sem_assinatura.p": "Compre o acesso vitalício para liberar o estúdio com 1.000 vídeos inclusos. O acesso é liberado assim que o pagamento é confirmado.",
  "gate.expirado.h": "Sua assinatura venceu", "gate.expirado.p": "Renove para voltar a editar. Seus créditos de recarga continuam guardados.",
  "gate.bloqueado.h": "Acesso suspenso", "gate.bloqueado.p": "Houve um reembolso ou contestação neste pedido. Fale com o suporte para reativar.",
  "gate.sem_creditos.h": "Seus créditos acabaram", "gate.sem_creditos.p": "Assine os créditos mensais para receber vídeos novos todo mês, ou compre uma recarga para continuar agora. Os créditos entram assim que o pagamento é confirmado.",
  "gate.limite_custo.h": "Limite de uso do plano atingido", "gate.limite_custo.p": "Você usou o máximo previsto para o seu plano neste período. Recarregue para continuar.",
- "gate.recarga.p": "Escolha como quer continuar:", "gate.config.h": "Configuração pendente", "gate.config.p": "O produtor ainda não configurou o acesso. Tente novamente mais tarde.",
+ "gate.recarga.p": "Escolha como quer continuar:", "gate.config.h": "Configuração pendente", "gate.config.p": "O login ainda não está ligado: falta conectar o banco de dados (Supabase) no config.js. Veja o passo 2 e 3 do guia.",
  "plan.vitalicio": "Acesso vitalício", "plan.per.vitalicio": "pagamento único", "plan.vit.eq": "Já vem com {n} vídeos. Sem mensalidade obrigatória.", "plan.vit.f1": "{n} vídeos inclusos (créditos não vencem)", "plan.vit.f2": "Acesso ao estúdio para sempre", "plan.vit.f3": "Identificador de estilo: envie uma referência e o agente copia", "plan.vit.cta": "Quero acesso vitalício",
  "plan.creditos_mensal": "Créditos mensais", "plan.per.creditos_mensal": "/mês", "plan.mon.unit": "vídeos todo mês", "plan.mon.eq": "Opcional. Assine de dentro do estúdio quando quiser.", "plan.mon.f1": "+{n} vídeos somados todo mês", "plan.mon.f2": "Créditos acumulam, não vencem", "plan.mon.f3": "Liberados automaticamente a cada pagamento", "plan.mon.cta": "Assinar dentro do estúdio",
  "plan.packs": "Recargas avulsas", "plan.packs.p": "Precisa de mais agora? Compre na hora, dentro do estúdio.", "plan.style": "Análise de estilo: {n} créditos",
  "mon.btn": "Assinar +{n} vídeos/mês", "mon.active": "Créditos mensais ativos", "credits.info": "Você tem {n} créditos. Cada vídeo usa 1 crédito e cada análise de estilo usa 5. Para nunca ficar sem, assine os créditos mensais.",
  "style.copy": "Copiar prompt", "style.btn": "Identificar estilo de um vídeo de referência", "style.active": "Estilo: {n}", "style.unnamed": "Estilo da referência", "style.mus.l": "trilha de lançamento", "style.mus.e": "trilha épica", "style.prompt": "Prompt pronto", "style.use": "Usar este estilo", "style.useSaved": "Usar estilo: {n}", "style.charged": "Análise de estilo: {n} créditos.",
  "style.watching": "Assistindo a referência", "style.reading": "Identificando ritmo, tipografia e destaques", "style.readFail": "Não consegui ler esse vídeo. Envie um MP4.", "style.need": "A análise de estilo usa {n} créditos e seu saldo não cobre.", "style.done": "Identifiquei o estilo \"{n}\". Já deixei o prompt pronto: é só completar os colchetes e enviar com os takes.", "style.userMsg": "Identifique o estilo deste vídeo", "style.title": "Estilo de referência", "style.turnUser": "Analise o estilo do vídeo de referência que enviei.",
+ "login.email": "E-mail", "login.pass": "Senha", "login.enter": "Entrar", "login.forgot": "Criar ou trocar senha", "login.needPass": "Digite sua senha, ou use \"Receber link de acesso\".", "login.needEmail": "Digite seu e-mail primeiro.", "login.entering": "Entrando…", "login.wrong": "E-mail ou senha incorretos. Se ainda não criou sua senha, clique em \"Criar ou trocar senha\".", "login.resetSent": "Enviamos um link para {e} criar sua senha.", "login.newPass": "Nova senha (mínimo 8 caracteres)", "login.savePass": "Salvar senha e entrar", "login.passFail": "Não consegui salvar a senha. Tente de novo.", "login.passOk": "Senha salva. Entrando…",
+ "gate.senha.h": "Crie sua senha", "gate.senha.p": "Escolha uma senha para entrar no Flamefields sem precisar de link por e-mail.",
+ "mix.eyebrow": "Um mix dos melhores editores", "mix.h2": "O motion do After Effects, o ritmo do CapCut e o acabamento de cinema, num chat", "mix.p": "O Flamefields junta as técnicas que os melhores editores usam em ferramentas diferentes e aplica tudo sozinho nos seus takes. Você só escreve o que quer.",
+ "mix.ae.tag": "estilo After Effects", "mix.ae.t": "Motion design e tipografia animada", "mix.ae.p": "Texto entrando palavra por palavra, palavra-chave em faixa colorida, palavra riscada, números gigantes digitados e movimento de câmera em cada cena.",
+ "mix.cc.tag": "estilo CapCut", "mix.cc.t": "Cortes rápidos de Reels", "mix.cc.p": "Cortes no ritmo da música, transições de impacto, zoom de entrada e o gancho nos 3 primeiros segundos que segura quem está rolando o feed.",
+ "mix.dv.tag": "estilo Premiere e DaVinci", "mix.dv.t": "Cor e acabamento de cinema", "mix.dv.p": "Tratamento de cor quente, contraste, vinheta, formato widescreen e grão de filme para o empreendimento parecer campanha de alto padrão.",
+ "mix.au.tag": "estúdio de som", "mix.au.t": "Trilha original e efeitos", "mix.au.p": "Trilha de lançamento composta para cada vídeo, sem direitos autorais, com efeitos sonoros que acompanham cada palavra e cada revelação.",
+ "mix.eq1": "Motion", "mix.eq2": "Cortes de Reels", "mix.eq3": "Cor de cinema",
+ "mix.note": "After Effects, Premiere, CapCut e DaVinci Resolve são marcas de seus respectivos donos. O Flamefields não é afiliado a eles: é uma IA de edição própria que aplica técnicas inspiradas nesses editores.",
  "idle.1": "PRONTO PARA\nEDITAR", "idle.2": "Peça no chat",
  "demo.t1": "SEU LANÇAMENTO", "demo.t2": "MERECE\nVÍDEO ASSIM", "demo.t3": "CORTE NA BATIDA", "demo.t4": "TRILHA PRÓPRIA", "demo.t5": "TEXTO QUE VENDE", "demo.t6": "EM 30 SEGUNDOS", "demo.t7": "AGRESSIVO OU\nTRANQUILO", "demo.t8": "VOCÊ SÓ PEDE", "demo.t10": "EDIÇÃO COM IA"
 },
 en: {
- "nav.how": "How it works", "nav.features": "Features", "nav.pricing": "Pricing", "nav.faq": "FAQ", "nav.login": "Log in", "nav.start": "Get access",
+ "nav.mix": "The mix", "nav.how": "How it works", "nav.features": "Features", "nav.pricing": "Pricing", "nav.faq": "FAQ", "nav.login": "Log in", "nav.start": "Get access",
  "hero.new": "NEW", "hero.announce": "Send a reference video and the agent copies the style",
  "hero.h1": "Launch videos <em>that sell</em>, edited by AI in minutes",
- "hero.lead": "Upload your property footage, ask in the chat and watch the agent build 30-second vertical videos with an original soundtrack, beat-synced cuts, on-screen copy and a closing call to action. Ready for Reels, Stories and Meta Ads.",
+ "hero.lead": "An AI that blends After Effects motion, CapCut pace and cinema color. Upload your property footage, ask in the chat and watch the agent build 30-second vertical videos with an original soundtrack, beat-synced cuts, on-screen copy and a closing call to action. Ready for Reels, Stories and Meta Ads.",
  "hero.cta1": "Get lifetime access", "hero.cta2": "See how it works",
  "hero.f1": "No editing skills needed", "hero.f2": "Copyright-free soundtrack", "hero.f3": "Bold or calm style",
  "frame.url": "app.flamefields · studio", "frame.you": "You", "frame.agent": "Agent", "frame.q": "Make 3 bold videos for the launch, with the date and a sign-up call to action.", "frame.a": "On it. Launch soundtrack, word-by-word typography and a branded ending. Editing 1 of 3.",
@@ -617,8 +662,8 @@ en: {
  "app.sugs": [["Reels-style motion", "Make 3 MOTION videos with the clips I sent, words appearing one by one, left-aligned. Property: [NAME], in [CITY]. Launch date [DATE]. Put the words [WORD 1] and [WORD 2] in an orange highlight box. Add a twist with a crossed-out word and an italic answer. Huge typed date at the end and close with \"comment WANT\"."], ["Bold ad", "Create 3 bold 30s Meta ads for [NAME] ([CITY]). Strong hook in the first 3 seconds, beat-synced cuts, short all-caps copy. Offer (use exactly): [OFFER]. Closing call: \"Tap Learn More and sign up\". Firm male voiceover."], ["Elegant lifestyle", "I want 2 calm, sophisticated widescreen videos for couples and families: sunsets, amenities and peace. Property [NAME]. No prices. Short elegant lines. Warm female voiceover."], ["Feature list", "Make 1 motion video showing the highlights, one per block, with the main word highlighted: [HIGHLIGHT 1], [HIGHLIGHT 2], [HIGHLIGHT 3]. End with [NAME] and the date [DATE] huge."], ["Countdown", "Make 1 countdown video for the [NAME] launch on [DATE]: 3, 2, 1 with impact, name reveal and the date highlighted at the end. Bold style."], ["Fine-tune", "Redo video [N] keeping everything the same. Only change: [WHAT TO CHANGE]."]], "card.motion": "motion",
  "plan.credits": "{n} videos per month included", "pack.label": "+{n} videos",
  "credits.badge": "{n} credits", "credits.title": "Monthly allowance: {p} · Top-ups: {x}", "credits.low": "{n} credits left. Top up so you don't stop mid-campaign.", "credits.cut": "Your credits only covered part of the request: {n} video(s) were left out. Top up to generate the rest.",
- "gate.send": "Email me an access link", "gate.sent": "We sent an access link to {e}. Open the email on this device.", "gate.notFound": "We couldn't find a subscription for this email. Use the same email you purchased with.", "gate.logout": "Sign out",
- "gate.login.h": "Sign in to Flamefields", "gate.login.p": "Enter the email you purchased with. You'll get an access link, no password needed.",
+ "gate.send": "Sign in with an email link", "gate.sent": "We sent an access link to {e}. Open the email on this device.", "gate.notFound": "We couldn't find a subscription for this email. Use the same email you purchased with.", "gate.logout": "Sign out",
+ "gate.login.h": "Sign in to Flamefields", "gate.login.p": "Sign in with your purchase email and password. First time? Click \"Create or reset password\" or use the email link.",
  "gate.sem_assinatura.h": "You don't have access yet", "gate.sem_assinatura.p": "Get lifetime access to unlock the studio with 1,000 videos included. Access is enabled as soon as payment is confirmed.",
  "gate.expirado.h": "Your subscription expired", "gate.expirado.p": "Renew to keep editing. Your top-up credits stay saved.",
  "gate.bloqueado.h": "Access suspended", "gate.bloqueado.p": "This order was refunded or disputed. Contact support to reactivate.",
@@ -631,6 +676,15 @@ en: {
  "mon.btn": "Subscribe +{n} videos/month", "mon.active": "Monthly credits active", "credits.info": "You have {n} credits. Each video uses 1 credit and each style analysis uses 5. Subscribe to monthly credits so you never run out.",
  "style.copy": "Copy prompt", "style.btn": "Identify the style of a reference video", "style.active": "Style: {n}", "style.unnamed": "Reference style", "style.mus.l": "launch soundtrack", "style.mus.e": "epic soundtrack", "style.prompt": "Ready-made prompt", "style.use": "Use this style", "style.useSaved": "Use style: {n}", "style.charged": "Style analysis: {n} credits.",
  "style.watching": "Watching the reference", "style.reading": "Identifying pace, typography and highlights", "style.readFail": "I couldn't read that video. Send an MP4.", "style.need": "Style analysis uses {n} credits and your balance doesn't cover it.", "style.done": "I identified the style \"{n}\". The prompt is ready: fill in the brackets and send it with your clips.", "style.userMsg": "Identify the style of this video", "style.title": "Reference style", "style.turnUser": "Analyze the style of the reference video I sent.",
+ "login.email": "Email", "login.pass": "Password", "login.enter": "Sign in", "login.forgot": "Create or reset password", "login.needPass": "Enter your password, or use \"Email me an access link\".", "login.needEmail": "Enter your email first.", "login.entering": "Signing in…", "login.wrong": "Wrong email or password. If you haven't created a password yet, click \"Create or reset password\".", "login.resetSent": "We sent a link to {e} to set your password.", "login.newPass": "New password (at least 8 characters)", "login.savePass": "Save password and sign in", "login.passFail": "Couldn't save the password. Try again.", "login.passOk": "Password saved. Signing in…",
+ "gate.senha.h": "Create your password", "gate.senha.p": "Choose a password to sign in to Flamefields without an email link.",
+ "mix.eyebrow": "A mix of the best editors", "mix.h2": "After Effects motion, CapCut pace and cinema finish, in a chat", "mix.p": "Flamefields brings together techniques top editors use across different tools and applies them to your footage on its own. You just write what you want.",
+ "mix.ae.tag": "After Effects style", "mix.ae.t": "Motion design and kinetic type", "mix.ae.p": "Words appearing one by one, keywords in a colored highlight, crossed-out words, huge typed numbers and camera movement on every shot.",
+ "mix.cc.tag": "CapCut style", "mix.cc.t": "Fast Reels cuts", "mix.cc.p": "Cuts on the beat, impact transitions, punch-in zooms and a hook in the first 3 seconds that stops the scroll.",
+ "mix.dv.tag": "Premiere and DaVinci style", "mix.dv.t": "Cinema color and finish", "mix.dv.p": "Warm grading, contrast, vignette, widescreen and film grain so the property looks like a premium campaign.",
+ "mix.au.tag": "sound studio", "mix.au.t": "Original soundtrack and SFX", "mix.au.p": "A launch soundtrack composed for each video, copyright-free, with sound effects that follow every word and reveal.",
+ "mix.eq1": "Motion", "mix.eq2": "Reels cuts", "mix.eq3": "Cinema color",
+ "mix.note": "After Effects, Premiere, CapCut and DaVinci Resolve are trademarks of their respective owners. Flamefields is not affiliated with them: it is its own AI editor applying techniques inspired by those tools.",
  "idle.1": "READY TO\nEDIT", "idle.2": "Ask in the chat",
  "demo.t1": "YOUR LAUNCH", "demo.t2": "DESERVES\nVIDEOS LIKE THIS", "demo.t3": "CUT ON THE BEAT", "demo.t4": "ORIGINAL MUSIC", "demo.t5": "COPY THAT SELLS", "demo.t6": "IN 30 SECONDS", "demo.t7": "BOLD OR\nCALM", "demo.t8": "JUST ASK", "demo.t10": "AI VIDEO EDITING"
 }};
@@ -673,7 +727,7 @@ function renderPlans() {
   card(true, t("plan.popular"), t("plan.vitalicio"), money(V.price), t("plan.per.vitalicio"), t("plan.vit.eq", { n: V.credits.toLocaleString(LANG === "pt" ? "pt-BR" : "en-US") }),
     [t("plan.vit.f1", { n: V.credits.toLocaleString(LANG === "pt" ? "pt-BR" : "en-US") }), t("plan.vit.f2"), t("plan.vit.f3"), t("plan.f1"), t("plan.f4"), t("plan.f5")], t("plan.vit.cta"), go("vitalicio"));
   card(false, "", t("plan.creditos_mensal"), MONTHLY.price ? money(MONTHLY.price) : "+" + MONTHLY.credits, MONTHLY.price ? t("plan.per.creditos_mensal") : t("plan.mon.unit"), t("plan.mon.eq"),
-    [t("plan.mon.f1", { n: MONTHLY.credits }), t("plan.mon.f2"), t("plan.mon.f3")], t("plan.mon.cta"), () => { location.href = "/app"; });
+    [t("plan.mon.f1", { n: MONTHLY.credits }), t("plan.mon.f2"), t("plan.mon.f3")], t("plan.mon.cta"), () => { location.href = "?app=1"; });
   const packs = document.createElement("div"); packs.className = "plan";
   packs.innerHTML = `<h3></h3><p class="eq"></p><ul></ul>`; packs.querySelector("h3").textContent = t("plan.packs"); packs.querySelector(".eq").textContent = t("plan.packs.p");
   PACKS.forEach(pk => { const li = document.createElement("li"); li.textContent = t("pack.label", { n: pk.credits }) + " · " + money(pk.price); packs.querySelector("ul").append(li); });
@@ -685,7 +739,7 @@ function renderPlans() {
 /* ======================= roteamento ======================= */
 function route() {
   const h = location.hash.replace("#", "");
-  const inApp = /\/app\/?$/.test(location.pathname) || h === "app";
+  const inApp = /\/app\/?$/.test(location.pathname) || h === "app" || new URLSearchParams(location.search).has("app");
   $("#site").hidden = inApp; $("#app").hidden = !inApp;
   if (inApp) { enterApp(); window.scrollTo(0, 0); heroPause(); }
   else { heroResume(); if (h && h !== "inicio") { const el = document.getElementById(h); if (el) el.scrollIntoView(); } else if (h === "inicio") window.scrollTo(0, 0); }
@@ -1095,7 +1149,7 @@ $("#leadForm").addEventListener("submit", async e => {
   const lead = { nome: $("#lNome").value.trim(), empresa: $("#lEmpresa").value.trim(), whatsapp: $("#lZap").value.trim(), plano: $("#lPlano").value, valor: $("#lPlano").value === "vitalicio" ? PLANS[0].price : MONTHLY.price, idioma: LANG, quando: new Date().toISOString() };
   $("#leadErr").hidden = true;
   let ok = false;
-  try { const r = await fetch("/api/lead", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(lead) }); ok = r.ok; } catch (err) {}
+  try { const r = await fetch((CFG.API_BASE || "").replace(/\/$/, "") + "/api/lead", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(lead) }); ok = r.ok; } catch (err) {}
   if (ok) { $("#leadOk").hidden = false; $("#leadForm").querySelector('button[type="submit"]').disabled = true; } else $("#leadErr").hidden = false;
 });
 
@@ -1109,12 +1163,14 @@ const CK = "ff_convs";
 const thread = $("#thread"), inp = $("#inp");
 
 /* ---- login, assinatura e créditos ---- */
-const SB = (window.supabase && CFG.SUPABASE_URL) ? window.supabase.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY) : null;
+const BASE = (CFG.API_BASE || "").replace(/\/$/, "");
+const APP_URL = location.origin + location.pathname.replace(/\/app\/?$/, "/").replace(/index\.html$/, "") + "?app=1";
+const SB = (window.supabase && CFG.SUPABASE_URL && !/SEU-PROJETO/.test(CFG.SUPABASE_URL)) ? window.supabase.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY) : null;
 let gateState = null;
 async function token() { if (!SB) return null; const { data } = await SB.auth.getSession(); return data && data.session ? data.session.access_token : null; }
 async function api(path, opts = {}) {
   const tk = await token();
-  const r = await fetch(path, { ...opts, headers: { "Content-Type": "application/json", ...(tk ? { Authorization: "Bearer " + tk } : {}), ...(opts.headers || {}) } });
+  const r = await fetch(BASE + path, { ...opts, headers: { "Content-Type": "application/json", ...(tk ? { Authorization: "Bearer " + tk } : {}), ...(opts.headers || {}) } });
   let data = null; try { data = await r.json(); } catch (e) {}
   return { ok: r.ok, status: r.status, data: data || {} };
 }
@@ -1123,19 +1179,37 @@ function showGate(kind) {
   $("#gate").hidden = !on; $("#thread").hidden = on; $("#dock").hidden = on;
   if (!on) return;
   $("#gateH").textContent = t("gate." + kind + ".h"); $("#gateP").textContent = t("gate." + kind + ".p");
-  $("#loginForm").hidden = kind !== "login"; $("#gateNote").textContent = "";
+  $("#loginForm").hidden = kind !== "login"; $("#newPassForm").hidden = kind !== "senha"; $("#gateNote").textContent = "";
   const box = $("#gateBtns"); box.innerHTML = "";
-  if (kind === "sem_assinatura" || kind === "expirado") PLANS.forEach(p => { const a = document.createElement("a"); a.className = "btn block" + (p.tag === "popular" ? " pri" : ""); a.href = checkoutUrl(p.id) || "/#planos"; a.textContent = t("plan." + p.id) + " · " + money(p.price); box.append(a); });
+  if (kind === "sem_assinatura" || kind === "expirado") PLANS.forEach(p => { const a = document.createElement("a"); a.className = "btn block" + (p.tag === "popular" ? " pri" : ""); a.href = checkoutUrl(p.id) || "./#planos"; a.textContent = t("plan." + p.id) + " · " + money(p.price); box.append(a); });
   if (kind === "sem_creditos" || kind === "limite_custo") monthlyBtn(box, "btn block pri");
-  if (kind === "sem_creditos" || kind === "limite_custo") PACKS.filter(p => checkoutUrl(p.id)).forEach((p, i) => { const a = document.createElement("a"); a.className = "btn block" + (i === 1 ? " pri" : ""); a.href = checkoutUrl(p.id) || "/#planos"; a.textContent = t("pack.label", { n: p.credits }) + " · " + money(p.price); box.append(a); });
-  if (kind !== "login") { const out = document.createElement("button"); out.type = "button"; out.className = "btn block"; out.textContent = t("gate.logout"); out.onclick = async () => { if (SB) await SB.auth.signOut(); location.reload(); }; box.append(out); }
+  if (kind === "sem_creditos" || kind === "limite_custo") PACKS.filter(p => checkoutUrl(p.id)).forEach((p, i) => { const a = document.createElement("a"); a.className = "btn block" + (i === 1 ? " pri" : ""); a.href = checkoutUrl(p.id) || "./#planos"; a.textContent = t("pack.label", { n: p.credits }) + " · " + money(p.price); box.append(a); });
+  if (kind !== "login" && kind !== "config" && kind !== "senha") { const out = document.createElement("button"); out.type = "button"; out.className = "btn block"; out.textContent = t("gate.logout"); out.onclick = async () => { if (SB) await SB.auth.signOut(); location.reload(); }; box.append(out); }
 }
 $("#loginForm").addEventListener("submit", async e => {
-  e.preventDefault(); const email = $("#loginEmail").value.trim().toLowerCase(); if (!email || !SB) return;
-  const b = $("#loginForm button"); b.disabled = true;
-  const { error } = await SB.auth.signInWithOtp({ email, options: { shouldCreateUser: false, emailRedirectTo: location.origin + "/app" } });
+  e.preventDefault(); const email = $("#loginEmail").value.trim().toLowerCase(), pass = $("#loginPass").value; if (!email || !SB) return;
+  if (!pass) { $("#gateNote").textContent = t("login.needPass"); $("#loginPass").focus(); return; }
+  const b = $('#loginForm button[type="submit"]'); b.disabled = true; $("#gateNote").textContent = t("login.entering");
+  const { error } = await SB.auth.signInWithPassword({ email, password: pass });
   b.disabled = false;
+  if (error) { $("#gateNote").textContent = t("login.wrong"); return; }
+  appReady = false; enterApp();
+});
+$("#magicBtn").addEventListener("click", async () => {
+  const email = $("#loginEmail").value.trim().toLowerCase(); if (!email || !SB) { $("#gateNote").textContent = t("login.needEmail"); $("#loginEmail").focus(); return; }
+  const { error } = await SB.auth.signInWithOtp({ email, options: { shouldCreateUser: false, emailRedirectTo: APP_URL } });
   $("#gateNote").textContent = error ? t("gate.notFound") : t("gate.sent", { e: email });
+});
+$("#forgotBtn").addEventListener("click", async () => {
+  const email = $("#loginEmail").value.trim().toLowerCase(); if (!email || !SB) { $("#gateNote").textContent = t("login.needEmail"); $("#loginEmail").focus(); return; }
+  const { error } = await SB.auth.resetPasswordForEmail(email, { redirectTo: APP_URL });
+  $("#gateNote").textContent = error ? t("gate.notFound") : t("login.resetSent", { e: email });
+});
+$("#newPassForm").addEventListener("submit", async e => {
+  e.preventDefault(); const pass = $("#newPass").value; if (!SB || pass.length < 8) return;
+  const { error } = await SB.auth.updateUser({ password: pass });
+  if (error) { $("#gateNote").textContent = t("login.passFail"); return; }
+  $("#gateNote").textContent = t("login.passOk"); setTimeout(() => { appReady = false; enterApp(); }, 900);
 });
 $("#credits").addEventListener("click", () => { if ($("#home").hidden === false) $("#home").hidden = true; const b = agentNote(t("credits.info", { n: (ME && ME.profile && ME.profile.credits) || 0 })); upsell(b, "recarga"); });
 function paintCredits() {
@@ -1162,7 +1236,7 @@ function upsell(body, reason) {
   const row = document.createElement("div"); row.className = "row";
   if (reason === "sem_creditos" || reason === "limite_custo" || reason === "recarga") monthlyBtn(row, "btn sm pri");
   const list = reason === "sem_creditos" || reason === "limite_custo" || reason === "recarga" ? PACKS : PLANS;
-  list.filter(x => list === PLANS || checkoutUrl(x.id)).forEach((x, i) => { const a = document.createElement("a"); a.className = "btn sm" + (list === PLANS ? " pri" : ""); a.href = checkoutUrl(x.id) || "/#planos"; a.textContent = (x.credits && list === PACKS ? t("pack.label", { n: x.credits }) : t("plan." + x.id)) + " · " + money(x.price); row.append(a); });
+  list.filter(x => list === PLANS || checkoutUrl(x.id)).forEach((x, i) => { const a = document.createElement("a"); a.className = "btn sm" + (list === PLANS ? " pri" : ""); a.href = checkoutUrl(x.id) || "./#planos"; a.textContent = (x.credits && list === PACKS ? t("pack.label", { n: x.credits }) : t("plan." + x.id)) + " · " + money(x.price); row.append(a); });
   box.append(row); body.append(box);
 }
 async function enterApp() {
@@ -1180,7 +1254,7 @@ async function enterApp() {
   } else { showGate(null); newConv(); }
   setTimeout(() => inp.focus(), 50);
 }
-if (SB) SB.auth.onAuthStateChange((ev) => { if (ev === "SIGNED_IN" && gateState === "login") { appReady = false; enterApp(); } });
+if (SB) SB.auth.onAuthStateChange((ev) => { if (ev === "PASSWORD_RECOVERY") { showGate("senha"); return; } if (ev === "SIGNED_IN" && gateState === "login") { appReady = false; enterApp(); } });
 function homeTitle() { $("#homeH").textContent = t("app.homeH", { n: firstName ? ", " + firstName : "" }); }
 function renderChips() {
   const box = $("#sugs"); if (!box) return; box.innerHTML = "";

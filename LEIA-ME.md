@@ -22,15 +22,6 @@ Tempo estimado: 40 a 60 minutos, uma vez só. Você vai precisar de 4 contas: **
 Custo de API estimado: cerca de R$ 0,12 por vídeo e R$ 0,15 por análise de estilo. Os 1.000 vídeos do vitalício custam por volta de R$ 120 se o cliente usar tudo.
 Para mudar quantidades: `PLANS_JSON` na Vercel (formato em `api/_lib.js`) e `public/config.js` (MONTHLY_CREDITS, STYLE_COST).
 
----|---|---|
-| Mensal | R$ 389,90 | 300 vídeos/mês |
-| Trimestral | R$ 789,90 | 300 vídeos/mês |
-| Anual | R$ 1.297,90 | 200 vídeos/mês |
-| Recarga 100 | R$ 49,90 | +100 vídeos (não vencem) |
-| Recarga 300 | R$ 119,90 | +300 vídeos (não vencem) |
-
-Para mudar créditos ou preços: variável `PLANS_JSON` na Vercel (formato em `api/_lib.js`) e a lista `PLANS`/`PACKS` em `public/index.html`.
-
 ---
 
 ## Passo 1: Chave da Anthropic (o "cérebro")

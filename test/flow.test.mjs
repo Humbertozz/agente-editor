@@ -178,4 +178,8 @@ console.log("✓ estilo escolhido entra nas regras do agente nos próximos víde
 await hc(tx("t1", "chargedback", 119090, "Flamefields Acesso Vitalício"));
 assert.equal(DB.profiles.get("vit@imob.com").status, "bloqueado");
 console.log("✓ chargeback do acesso vitalício bloqueia");
+// 21) produtor (ADMIN_EMAILS) usa sem comprar
+r = await call(agent, "POST", "tok-dono", { lang: "pt", turns: [{ role: "user", content: "faz 1" }], catalog: [{ id: "a", dur: 8 }], feitos: [] });
+assert.equal(r.status, 200); d = await r.json(); assert.ok(d.profile.credits >= 999);
+console.log("✓ o produtor entra e usa o estúdio sem precisar comprar");
 console.log("\nTODOS OS TESTES PASSARAM");

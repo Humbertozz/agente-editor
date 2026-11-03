@@ -1,5 +1,28 @@
-# Flamefields: como colocar no ar (venda automática)
+# Flamefields
 
+Editor de vídeos de lançamento imobiliário com IA: o cliente anexa os takes, escreve a ideia no chat e recebe vídeos verticais de 30s com motion design, cortes no ritmo, cor de cinema, trilha original e locução.
+
+- **Site de vendas + estúdio:** pasta `public/` (no GitHub Pages abre em `.../agente-editor/public/`)
+- **Servidor (IA, créditos, pagamentos):** pasta `api/` (roda na Vercel)
+- **Banco e login:** `supabase.sql` (Supabase)
+
+## Seu login de produtor (e-mail e senha)
+
+1. No Supabase: **Authentication > Users > Add user > Create new user**. Coloque seu e-mail e a senha que quiser e marque **Auto Confirm User**.
+2. Na Vercel, coloque o mesmo e-mail em `ADMIN_EMAILS`.
+3. Pronto: em `.../?app=1` você entra com e-mail e senha e usa o estúdio sem precisar comprar. O painel fica em `.../admin.html`.
+
+> Nunca coloque senha nem chave secreta em arquivo deste repositório. Ele é público: qualquer pessoa consegue ler.
+
+Os clientes entram com o e-mail da compra. No primeiro acesso clicam em **"Criar ou trocar senha"** (ou entram pelo link enviado por e-mail).
+
+## Por que só o site não basta
+
+O GitHub Pages hospeda só a parte visual. O login, a IA e os créditos precisam do Supabase e do servidor na Vercel (passos abaixo). Com o site no GitHub Pages, preencha `API_BASE` no `public/config.js` com o endereço da Vercel.
+
+---
+
+## Como colocar no ar (venda automática)
 Tempo estimado: 40 a 60 minutos, uma vez só. Você vai precisar de 4 contas: **Anthropic Console**, **Supabase**, **Vercel** e **Hypercash**.
 
 ## Como funciona depois de pronto
@@ -21,15 +44,6 @@ Tempo estimado: 40 a 60 minutos, uma vez só. Você vai precisar de 4 contas: **
 
 Custo de API estimado: cerca de R$ 0,12 por vídeo e R$ 0,15 por análise de estilo. Os 1.000 vídeos do vitalício custam por volta de R$ 120 se o cliente usar tudo.
 Para mudar quantidades: `PLANS_JSON` na Vercel (formato em `api/_lib.js`) e `public/config.js` (MONTHLY_CREDITS, STYLE_COST).
-
----|---|---|
-| Mensal | R$ 389,90 | 300 vídeos/mês |
-| Trimestral | R$ 789,90 | 300 vídeos/mês |
-| Anual | R$ 1.297,90 | 200 vídeos/mês |
-| Recarga 100 | R$ 49,90 | +100 vídeos (não vencem) |
-| Recarga 300 | R$ 119,90 | +300 vídeos (não vencem) |
-
-Para mudar créditos ou preços: variável `PLANS_JSON` na Vercel (formato em `api/_lib.js`) e a lista `PLANS`/`PACKS` em `public/index.html`.
 
 ---
 

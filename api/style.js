@@ -1,5 +1,5 @@
 // POST /api/style — identifica o estilo de um vídeo de referência e devolve uma "receita" + prompt pronto. Cobra créditos.
-import { env, json, authEmail, db, accessState, publicProfile, costCents, STYLE_COST } from "./_lib.js";
+import { env, json, authEmail, db, accessState, accessFor, publicProfile, costCents, STYLE_COST } from "./_lib.js";
 
 export const maxDuration = 120;
 
@@ -29,7 +29,7 @@ export async function POST(request) {
   if (!email) return json({ error: "login" }, 401);
   let p = (await db.rpc("ff_refill", { p_email: email })).data;
   if (!p || !p.email) p = await db.profile(email);
-  const st = accessState(p);
+  const st = accessFor(email, p);
   const cost = STYLE_COST();
   if (!st.ok) return json({ error: st.reason, profile: publicProfile(p) }, 402);
   if (st.credits < cost) return json({ error: "sem_creditos", need: cost, profile: publicProfile(p) }, 402);
@@ -55,6 +55,7 @@ export async function POST(request) {
   const out = parseJSON(text);
   const usage = data.usage || {}, c = costCents(usage);
   if (!out || !out.receita) { await db.rpc("ff_cost", { p_email: email, p_cost: c, p_in: usage.input_tokens || 0, p_out: usage.output_tokens || 0 }); return json({ error: "invalid_json" }, 502); }
-  const after = (await db.rpc("ff_charge", { p_email: email, p_credits: cost, p_cost: c, p_in: usage.input_tokens || 0, p_out: usage.output_tokens || 0 })).data;
-  return json({ estilo: out, cost, profile: publicProfile(after && after.email ? after : await db.profile(email)) });
+  const after = !p ? null : (await db.rpc("ff_charge", { p_email: email, p_credits: cost, p_cost: c, p_in: usage.input_tokens || 0, p_out: usage.output_tokens || 0 })).data;
+  const prof = after && after.email ? after : await db.profile(email);
+  return json({ estilo: out, cost, profile: publicProfile(prof) || (st.admin ? { email, credits: st.credits, plan: "produtor" } : null) });
 }
