@@ -285,6 +285,7 @@ button.credits{cursor:pointer}
 .gate-card .mark{width:52px;height:52px}
 .gate-card h2{font-size:24px;font-weight:800}
 .gate-card p{color:var(--mist)}
+.takestrip{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.takestrip img{width:72px;height:40px;object-fit:cover;border-radius:6px;border:1px solid rgba(255,255,255,.12)}
 .trialnav{border-color:rgba(255,106,31,.6)!important;color:#ffb27a!important}
 .trialbtn{border-color:rgba(255,106,31,.55)!important;color:#ffb27a!important}
 .gate-form{display:grid;gap:10px;width:100%}
@@ -627,6 +628,7 @@ pt: {
  "demo.locM": "[voz feminina calma e acolhedora] Esse lugar que você tá vendo agora não é um resort. É o seu bairro. Aqui o pôr do sol vira rotina, o lazer fica a poucos passos e tudo o que você precisa está perto. {n}. Lançamento: {d}. Quer saber mais? Comenta quero que eu te mando tudo.",
  "demo.locI": "[voz masculina grave e firme] Para tudo. Olha onde você pode morar. Lazer completo, localização privilegiada e um projeto pensado para quem não quer abrir mão de nada. {n}. Lançamento: {d}. Toque em Saiba Mais e garanta o seu cadastro antes de todo mundo.",
  "demo.locL": "[voz feminina calma e acolhedora] Existe um lugar onde o fim de tarde vira rotina e a vida acontece devagar. Um lugar para viver com calma, perto de quem você ama. {n}. Lançamento: {d}. Toque em Saiba Mais e conheça.",
+ "long.scan": "Vídeo longo ({m} min): procurando as trocas de cena e os melhores trechos… {p}%", "long.done": "Pronto: transformei o vídeo de {m} min em {n} takes. Agora monto os vídeos.", "long.fail": "Não consegui separar esse vídeo em takes; vou usar ele inteiro.", "long.desc": "trecho de {a}s a {b}s do vídeo longo", "long.defaultAsk": "Faça vídeos com os melhores trechos deste vídeo.",
  "trial.nav": "Teste grátis", "trial.hero": "Teste grátis: 3 vídeos", "trial.cta": "Criar conta grátis e ganhar 3 vídeos", "trial.name": "Seu nome", "trial.zap": "WhatsApp (opcional)", "trial.pass": "Crie uma senha", "trial.submit": "Criar conta e começar", "trial.haveAccount": "Já tenho conta: entrar",
  "trial.fill": "Preencha nome, e-mail e uma senha de pelo menos 6 caracteres.", "trial.creating": "Criando sua conta…", "trial.exists": "Este e-mail já tem conta. Entre com a sua senha.", "trial.isOwner": "Esta é a conta do produtor. Entre com a sua senha.", "trial.err": "Não consegui criar a conta agora. Tente de novo em instantes.", "trial.noAccount": "E-mail não encontrado. Crie sua conta grátis abaixo.",
  "trial.badge": "Teste grátis: {n}/{m} vídeos", "trial.acct": "Teste grátis", "trial.welcome": "Bem-vindo, {name}! Sua conta está liberada com {n} vídeos grátis. Anexe os takes do empreendimento (ou use as cenas de demonstração) e escreva como quer os vídeos.", "trial.info": "Você tem {n} de {m} vídeos grátis. Quando acabarem, escolha um plano para continuar:", "trial.over": "Seus {m} vídeos grátis acabaram. Para continuar editando, escolha um plano:",
@@ -735,6 +737,7 @@ en: {
  "demo.locM": "[calm, warm female voice] This place you're looking at isn't a resort. It's your neighborhood. Here sunsets are routine, leisure is steps away and everything you need is close. {n}. Launch: {d}. Want to know more? Comment want and I'll send you everything.",
  "demo.locI": "[deep, firm male voice] Stop scrolling. Look where you could live. Full amenities, prime location and a project made for people who won't settle. {n}. Launch: {d}. Tap Learn More and sign up before everyone else.",
  "demo.locL": "[calm, warm female voice] There is a place where sunsets become routine and life slows down. A place to live calmly, close to the people you love. {n}. Launch: {d}. Tap Learn More to discover it.",
+ "long.scan": "Long video ({m} min): finding scene changes and the best moments… {p}%", "long.done": "Done: I turned the {m}-min video into {n} takes. Now building the videos.", "long.fail": "Couldn't split this video into takes; using it whole.", "long.desc": "segment {a}s to {b}s of the long video", "long.defaultAsk": "Make videos from the best moments of this video.",
  "trial.nav": "Free trial", "trial.hero": "Free trial: 3 videos", "trial.cta": "Create a free account and get 3 videos", "trial.name": "Your name", "trial.zap": "WhatsApp (optional)", "trial.pass": "Create a password", "trial.submit": "Create account and start", "trial.haveAccount": "I have an account: sign in",
  "trial.fill": "Fill in name, email and a password with at least 6 characters.", "trial.creating": "Creating your account…", "trial.exists": "This email already has an account. Sign in with your password.", "trial.isOwner": "This is the producer account. Sign in with your password.", "trial.err": "Couldn't create the account right now. Try again shortly.", "trial.noAccount": "Email not found. Create your free account below.",
  "trial.badge": "Free trial: {n}/{m} videos", "trial.acct": "Free trial", "trial.welcome": "Welcome, {name}! Your account is active with {n} free videos. Attach the project's clips (or use the demo scenes) and describe the videos you want.", "trial.info": "You have {n} of {m} free videos. When they run out, pick a plan to continue:", "trial.over": "Your {m} free videos are used up. To keep editing, pick a plan:",
@@ -1138,7 +1141,7 @@ function makeRenderer(canvas) {
       if (s.clip.synth) { const c = document.createElement("canvas"); c.width = 1280; c.height = 720; s.el = c; continue; }
       const v = document.createElement("video"); v.muted = true; v.playsInline = true; v.preload = "auto"; v.src = s.clip.url; s.el = v;
     }
-    await Promise.all(P.scenes.filter(s => !s.clip.synth).map(async s => { await waitEv(s.el, "loadeddata", 10000); const p = waitEv(s.el, "seeked", 5000); s.el.currentTime = s.inicio; await p; s.el.playbackRate = s.vel; }));
+    await Promise.all(P.scenes.filter(s => !s.clip.synth).map(async s => { await waitEv(s.el, "loadeddata", 10000); const p = waitEv(s.el, "seeked", 5000); s.el.currentTime = (s.clip.off || 0) + s.inicio; await p; s.el.playbackRate = s.vel; }));
   }
   function release(P) { P.scenes.forEach(s => { s.started = s.stopped = false; if (!s.clip.synth && s.el) { s.el.pause(); s.el.removeAttribute("src"); s.el.load(); } }); }
   function tickVideos(P, t) {
@@ -1489,6 +1492,40 @@ async function probe(url) {
   return { dur, w: v.videoWidth || 1280, h: v.videoHeight || 720, thumb: c.toDataURL("image/jpeg", .75), blob: await new Promise(r => c.toBlob(r, "image/jpeg", .8)) };
 }
 
+/* vídeo longo -> takes: detecta as trocas de cena e separa os melhores trechos */
+const LONG_MIN = 45, TAKE_MAX = 7, TAKE_MIN = 1.6, TAKES_CAP = 18;
+async function splitLong(a, onProg) {
+  const v = document.createElement("video"); v.muted = true; v.preload = "auto"; v.playsInline = true; v.src = a.url;
+  await waitEv(v, "loadedmetadata", 12000);
+  const dur = v.duration || a.dur; const step = Math.max(.5, Math.min(2, dur / 360));
+  const seek = tt => new Promise(r => { const f = () => { v.removeEventListener("seeked", f); r(); }; v.addEventListener("seeked", f); v.currentTime = tt; setTimeout(f, 2500); });
+  const sc = document.createElement("canvas"); sc.width = 32; sc.height = 18; const sg = sc.getContext("2d", { willReadFrequently: true });
+  let prev = null; const cuts = [0], mot = [];
+  for (let tt = 0; tt < dur; tt += step) {
+    await seek(tt); sg.drawImage(v, 0, 0, 32, 18); const d = sg.getImageData(0, 0, 32, 18).data;
+    if (prev) { let s2 = 0, lum = 0; for (let i = 0; i < d.length; i += 4) { s2 += Math.abs(d[i] - prev[i]) + Math.abs(d[i + 1] - prev[i + 1]) + Math.abs(d[i + 2] - prev[i + 2]); lum += d[i]; } const m = s2 / (d.length / 4 * 3); mot.push({ t: tt, m, dark: lum / (d.length / 4) < 18 }); if (m > 38 && tt - cuts[cuts.length - 1] > TAKE_MIN) cuts.push(tt); }
+    prev = d; if (onProg) onProg(tt / dur);
+  }
+  cuts.push(dur);
+  let segs = [];
+  for (let i = 0; i < cuts.length - 1; i++) {
+    let a0 = cuts[i] + .25, a1 = cuts[i + 1] - .25; if (a1 - a0 < TAKE_MIN) continue;
+    while (a1 - a0 > TAKE_MAX * 1.6) { segs.push([a0, a0 + TAKE_MAX]); a0 += TAKE_MAX + .5; }
+    if (a1 - a0 > TAKE_MAX) { const mid = (a0 + a1) / 2; a0 = mid - TAKE_MAX / 2; a1 = mid + TAKE_MAX / 2; }
+    segs.push([a0, a1]);
+  }
+  // tira trechos escuros e prefere os com movimento
+  const score = sgm => { const ms = mot.filter(x => x.t >= sgm[0] && x.t <= sgm[1]); if (!ms.length) return 0; if (ms.filter(x => x.dark).length > ms.length / 2) return -1; return ms.reduce((q, x) => q + Math.min(x.m, 30), 0) / ms.length + 4; };
+  segs = segs.map(sgm => ({ sgm, sc: score(sgm) })).filter(x => x.sc >= 0);
+  if (segs.length > TAKES_CAP) { const keep = new Set(segs.map((x, i) => [x.sc, i]).sort((p, q) => q[0] - p[0]).slice(0, TAKES_CAP).map(x => x[1])); segs = segs.filter((x, i) => keep.has(i)); }
+  const c = document.createElement("canvas"); c.width = 320; c.height = 180; const g = c.getContext("2d"); const out = [];
+  for (let i = 0; i < segs.length; i++) {
+    const [a0, a1] = segs[i].sgm; await seek((a0 + a1) / 2); try { g.drawImage(v, 0, 0, 320, 180); } catch (e) {}
+    out.push({ id: a.id + "_t" + String(i + 1).padStart(2, "0"), url: a.url, off: a0, dur: a1 - a0, desc: t("long.desc", { a: Math.round(a0), b: Math.round(a1) }), user: true, synth: false, w: a.w, h: a.h, thumb: c.toDataURL("image/jpeg", .72) });
+  }
+  v.removeAttribute("src"); v.load();
+  return { takes: out, dur };
+}
 /* caixa de texto */
 function autosize() { inp.style.height = "auto"; inp.style.height = Math.min(200, inp.scrollHeight) + "px"; }
 function updSend() { const zero = ME && ME.profile && ME.profile.credits <= 0; $("#send").disabled = busyAsk || zero || (!inp.value.trim() && !pending.length); }
@@ -1575,7 +1612,24 @@ async function send() {
     return analyzeStyle(vidAtts[0].file, text);
   }
   inp.value = ""; autosize(); audioCtx();
-  for (const a of atts) if (a.kind === "video") clips.set(a.id, { id: a.id, url: a.url, desc: "", user: true, synth: false, dur: a.dur || 8, w: a.w, h: a.h, thumb: a.thumb, blob: a.blob });
+  const longs = atts.filter(a => a.kind === "video" && (a.dur || 0) > LONG_MIN);
+  for (const a of atts) if (a.kind === "video" && !longs.includes(a)) clips.set(a.id, { id: a.id, url: a.url, desc: "", user: true, synth: false, dur: a.dur || 8, w: a.w, h: a.h, thumb: a.thumb, blob: a.blob });
+  if (longs.length) {
+    renderUser(text, atts); conv.msgs.push({ role: "user", text, atts: atts.map(a => ({ kind: a.kind, name: a.id })) });
+    if (!conv.title) { conv.title = (text || atts.map(a => a.id).join(", ")).slice(0, 52); $("#convTitle").textContent = conv.title; }
+    busyAsk = true; updSend();
+    for (const a of longs) {
+      const b = agentNote(t("long.scan", { m: Math.round(a.dur / 60 * 10) / 10, p: 0 })); const tx = b.querySelector(".txt");
+      let r = { takes: [] }; try { r = await splitLong(a, p => { tx.textContent = t("long.scan", { m: Math.round(a.dur / 60 * 10) / 10, p: Math.round(p * 100) }); }); } catch (e) {}
+      if (!r.takes.length) { clips.set(a.id, { id: a.id, url: a.url, desc: "", user: true, synth: false, dur: a.dur || 8, w: a.w, h: a.h, thumb: a.thumb }); tx.textContent = t("long.fail"); continue; }
+      r.takes.forEach(k => clips.set(k.id, k));
+      tx.textContent = t("long.done", { n: r.takes.length, m: Math.round(a.dur / 60 * 10) / 10 });
+      const strip = document.createElement("div"); strip.className = "takestrip"; r.takes.slice(0, 12).forEach(k => { const im = document.createElement("img"); im.src = k.thumb; im.alt = k.desc; strip.append(im); }); b.append(strip);
+    }
+    busyAsk = false; updSend();
+    if ([...clips.values()].some(c => !c.synth)) [...clips.values()].filter(c => c.synth).forEach(c => clips.delete(c.id));
+    return ask(text || t("long.defaultAsk"));
+  }
   if ([...clips.values()].some(c => !c.synth)) [...clips.values()].filter(c => c.synth).forEach(c => clips.delete(c.id));
   renderUser(text, atts);
   conv.msgs.push({ role: "user", text, atts: atts.map(a => ({ kind: a.kind, name: a.id })) });
