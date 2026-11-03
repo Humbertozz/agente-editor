@@ -973,8 +973,8 @@ function normalize(v, catalog) {
     s.inicio = Math.max(0, Math.min(st, s.clip.dur - n2 - .02));
   }
   const mo = v.pegada === "motion";
-  const textos = (v.textos || []).map(x => ({ de: +x.de || 0, ate: Math.min(DUR, +x.ate || 2), texto: String(x.texto || ""), y: Math.min(.86, Math.max(.06, +x.y || .3)), tam: x.tam || "g", cor: x.cor || "branco", caixa: !!x.caixa, anim: x.anim || (mo ? "palavra" : calm ? "fade" : "sobe"), peso: x.peso || (calm ? "leve" : "forte"), estilo: x.estilo === "serif" ? "serif" : "", alinha: x.alinha === "centro" ? "centro" : x.alinha === "esquerda" ? "esquerda" : (mo ? "esquerda" : "centro"), marca: x.marca || "", risco: !!x.risco, conta: !!x.conta, ritmo: x.ritmo })).filter(x => x.texto && x.ate > x.de);
-  return { escurecer: Math.min(.8, Math.max(0, v.escurecer != null ? +v.escurecer : (mo ? .5 : 0))), brilho: v.brilho != null ? !!v.brilho : mo, pontos: v.pontos != null ? !!v.pontos : mo, titulo: v.titulo || "Vídeo", pegada: mo ? "motion" : calm ? "tranquilo" : "agressivo", musica: ["lancamento", "epico", "house", "cinema"].includes(v.musica) ? v.musica : (v.musica === "trap" || v.musica === "drill") ? "epico" : (mo ? "lancamento" : calm ? "cinema" : "epico"), bpm, cor: GRADE[v.cor] ? v.cor : (calm ? "warm" : "punchy"), layout: v.layout === "cinema" ? "cinema" : "cheio", scenes, textos, cuts: scenes.slice(1).map(s => s.start), impactos: (v.impactos || []).map(Number).filter(n => n >= 0 && n < DUR), drop: v.drop, locucao: v.locucao || "", destaque: /^#[0-9a-f]{6}$/i.test(v.destaque || "") ? v.destaque : ($("#bCor") ? $("#bCor").value : "#f3c34a") };
+  const textos = (v.textos || []).map(x => ({ de: +x.de || 0, ate: Math.min(DUR, +x.ate || 2), texto: String(x.texto || ""), y: Math.min(.95, Math.max(.04, +x.y || .3)), tam: x.tam || "g", cor: x.cor || "branco", caixa: !!x.caixa, anim: x.anim || (mo ? "palavra" : calm ? "fade" : "sobe"), peso: x.peso || (calm ? "leve" : "forte"), estilo: x.estilo === "serif" ? "serif" : "", alinha: x.alinha === "centro" ? "centro" : x.alinha === "esquerda" ? "esquerda" : (mo ? "esquerda" : "centro"), marca: x.marca || "", risco: !!x.risco, conta: !!x.conta, ritmo: x.ritmo })).filter(x => x.texto && x.ate > x.de);
+  return { escurecer: Math.min(.8, Math.max(0, v.escurecer != null ? +v.escurecer : (mo ? .5 : 0))), brilho: v.brilho != null ? !!v.brilho : mo, pontos: v.pontos != null ? !!v.pontos : mo, titulo: v.titulo || "Vídeo", pegada: mo ? "motion" : calm ? "tranquilo" : "agressivo", musica: ["lancamento", "epico", "house", "cinema"].includes(v.musica) ? v.musica : (v.musica === "trap" || v.musica === "drill") ? "epico" : (mo ? "lancamento" : calm ? "cinema" : "epico"), bpm, cor: GRADE[v.cor] ? v.cor : (calm ? "warm" : "punchy"), layout: ["cinema", "vitrine", "cartaz"].includes(v.layout) ? v.layout : "cheio", fundo: /^#[0-9a-f]{6}$/i.test(v.fundo || "") ? v.fundo : "", scenes, textos, cuts: scenes.slice(1).map(s => s.start), impactos: (v.impactos || []).map(Number).filter(n => n >= 0 && n < DUR), drop: v.drop, locucao: v.locucao || "", destaque: /^#[0-9a-f]{6}$/i.test(v.destaque || "") ? v.destaque : ($("#bCor") ? $("#bCor").value : "#f3c34a") };
 }
 function motion(s, lt) {
   const T = Math.min(lt / (s.dur + s.td), 1), E = ease(T), cx = s.cx != null ? +s.cx : .5;
@@ -1005,6 +1005,7 @@ function makeRenderer(canvas) {
   }
   const SIZE = { gg: 98, g: 68, m: 48, p: 33, xg: 230 };
   const hexA = (hex, a) => { const n = parseInt(hex.slice(1), 16); return `rgba(${n >> 16 & 255},${n >> 8 & 255},${n & 255},${a})`; };
+  let FLAT = false;
   function drawText(x, t, accent) {
     const lt = t - x.de;
     const perWord = x.anim === "palavra" || x.anim === "digita";
@@ -1054,8 +1055,8 @@ function makeRenderer(canvas) {
         if (bl > .02) ctx.filter = `blur(${(bl * 8).toFixed(1)}px)`;
         if (mark && x.caixa) { ctx.fillStyle = accent; const pad = size * .14; ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(cx - pad, y + yo - lh / 2 + size * .06, tw + pad * 2, lh * .92, size * .12); else ctx.rect(cx - pad, y + yo - lh / 2, tw + pad * 2, lh); ctx.fill(); }
         const boxed = x.caixa && (!marks.length || mark);
-        ctx.shadowColor = boxed ? "transparent" : "rgba(0,0,0,.5)"; ctx.shadowBlur = 18; ctx.shadowOffsetY = 3;
-        ctx.fillStyle = boxed ? "#fff8f1" : (mark || x.cor === "destaque") ? accent : x.cor === "cinza" ? GREY : WHITE;
+        ctx.shadowColor = (boxed || x.cor === "preto") ? "transparent" : FLAT ? "rgba(0,0,0,.2)" : "rgba(0,0,0,.5)"; ctx.shadowBlur = 18; ctx.shadowOffsetY = 3;
+        ctx.fillStyle = boxed ? "#fff8f1" : (mark || x.cor === "destaque") ? accent : x.cor === "cinza" ? GREY : x.cor === "preto" ? "#0c0a0f" : WHITE;
         ctx.font = font(size); track(size); ctx.fillText(txt, cx, y + yo + (serif ? size * .05 : 0));
         ctx.restore();
         if (x.anim === "digita") caret = { x: cx + tw + 4, y };
@@ -1071,11 +1072,16 @@ function makeRenderer(canvas) {
     ctx.globalAlpha = 1; ctx.filter = "none"; try { ctx.letterSpacing = "0px"; } catch (e) {}
   }
   function frame(P, t) {
-    const R = P.layout === "cinema" ? { x: 0, y: Math.round((H - W / 2.39) / 2), w: W, h: Math.round(W / 2.39) } : { x: 0, y: 0, w: W, h: H };
-    ctx.fillStyle = "#000"; ctx.fillRect(0, 0, W, H);
+    const R = P.layout === "cinema" ? { x: 0, y: Math.round((H - W / 2.39) / 2), w: W, h: Math.round(W / 2.39) }
+      : P.layout === "vitrine" ? { x: 44, y: Math.round(H * .2), w: W - 88, h: Math.round((W - 88) * 1.18) }
+      : P.layout === "cartaz" ? { x: 0, y: Math.round(H * .4), w: W, h: H - Math.round(H * .4) } : { x: 0, y: 0, w: W, h: H };
+    const BG = P.layout === "cartaz" ? (P.fundo || P.destaque) : P.layout === "vitrine" ? (P.fundo || "#07080d") : "#000";
+    ctx.fillStyle = BG; ctx.fillRect(0, 0, W, H);
+    if (P.layout === "vitrine") { const g = ctx.createRadialGradient(W / 2, H * .45, 20, W / 2, H * .45, H * .6); g.addColorStop(0, hexA(P.destaque, .16)); g.addColorStop(1, hexA(P.destaque, 0)); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); }
+    if (P.layout === "cartaz") { const g = ctx.createLinearGradient(0, 0, 0, H * .5); g.addColorStop(0, "rgba(0,0,0,.18)"); g.addColorStop(1, "rgba(0,0,0,0)"); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); }
     let i = 0; while (i < P.scenes.length - 1 && P.scenes[i + 1].start <= t) i++;
     const cur = P.scenes[i], prev = P.scenes[i - 1], lt = t - cur.start;
-    ctx.save(); ctx.beginPath(); ctx.rect(R.x, R.y, R.w, R.h); ctx.clip();
+    ctx.save(); ctx.beginPath(); if (P.layout === "vitrine" && ctx.roundRect) ctx.roundRect(R.x, R.y, R.w, R.h, 26); else ctx.rect(R.x, R.y, R.w, R.h); ctx.clip();
     ctx.filter = GRADE[P.cor] || "none";
     if (prev && lt < prev.td) {
       const p = lt / prev.td, e = ease(p), plt = t - prev.start;
@@ -1096,7 +1102,11 @@ function makeRenderer(canvas) {
     ctx.drawImage(vign, 0, 0);
     if (P.cor === "film") { ctx.globalAlpha = .07; ctx.globalCompositeOperation = "overlay"; const ox = Math.random() * 256, oy = Math.random() * 256; for (let gx = -ox; gx < W; gx += 256) for (let gy = -oy; gy < H; gy += 256) ctx.drawImage(grain, gx, gy); ctx.globalCompositeOperation = "source-over"; ctx.globalAlpha = 1; }
     ctx.restore();
-    for (const x of P.textos) if (t >= x.de && t <= x.ate) drawText(x, t, P.destaque);
+    if (P.layout === "vitrine") { ctx.save(); ctx.strokeStyle = "rgba(255,255,255,.14)"; ctx.lineWidth = 2; ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(R.x, R.y, R.w, R.h, 26); else ctx.rect(R.x, R.y, R.w, R.h); ctx.stroke(); ctx.restore(); }
+    if (P.layout === "cartaz") { const g = ctx.createLinearGradient(0, R.y, 0, R.y + R.h * .38); g.addColorStop(0, BG); g.addColorStop(1, hexA(BG, 0)); ctx.fillStyle = g; ctx.fillRect(0, R.y - 1, W, R.h * .38); }
+    FLAT = P.layout === "cartaz";
+    const TA = FLAT && (!P.fundo || P.fundo.toLowerCase() === String(P.destaque).toLowerCase()) ? "#0c0a0f" : P.destaque;
+    for (const x of P.textos) if (t >= x.de && t <= x.ate) drawText(x, t, TA);
   }
   async function prepare(P) {
     for (const s of P.scenes) {
