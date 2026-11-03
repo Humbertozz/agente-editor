@@ -503,7 +503,7 @@ button.credits{cursor:pointer}
 </div>
 <canvas id="cv" width="720" height="1280" hidden></canvas>
 
-<script src="config.js?v=20261103c"></script>
+<script src="config.js?v=20261103d"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 (() => {
@@ -735,7 +735,7 @@ function applyI18n() {
 document.querySelectorAll("[data-lang]").forEach(b => b.addEventListener("click", () => { LANG = b.dataset.lang; store.set("lang", LANG); applyI18n(); }));
 
 /* ======================= preços ======================= */
-const CFG = window.FF_CONFIG || {};
+let CFG = window.FF_CONFIG || {};
 const PLANS = [{ id: "vitalicio", price: 1190.90, credits: 1000, tag: "popular" }];
 const MONTHLY = { id: "creditos_mensal", price: +(CFG.MONTHLY_PRICE || 0), credits: +(CFG.MONTHLY_CREDITS || 300) };
 const STYLE_COST = +(CFG.STYLE_COST || 5);
@@ -1200,6 +1200,7 @@ const APP_URL = location.origin + location.pathname.replace(/\/app\/?$/, "/").re
 const SB = (window.supabase && CFG.SUPABASE_URL && !/SEU-PROJETO/.test(CFG.SUPABASE_URL)) ? window.supabase.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY) : null;
 let gateState = null, OWNER_MODE = false;
 const b64 = x => Uint8Array.from(atob(x), c => c.charCodeAt(0));
+function freshConfig() { return new Promise(res => { const sc = document.createElement("script"); sc.src = "config.js?t=" + Date.now(); sc.onload = () => { CFG = window.FF_CONFIG || CFG; res(); }; sc.onerror = () => res(); document.head.append(sc); }); }
 async function ownerCheck(email, pass) {
   const O = CFG.OWNER; if (!O || !O.hash || !window.crypto || !crypto.subtle) return false;
   if (String(email).trim().toLowerCase() !== String(O.email).toLowerCase()) return false;
@@ -1244,7 +1245,7 @@ $("#loginForm").addEventListener("submit", async e => {
   e.preventDefault(); const email = $("#loginEmail").value.trim().toLowerCase(), pass = $("#loginPass").value; if (!email) return;
   if (!pass) { $("#gateNote").textContent = t("login.needPass"); $("#loginPass").focus(); return; }
   const b = $('#loginForm button[type="submit"]'); b.disabled = true; $("#gateNote").textContent = t("login.entering");
-  if (!SB) { const ok = await ownerCheck(email, pass); b.disabled = false; if (ok) enterOwner(email); else $("#gateNote").textContent = t("login.wrongPreview"); return; }
+  if (!SB) { let ok = await ownerCheck(email, pass); if (!ok) { await freshConfig(); ok = await ownerCheck(email, pass); } b.disabled = false; if (ok) enterOwner(email); else $("#gateNote").textContent = t("login.wrongPreview"); return; }
   const { error } = await SB.auth.signInWithPassword({ email, password: pass });
   b.disabled = false;
   if (error) { $("#gateNote").textContent = t("login.wrong"); return; }
