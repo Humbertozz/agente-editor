@@ -48,7 +48,7 @@ button.ghost{background:transparent;border:1px solid var(--line)}
       <form id="gf">
         <label>E-mail<input id="ge" type="email" required></label>
         <label>Nome<input id="gn"></label>
-        <label>Plano ou recarga<select id="gk"><option value="mensal">Mensal</option><option value="trimestral">Trimestral</option><option value="anual">Anual</option><option value="recarga100">Recarga 100</option><option value="recarga300">Recarga 300</option></select></label>
+        <label>Plano ou recarga<select id="gk"><option value="vitalicio">Vitalício (1.000 vídeos)</option><option value="mensal">Mensal R$ 329,90 (120 vídeos/mês)</option><option value="creditos_mensal">Créditos mensais (+300)</option><option value="recarga100">Recarga 100</option><option value="recarga300">Recarga 300</option></select></label>
         <button type="submit">Liberar</button>
       </form>
       <p class="note" id="gnote"></p>
@@ -57,7 +57,7 @@ button.ghost{background:transparent;border:1px solid var(--line)}
     <div class="card"><h2>Leads do site</h2><div class="tbl"><table><thead><tr><th>Data</th><th>Nome</th><th>Empresa</th><th>WhatsApp</th><th>Plano</th></tr></thead><tbody id="leads"></tbody></table></div></div>
   </div>
 </div>
-<script src="config.js?v=20261103d"></script>
+<script src="config.js?v=20261103e"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 const C = window.FF_CONFIG, SB = supabase.createClient(C.SUPABASE_URL, C.SUPABASE_ANON_KEY);

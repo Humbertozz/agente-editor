@@ -15,7 +15,7 @@ const DEFAULT_PLANS = {
   recarga100:      { kind: "pack", credits: 100, price_cents: 4990 },
   recarga300:      { kind: "pack", credits: 300, price_cents: 11990 },
   // planos antigos (continuam funcionando se você usar)
-  mensal:     { kind: "plan", months: 1,  monthly: 300, price_cents: 38990 },
+  mensal:     { kind: "plan", months: 1,  monthly: 120, price_cents: 32990 }, // R$ 329,90/mês, 120 vídeos que renovam (não acumulam)
   trimestral: { kind: "plan", months: 3,  monthly: 300, price_cents: 78990 },
   anual:      { kind: "plan", months: 12, monthly: 200, price_cents: 129790 }
 };

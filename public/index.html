@@ -133,7 +133,8 @@ section.sec{padding-block:clamp(64px,8vw,110px)}
 .mode ul{margin:0;padding-left:18px;color:var(--mist);display:grid;gap:5px;font-size:15px}
 .mode q{font-family:var(--f-display);font-weight:800;font-size:16px;color:var(--fg)}
 .plans{display:grid;gap:18px;align-items:stretch}
-@media (min-width:900px){.plans{grid-template-columns:repeat(2,minmax(0,440px));justify-content:center}}
+@media (min-width:760px){.plans{grid-template-columns:repeat(2,minmax(0,440px));justify-content:center}}
+@media (min-width:1100px){.plans{grid-template-columns:repeat(3,minmax(0,370px))}}
 .plan{position:relative;border:1px solid var(--line);border-radius:20px;padding:28px;background:var(--card);display:flex;flex-direction:column;gap:18px}
 .plan.hl{border-color:rgba(21,93,251,.7);background:linear-gradient(180deg,rgba(21,93,251,.16),var(--card) 55%);box-shadow:0 30px 90px -40px rgba(21,93,251,.75)}
 .plan .badge-top{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--brand);color:#fff;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 12px;border-radius:99px;white-space:nowrap}
@@ -418,7 +419,7 @@ button.credits{cursor:pointer}
           <div style="display:grid;gap:14px"><span class="eyebrow" data-i18n="cta.eyebrow"></span><h2 data-i18n="cta.h2"></h2><p style="color:var(--mist);font-size:16px" data-i18n="cta.p"></p></div>
           <form class="form" id="leadForm">
             <div class="two"><label for="lNome"><span data-i18n="form.name"></span><input id="lNome" required autocomplete="name"></label><label for="lEmpresa"><span data-i18n="form.company"></span><input id="lEmpresa" required autocomplete="organization"></label></div>
-            <div class="two"><label for="lZap"><span data-i18n="form.phone"></span><input id="lZap" required inputmode="tel" autocomplete="tel"></label><label for="lPlano"><span data-i18n="form.plan"></span><select id="lPlano"><option value="vitalicio" selected></option><option value="creditos_mensal"></option></select></label></div>
+            <div class="two"><label for="lZap"><span data-i18n="form.phone"></span><input id="lZap" required inputmode="tel" autocomplete="tel"></label><label for="lPlano"><span data-i18n="form.plan"></span><select id="lPlano"><option value="vitalicio" selected></option><option value="mensal"></option><option value="creditos_mensal"></option></select></label></div>
             <button class="btn pri" type="submit" data-i18n="form.submit"></button>
             <p class="okmsg" id="leadOk" hidden data-i18n="form.ok"></p>
             <p class="note" id="leadErr" hidden data-i18n="form.err"></p>
@@ -503,7 +504,7 @@ button.credits{cursor:pointer}
 </div>
 <canvas id="cv" width="720" height="1280" hidden></canvas>
 
-<script src="config.js?v=20261103d"></script>
+<script src="config.js?v=20261103e"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 (() => {
@@ -586,6 +587,7 @@ pt: {
  "gate.sem_creditos.h": "Seus créditos acabaram", "gate.sem_creditos.p": "Assine os créditos mensais para receber vídeos novos todo mês, ou compre uma recarga para continuar agora. Os créditos entram assim que o pagamento é confirmado.",
  "gate.limite_custo.h": "Limite de uso do plano atingido", "gate.limite_custo.p": "Você usou o máximo previsto para o seu plano neste período. Recarregue para continuar.",
  "gate.recarga.p": "Escolha como quer continuar:", "gate.config.h": "Configuração pendente", "gate.config.p": "O login ainda não está ligado: falta conectar o banco de dados (Supabase) no config.js. Veja o passo 2 e 3 do guia.",
+ "plan.men.badge": "PARA COMEÇAR", "plan.per.mensal": "/mês", "plan.men.eq": "Comece pagando só o primeiro mês. Cancele quando quiser.", "plan.men.f1": "{n} vídeos por mês (renovam todo mês)", "plan.men.f2": "Estúdio completo com chat do agente", "plan.men.f3": "Identificador de estilo e trilha original", "plan.men.f4": "Em {n} meses o vitalício já sai mais barato", "plan.men.cta": "Começar por {p}",
  "plan.vitalicio": "Acesso vitalício", "plan.per.vitalicio": "pagamento único", "plan.vit.eq": "Já vem com {n} vídeos. Sem mensalidade obrigatória.", "plan.vit.f1": "{n} vídeos inclusos (créditos não vencem)", "plan.vit.f2": "Acesso ao estúdio para sempre", "plan.vit.f3": "Identificador de estilo: envie uma referência e o agente copia", "plan.vit.cta": "Quero acesso vitalício",
  "plan.creditos_mensal": "Créditos mensais", "plan.per.creditos_mensal": "/mês", "plan.mon.unit": "vídeos todo mês", "plan.mon.eq": "Opcional. Assine de dentro do estúdio quando quiser.", "plan.mon.f1": "+{n} vídeos somados todo mês", "plan.mon.f2": "Créditos acumulam, não vencem", "plan.mon.f3": "Liberados automaticamente a cada pagamento", "plan.mon.cta": "Assinar dentro do estúdio",
  "plan.packs": "Recargas avulsas", "plan.packs.p": "Precisa de mais agora? Compre na hora, dentro do estúdio.", "plan.style": "Análise de estilo: {n} créditos",
@@ -689,6 +691,7 @@ en: {
  "gate.sem_creditos.h": "You're out of credits", "gate.sem_creditos.p": "Subscribe to monthly credits to get new videos every month, or buy a top-up to continue now. Credits are added as soon as payment is confirmed.",
  "gate.limite_custo.h": "Plan usage limit reached", "gate.limite_custo.p": "You've used the maximum planned for your plan this period. Top up to continue.",
  "gate.recarga.p": "Choose how to continue:", "gate.config.h": "Setup pending", "gate.config.p": "Access hasn't been configured yet. Please try again later.",
+ "plan.men.badge": "TO GET STARTED", "plan.per.mensal": "/month", "plan.men.eq": "Start by paying just the first month. Cancel anytime.", "plan.men.f1": "{n} videos per month (renewed monthly)", "plan.men.f2": "Full studio with agent chat", "plan.men.f3": "Style identifier and original soundtrack", "plan.men.f4": "In {n} months lifetime is already cheaper", "plan.men.cta": "Start for {p}",
  "plan.vitalicio": "Lifetime access", "plan.per.vitalicio": "one-time payment", "plan.vit.eq": "Comes with {n} videos. No mandatory subscription.", "plan.vit.f1": "{n} videos included (credits never expire)", "plan.vit.f2": "Studio access forever", "plan.vit.f3": "Style identifier: send a reference and the agent copies it", "plan.vit.cta": "Get lifetime access",
  "plan.creditos_mensal": "Monthly credits", "plan.per.creditos_mensal": "/month", "plan.mon.unit": "videos every month", "plan.mon.eq": "Optional. Subscribe from inside the studio anytime.", "plan.mon.f1": "+{n} videos added every month", "plan.mon.f2": "Credits stack and never expire", "plan.mon.f3": "Added automatically on every payment", "plan.mon.cta": "Subscribe inside the studio",
  "plan.packs": "Top-ups", "plan.packs.p": "Need more now? Buy instantly inside the studio.", "plan.style": "Style analysis: {n} credits",
@@ -729,14 +732,14 @@ function applyI18n() {
   document.querySelectorAll("[data-i18n-ph]").forEach(el => { el.placeholder = t(el.dataset.i18nPh); });
   document.querySelectorAll("[data-i18n-title]").forEach(el => { el.title = t(el.dataset.i18nTitle); el.setAttribute("aria-label", t(el.dataset.i18nTitle)); });
   document.querySelectorAll("[data-lang]").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === LANG ? "true" : "false"));
-  [...$("#lPlano").options].forEach(o => { const pr = o.value === "vitalicio" ? PLANS[0].price : MONTHLY.price; o.textContent = t("plan." + o.value) + (pr ? " · " + money(pr) : ""); });
+  [...$("#lPlano").options].forEach(o => { const pr = o.value === "vitalicio" ? PLANS[0].price : o.value === "mensal" ? PLANS[1].price : MONTHLY.price; o.textContent = t("plan." + o.value) + (pr ? " · " + money(pr) : ""); });
   renderPlans(); renderChips(); if (window.__onLang) window.__onLang();
 }
 document.querySelectorAll("[data-lang]").forEach(b => b.addEventListener("click", () => { LANG = b.dataset.lang; store.set("lang", LANG); applyI18n(); }));
 
 /* ======================= preços ======================= */
 let CFG = window.FF_CONFIG || {};
-const PLANS = [{ id: "vitalicio", price: 1190.90, credits: 1000, tag: "popular" }];
+const PLANS = [{ id: "vitalicio", price: 1190.90, credits: 1000, tag: "popular" }, { id: "mensal", price: 329.90, credits: 120 }];
 const MONTHLY = { id: "creditos_mensal", price: +(CFG.MONTHLY_PRICE || 0), credits: +(CFG.MONTHLY_CREDITS || 300) };
 const STYLE_COST = +(CFG.STYLE_COST || 5);
 const PACKS = [{ id: "recarga100", price: 49.90, credits: 100 }, { id: "recarga300", price: 119.90, credits: 300 }];
@@ -756,6 +759,9 @@ function renderPlans() {
     const bt = el.querySelector("button"); bt.textContent = cta; bt.onclick = onclick; box.append(el); return el;
   };
   const go = id => () => { const u = checkoutUrl(id); if (u) { location.href = u; return; } $("#lPlano").value = id; document.getElementById("contato").scrollIntoView({ behavior: "smooth" }); setTimeout(() => $("#lNome").focus({ preventScroll: true }), 500); };
+  const M = PLANS[1], loc = LANG === "pt" ? "pt-BR" : "en-US";
+  card(false, t("plan.men.badge"), t("plan.mensal"), money(M.price), t("plan.per.mensal"), t("plan.men.eq"),
+    [t("plan.men.f1", { n: M.credits }), t("plan.men.f2"), t("plan.men.f3"), t("plan.men.f4", { n: Math.ceil(V.price / M.price) })], t("plan.men.cta", { p: money(M.price) }), go("mensal"));
   card(true, t("plan.popular"), t("plan.vitalicio"), money(V.price), t("plan.per.vitalicio"), t("plan.vit.eq", { n: V.credits.toLocaleString(LANG === "pt" ? "pt-BR" : "en-US") }),
     [t("plan.vit.f1", { n: V.credits.toLocaleString(LANG === "pt" ? "pt-BR" : "en-US") }), t("plan.vit.f2"), t("plan.vit.f3"), t("plan.f1"), t("plan.f4"), t("plan.f5")], t("plan.vit.cta"), go("vitalicio"));
   card(false, "", t("plan.creditos_mensal"), MONTHLY.price ? money(MONTHLY.price) : "+" + MONTHLY.credits, MONTHLY.price ? t("plan.per.creditos_mensal") : t("plan.mon.unit"), t("plan.mon.eq"),
@@ -1188,7 +1194,7 @@ $("#heroSound").onclick = async () => {
 /* leads */
 $("#leadForm").addEventListener("submit", async e => {
   e.preventDefault();
-  const lead = { nome: $("#lNome").value.trim(), empresa: $("#lEmpresa").value.trim(), whatsapp: $("#lZap").value.trim(), plano: $("#lPlano").value, valor: $("#lPlano").value === "vitalicio" ? PLANS[0].price : MONTHLY.price, idioma: LANG, quando: new Date().toISOString() };
+  const lead = { nome: $("#lNome").value.trim(), empresa: $("#lEmpresa").value.trim(), whatsapp: $("#lZap").value.trim(), plano: $("#lPlano").value, valor: ($("#lPlano").value === "vitalicio" ? PLANS[0] : $("#lPlano").value === "mensal" ? PLANS[1] : MONTHLY).price, idioma: LANG, quando: new Date().toISOString() };
   $("#leadErr").hidden = true;
   let ok = false;
   try { const r = await fetch((CFG.API_BASE || "").replace(/\/$/, "") + "/api/lead", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(lead) }); ok = r.ok; } catch (err) {}

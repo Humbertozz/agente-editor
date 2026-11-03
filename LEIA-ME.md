@@ -16,6 +16,7 @@ Tempo estimado: 40 a 60 minutos, uma vez só. Você vai precisar de 4 contas: **
 | Produto | Preço | O que libera |
 |---|---|---|
 | Acesso vitalício | R$ 1.190,90 (único) | Acesso para sempre + 1.000 vídeos |
+| Plano mensal | R$ 329,90 por mês | Acesso enquanto pagar + 120 vídeos que renovam todo mês (não acumulam) |
 | Créditos mensais | você define | +300 vídeos a cada mês pago |
 | Recarga 100 / 300 (opcional) | R$ 49,90 / R$ 119,90 | +100 / +300 vídeos |
 
@@ -80,6 +81,7 @@ Abra `public/config.js` e coloque:
 
 1. Na Hypercash, crie os produtos:
    - **Flamefields Acesso Vitalício**: pagamento único, R$ 1.190,90 (o nome precisa ter "Vitalício")
+   - **Flamefields Plano Mensal**: recorrência mensal, R$ 329,90 (o nome precisa ter "Mensal" e NÃO pode ter "Créditos"). Seu link: `https://pay.hypercash.com.br/pt/checkout/2c1c2a00-c873-43a0-ab96-dca3162aaa33`
    - **Flamefields Créditos Mensais**: recorrência mensal (o nome precisa ter "Créditos" e "Mensais"). O seu link atual: `https://pay.hypercash.com.br/pt/checkout/b470cd3b-9c39-4ba3-b2cf-d76210413e74`
    - Opcional: **Recarga 100 créditos** e **Recarga 300 créditos** (pagamento único)
 2. Coloque os links de checkout no `public/config.js` (e o preço da mensalidade em `MONTHLY_PRICE`).

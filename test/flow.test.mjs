@@ -81,21 +81,21 @@ assert.equal((await agentReq("tok-cliente")).status, 402);
 assert.equal((await agentReq("tok-invalido")).status, 401);
 console.log("✓ sem compra = bloqueado (402); sem login = 401");
 
-// 4) compra aprovada libera 300 créditos
+// 4) compra aprovada libera 120 créditos
 let r = await kiwi({ order_id: "o1", webhook_event_type: "order_approved", order_status: "paid", Customer: { email: "Cliente@Imob.com", full_name: "Ana Corretora" }, Product: { product_id: "prod-mensal", product_name: "Flamefields Mensal" } });
 assert.equal(r.status, 200);
 let p = DB.profiles.get("cliente@imob.com");
-assert.equal(p.plan, "mensal"); assert.equal(p.plan_credits, 300); assert.equal(p.paid_cents, 38990);
-console.log("✓ compra aprovada → acesso + 300 créditos + convite por e-mail");
+assert.equal(p.plan, "mensal"); assert.equal(p.plan_credits, 120); assert.equal(p.paid_cents, 32990);
+console.log("✓ compra aprovada → acesso + 120 créditos + convite por e-mail");
 
 // 5) evento repetido não duplica
 await kiwi({ order_id: "o1", webhook_event_type: "order_approved", order_status: "paid", Customer: { email: "cliente@imob.com" }, Product: { product_id: "prod-mensal" } });
-assert.equal(DB.profiles.get("cliente@imob.com").paid_cents, 38990);
+assert.equal(DB.profiles.get("cliente@imob.com").paid_cents, 32990);
 console.log("✓ webhook repetido não soma duas vezes");
 
 // 6) pedido no agente desconta créditos e registra custo
 r = await agentReq("tok-cliente"); let d = await r.json();
-assert.equal(r.status, 200); assert.equal(d.videos.length, 3); assert.equal(d.profile.credits, 297);
+assert.equal(r.status, 200); assert.equal(d.videos.length, 3); assert.equal(d.profile.credits, 117);
 assert.ok(lastAnthropicBody.system[0].text.includes("FLAMEFIELDS")); assert.equal(lastAnthropicBody.messages.at(-1).content[0].type, "image");
 assert.ok(DB.profiles.get("cliente@imob.com").cost_cents > 0);
 console.log("✓ agente gera 3 vídeos, desconta 3 créditos (sobram 297) e registra o custo: R$", (DB.profiles.get("cliente@imob.com").cost_cents / 100).toFixed(3));
@@ -126,10 +126,10 @@ console.log("✓ trava de custo protege contra prejuízo");
 // 11) renovação mensal e virada do mês
 DB.profiles.get("cliente@imob.com").plan_credits = 10;
 await kiwi({ order_id: "o1", webhook_event_type: "subscription_renewed", order_status: "paid", Customer: { email: "cliente@imob.com" }, Product: { product_id: "prod-mensal" } });
-assert.equal(DB.profiles.get("cliente@imob.com").plan_credits, 300);
+assert.equal(DB.profiles.get("cliente@imob.com").plan_credits, 120);
 DB.profiles.get("cliente@imob.com").plan_credits = 5; DB.profiles.get("cliente@imob.com").next_refill = new Date(Date.now() - 1000).toISOString();
-r = await call(me, "GET", "tok-cliente"); d = await r.json(); assert.equal(d.profile.plan_credits, 300);
-console.log("✓ renovação e virada do mês recarregam a franquia de 300");
+r = await call(me, "GET", "tok-cliente"); d = await r.json(); assert.equal(d.profile.plan_credits, 120);
+console.log("✓ renovação e virada do mês recarregam a franquia de 120");
 
 // 12) reembolso bloqueia
 await kiwi({ order_id: "o1", webhook_event_type: "order_refunded", order_status: "refunded", Customer: { email: "cliente@imob.com" }, Product: { product_id: "prod-mensal" } });

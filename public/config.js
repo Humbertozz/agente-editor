@@ -9,6 +9,7 @@ window.FF_CONFIG = {
 
   // Links de pagamento (Hypercash). Abrem exatamente como estão aqui.
   CHECKOUT: {
+    mensal:          "https://pay.hypercash.com.br/pt/checkout/2c1c2a00-c873-43a0-ab96-dca3162aaa33", // R$ 329,90 por mês (120 vídeos/mês)
     vitalicio:       "https://pay.hypercash.com.br/pt/checkout/b470cd3b-9c39-4ba3-b2cf-d76210413e74", // R$ 1.190,90 pagamento único
     creditos_mensal: "https://pay.hypercash.com.br/pt/checkout/b470cd3b-9c39-4ba3-b2cf-d76210413e74", // assinatura mensal de créditos
     recarga100:      "",  // opcional
