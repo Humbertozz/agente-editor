@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Flamefields VFX</title>
+<meta name="description" content="Efeitos VFX e movimento para o seu site: animações de scroll, partículas, texto cinético e microinterações.">
+<meta property="og:title" content="Flamefields VFX">
+<meta property="og:description" content="Seu site parado perde cliente. Coloque movimento de cinema nele.">
+<meta property="og:image" content="flamefields-banner.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23ff5a1f'/%3E%3Cpath d='M16 6c1 5 6 7 6 13a6 6 0 0 1-12 0c0-3 2-5 3-6 0 2 1 3 2 3 0-4-1-7 1-10z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;800;900&family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=swap">
+<style>
+:root{--bg:#07070a;--bg2:#0e0e14;--line:rgba(255,255,255,.09);--fg:#f4f1ec;--mist:#a39d95;--or:#ff5a1f;--or2:#ffb12a;--red:#ef0f4d;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 Inter,system-ui,sans-serif;overflow-x:hidden}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+.wm{font-family:Outfit,'Inter Display',Inter,sans-serif;font-weight:800;letter-spacing:-.035em;font-size:24px;text-decoration:none}
+.wm b{font-weight:800;background:linear-gradient(95deg,#ffb12a,#ff7a1a 40%,#ff3a2f 75%,#ef0f4d);-webkit-background-clip:text;background-clip:text;color:transparent}
+.wm small{font-family:Inter;font-weight:700;font-size:11px;letter-spacing:.14em;color:var(--or2);margin-left:6px;vertical-align:middle;border:1px solid rgba(255,122,26,.5);border-radius:99px;padding:2px 7px}
+nav{position:fixed;inset:0 0 auto;z-index:20;backdrop-filter:blur(14px);background:rgba(7,7,10,.6);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:66px;gap:12px}
+nav .links{display:flex;gap:22px;font-size:14px;color:var(--mist)}nav .links a{text-decoration:none}nav .links a:hover{color:var(--fg)}
+.lang{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}.lang button{background:none;border:0;color:var(--mist);font:600 12px Inter;padding:7px 10px;cursor:pointer}.lang button.on{background:#fff;color:#000}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:14px 26px;font:700 15px Inter;text-decoration:none;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--fg);cursor:pointer;transition:transform .2s}
+.btn.pri{background:linear-gradient(95deg,#ffb12a,#ff5a1f 55%,#ef0f4d);border:0;color:#fff;box-shadow:0 18px 50px -18px rgba(255,90,31,.8)}
+.btn.sm{padding:9px 16px;font-size:13px}
+@media (max-width:760px){nav .links{display:none}}
+@media (max-width:560px){nav .btn.pri.sm{display:none}.amt small{display:block;margin:6px 0 0}}
+/* hero */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;padding:110px 0 70px}
+#fx{position:absolute;inset:0;width:100%;height:100%}
+.hero .wrap{position:relative;z-index:2}
+.eyebrow{display:inline-flex;gap:8px;align-items:center;font:700 12px Inter;letter-spacing:.16em;color:var(--or2);border:1px solid rgba(255,122,26,.45);border-radius:99px;padding:7px 14px;background:rgba(255,90,31,.08)}
+.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--or);box-shadow:0 0 12px var(--or);animation:pulse 1.4s infinite}
+@keyframes pulse{50%{opacity:.3}}
+h1{font-family:Outfit,'Inter Display',Inter,sans-serif;font-weight:900;font-size:clamp(44px,8.4vw,112px);line-height:.92;letter-spacing:-.045em;margin:22px 0 18px}
+h1 .w{display:inline-block;opacity:0;transform:translateY(40px) rotate(4deg);filter:blur(10px);transition:all .8s cubic-bezier(.2,.8,.2,1)}
+h1.in .w{opacity:1;transform:none;filter:none}
+h1 .hl{background:var(--or);color:#fff8f1;padding:0 .14em;border-radius:.12em}
+h1 em{font-family:"Instrument Serif",serif;font-style:italic;font-weight:400;color:var(--or2);letter-spacing:-.01em}
+.sub{font-size:clamp(17px,2vw,21px);color:#d8d2ca;max-width:640px;margin:0 0 30px}
+.ctas{display:flex;gap:12px;flex-wrap:wrap}
+.trust{display:flex;gap:22px;flex-wrap:wrap;margin-top:30px;color:var(--mist);font-size:13px}.trust b{color:var(--fg)}
+/* marquee */
+.marq{border-block:1px solid var(--line);overflow:hidden;padding:18px 0;background:var(--bg2)}
+.marq div{display:flex;gap:46px;white-space:nowrap;animation:mq 26s linear infinite;font:800 clamp(22px,3vw,34px) Outfit,'Inter Display',Inter,sans-serif;letter-spacing:-.02em;color:#5f5a54}
+.marq span b{color:var(--or)}
+@keyframes mq{to{transform:translateX(-50%)}}
+section{padding:96px 0}
+.kick{font:700 12px Inter;letter-spacing:.16em;color:var(--or2);text-transform:uppercase}
+h2{font-family:Outfit,'Inter Display',Inter,sans-serif;font-weight:900;font-size:clamp(34px,5vw,62px);line-height:1;letter-spacing:-.04em;margin:12px 0 16px}
+h2 em{font-family:"Instrument Serif";font-weight:400;font-style:italic;color:var(--or2)}
+.lead{color:var(--mist);font-size:18px;max-width:640px}
+.rv{opacity:0;transform:translateY(46px);transition:all .9s cubic-bezier(.2,.8,.2,1)}.rv.in{opacity:1;transform:none}
+/* effects grid */
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:44px}
+@media (max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media (max-width:560px){.grid{grid-template-columns:minmax(0,1fr)}}
+.card{position:relative;border:1px solid var(--line);border-radius:22px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));padding:22px;min-height:260px;overflow:hidden;transform-style:preserve-3d;transition:transform .15s,border-color .3s}
+.card:hover{border-color:rgba(255,122,26,.5)}
+.card::before{content:"";position:absolute;inset:0;background:radial-gradient(320px circle at var(--mx,50%) var(--my,50%),rgba(255,90,31,.18),transparent 60%);opacity:0;transition:opacity .3s}
+.card:hover::before{opacity:1}
+.card h3{font:800 21px Outfit,'Inter Display',Inter,sans-serif;letter-spacing:-.02em;margin:14px 0 6px}.card p{margin:0;color:var(--mist);font-size:14.5px}
+.demo{height:130px;border-radius:14px;background:#0b0b11;border:1px solid var(--line);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+/* demos */
+.d-orb span{position:absolute;width:10px;height:10px;border-radius:50%;background:var(--or);box-shadow:0 0 14px var(--or);animation:orb 3s ease-in-out infinite}
+@keyframes orb{50%{transform:translate(var(--x),var(--y)) scale(.4);opacity:.4}}
+.d-type{font:900 34px Outfit,'Inter Display',Inter,sans-serif;letter-spacing:-.03em}.d-type b{background:var(--or);color:#fff8f1;padding:0 8px;border-radius:6px}
+.d-type .c{display:inline-block;width:3px;height:30px;background:var(--or2);margin-left:4px;vertical-align:middle;animation:pulse 1s infinite}
+.d-par div{position:absolute;border-radius:12px}.d-par .a{width:70%;height:60%;background:linear-gradient(135deg,#1e3a8a,#7c3aed);transform:translateZ(0)}.d-par .b{width:40%;height:44%;background:linear-gradient(135deg,#ff5a1f,#ef0f4d);right:12%;bottom:10%}.d-par .c2{width:26%;height:26%;background:#fff;left:12%;top:14%;opacity:.9}
+.d-mag a{padding:12px 22px;border-radius:99px;background:var(--or);font:800 14px Inter;text-decoration:none;transition:transform .12s}
+.d-grad{background:conic-gradient(from var(--a,0deg),#ff5a1f,#7c3aed,#06b6d4,#ef0f4d,#ff5a1f);animation:spin 6s linear infinite;filter:blur(18px) saturate(1.3)}
+@property --a{syntax:"<angle>";inherits:false;initial-value:0deg}@keyframes spin{to{--a:360deg}}
+.d-count{font:900 50px Outfit,'Inter Display',Inter,sans-serif;letter-spacing:-.04em}.d-count small{font-size:16px;color:var(--mist);margin-left:6px}
+/* how */
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:40px}@media (max-width:820px){.steps{grid-template-columns:minmax(0,1fr)}}
+.step{border:1px solid var(--line);border-radius:22px;padding:26px;background:var(--bg2)}.step b{font:900 54px Outfit,'Inter Display',Inter,sans-serif;color:var(--or);line-height:1}.step h3{font:800 22px Outfit,'Inter Display',Inter,sans-serif;margin:10px 0 6px}.step p{margin:0;color:var(--mist)}
+/* price */
+.price{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:30px;align-items:center;border:1px solid rgba(255,122,26,.4);border-radius:30px;padding:clamp(26px,5vw,56px);background:radial-gradient(600px circle at 90% 0%,rgba(255,90,31,.18),transparent 60%),var(--bg2)}
+@media (max-width:860px){.price{grid-template-columns:minmax(0,1fr)}}
+.amt{white-space:nowrap;font:900 clamp(52px,7.4vw,92px) Outfit,'Inter Display',Inter,sans-serif;letter-spacing:-.05em;line-height:.9}.amt small{display:block;font:700 18px Inter;color:var(--mist);letter-spacing:0;margin:8px 0 0}
+.inc{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:10px}.inc li{display:flex;gap:10px;align-items:flex-start}.inc li::before{content:"";flex:none;width:20px;height:20px;margin-top:2px;border-radius:50%;background:var(--or) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3 3 7-7' fill='none' stroke='white' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat}
+.note{color:var(--mist);font-size:13px;margin-top:12px}
+/* faq */
+details{border-bottom:1px solid var(--line);padding:18px 0}summary{cursor:pointer;font:700 18px Inter;list-style:none;display:flex;justify-content:space-between;gap:12px}summary::after{content:"+";color:var(--or);font-size:24px;line-height:1}details[open] summary::after{content:"–"}details p{color:var(--mist);margin:10px 0 0}
+footer{border-top:1px solid var(--line);padding:34px 0;color:var(--mist);font-size:13px}footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+#glow{position:fixed;width:420px;height:420px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(255,90,31,.12),transparent 65%);transform:translate(-50%,-50%);z-index:1;left:-500px;top:-500px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}h1 .w,.rv{opacity:1;transform:none;filter:none}}
+</style>
+</head>
+<body>
+<div id="glow" aria-hidden="true"></div>
+<nav><div class="wrap">
+  <a class="wm" href="#top">Flame<b>fields</b><small>VFX</small></a>
+  <div class="links"><a href="#efeitos" data-t="nav1">Efeitos</a><a href="#como" data-t="nav2">Como funciona</a><a href="#preco" data-t="nav3">Preço</a><a href="#faq" data-t="nav4">Dúvidas</a></div>
+  <div style="display:flex;gap:10px;align-items:center"><div class="lang"><button type="button" data-l="pt" class="on">PT</button><button type="button" data-l="en">EN</button></div><a class="btn pri sm" href="#preco" data-t="buy">Comprar · US$ 21,99</a></div>
+</div></nav>
+
+<header class="hero" id="top">
+  <canvas id="fx" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <span class="eyebrow"><i></i><span data-t="eye">VFX PARA SITES</span></span>
+    <h1 id="h1"></h1>
+    <p class="sub" data-t="sub">Site parado perde cliente em 3 segundos. A Flamefields coloca movimento de cinema no seu site: partículas, texto cinético, scroll animado e microinterações que fazem a pessoa ficar e clicar.</p>
+    <div class="ctas"><a class="btn pri" href="#preco" data-t="cta1">Quero meu site em movimento</a><a class="btn" href="#efeitos" data-t="cta2">Ver os efeitos ao vivo</a></div>
+    <div class="trust"><span data-t="t1"><b>Tudo nesta página</b> é efeito que você pode ter</span><span data-t="t2"><b>Leve</b>: sem travar o site</span><span data-t="t3"><b>Funciona</b> no celular</span></div>
+  </div>
+</header>
+
+<div class="marq" aria-hidden="true"><div id="mq"></div></div>
+
+<section id="efeitos"><div class="wrap">
+  <span class="kick rv" data-t="k1">Os efeitos</span>
+  <h2 class="rv" data-t="h2a">Passe o mouse. <em>Role a página.</em> Sinta.</h2>
+  <p class="lead rv" data-t="l1">Cada card abaixo é um efeito real rodando agora. Escolhemos os que combinam com a sua marca e aplicamos no seu site.</p>
+  <div class="grid">
+    <article class="card rv"><div class="demo d-orb" id="orbs"></div><h3 data-t="e1">Partículas e brilho</h3><p data-t="e1p">Fundo vivo no topo do site, que reage ao mouse e chama atenção sem poluir.</p></article>
+    <article class="card rv"><div class="demo d-type"><span id="typ"></span><span class="c"></span></div><h3 data-t="e2">Texto cinético</h3><p data-t="e2p">Títulos que entram palavra por palavra, com destaque na palavra que vende.</p></article>
+    <article class="card rv"><div class="demo d-par" id="par"><div class="a"></div><div class="b"></div><div class="c2"></div></div><h3 data-t="e3">Parallax 3D</h3><p data-t="e3p">Camadas que se mexem em profundidade com o mouse e com o scroll.</p></article>
+    <article class="card rv"><div class="demo d-mag"><a href="#preco" id="mag" data-t="e4b">Clique aqui</a></div><h3 data-t="e4">Botão magnético</h3><p data-t="e4p">O botão de compra "puxa" o cursor. Mais clique no que importa.</p></article>
+    <article class="card rv"><div class="demo d-grad"></div><h3 data-t="e5">Gradiente animado</h3><p data-t="e5p">Cores da sua marca em movimento contínuo, como em sites de tecnologia.</p></article>
+    <article class="card rv"><div class="demo d-count"><span id="cnt">0</span><small>%</small></div><h3 data-t="e6">Números que contam</h3><p data-t="e6p">Resultados, clientes e prazos que sobem na tela quando aparecem.</p></article>
+  </div>
+</div></section>
+
+<section id="como" style="background:var(--bg2);border-block:1px solid var(--line)"><div class="wrap">
+  <span class="kick rv" data-t="k2">Como funciona</span>
+  <h2 class="rv" data-t="h2b">Três passos. <em>Zero dor de cabeça.</em></h2>
+  <div class="steps">
+    <div class="step rv"><b>1</b><h3 data-t="s1">Você compra</h3><p data-t="s1p">Paga US$ 21,99 e manda o link do seu site ou a página que quer animar.</p></div>
+    <div class="step rv"><b>2</b><h3 data-t="s2">A gente aplica</h3><p data-t="s2p">Escolhemos os efeitos com a cara da sua marca e preparamos tudo pronto para colar.</p></div>
+    <div class="step rv"><b>3</b><h3 data-t="s3">Seu site ganha vida</h3><p data-t="s3p">Você recebe os efeitos instalados ou o código com o passo a passo.</p></div>
+  </div>
+</div></section>
+
+<section id="preco"><div class="wrap">
+  <div class="price rv">
+    <div>
+      <span class="kick" data-t="k3">Pacote VFX</span>
+      <h2 data-t="h2c">Movimento de cinema <em>pelo preço de um lanche.</em></h2>
+      <ul class="inc">
+        <li data-t="i1">Efeitos de movimento escolhidos para a sua marca</li>
+        <li data-t="i2">Animação de entrada nos títulos e no scroll</li>
+        <li data-t="i3">Microinterações nos botões de compra</li>
+        <li data-t="i4">Otimizado para celular e para não deixar o site lento</li>
+        <li data-t="i5">Funciona em HTML, WordPress, Webflow e outros</li>
+      </ul>
+    </div>
+    <div>
+      <div class="amt"><span data-t="amt">US$ 21,99</span><small data-t="once">pagamento único</small></div>
+      <p class="note" data-t="n1">Pagamento seguro. Você recebe as instruções logo após a compra.</p>
+      <a class="btn pri" id="buy" href="#" style="width:100%;margin-top:14px;font-size:17px;padding:18px" data-t="buy2">Comprar agora</a>
+    </div>
+  </div>
+</div></section>
+
+<section id="faq" style="padding-top:20px"><div class="wrap" style="max-width:820px">
+  <h2 class="rv" data-t="h2d">Dúvidas</h2>
+  <details class="rv"><summary data-t="q1">Funciona no meu site?</summary><p data-t="a1">Sim, se você consegue editar o site (HTML, WordPress, Webflow, Wix, Framer e similares). Se tiver dúvida, mande o link antes de comprar.</p></details>
+  <details class="rv"><summary data-t="q2">Vai deixar meu site lento?</summary><p data-t="a2">Não. Os efeitos são leves, rodam no próprio navegador e respeitam quem pede menos movimento nas configurações do celular.</p></details>
+  <details class="rv"><summary data-t="q3">Quanto tempo para receber?</summary><p data-t="a3">Você recebe as instruções logo após o pagamento. O prazo de entrega é combinado conforme o tamanho do site.</p></details>
+  <details class="rv"><summary data-t="q4">Tem teste grátis?</summary><p data-t="a4">Não. O valor já é de entrada: US$ 21,99, pagamento único.</p></details>
+</div></section>
+
+<footer><div class="wrap"><span class="wm" style="font-size:20px">Flame<b>fields</b><small>VFX</small></span><span>© 2026 Flamefields · flamefieldai.online</span></div></footer>
+
+<script src="config.js?v=20261111"></script>
+<script>
+const CFG = window.FF_CONFIG || {};
+const T = {
+ pt: { h1: ["Seu", "site", "parado", "não", "<span class='hl'>vende.</span>", "<br>", "Coloque", "<em>movimento.</em>"], mq: ["PARTÍCULAS", "TEXTO CINÉTICO", "PARALLAX 3D", "SCROLL ANIMADO", "BOTÃO MAGNÉTICO", "GRADIENTE VIVO"], typ: ["mais", "cliques", "vendas"] },
+ en: { h1: ["Your", "static", "site", "doesn't", "<span class='hl'>sell.</span>", "<br>", "Add", "<em>motion.</em>"], mq: ["PARTICLES", "KINETIC TYPE", "3D PARALLAX", "SCROLL ANIMATION", "MAGNETIC BUTTON", "LIVE GRADIENT"], typ: ["more", "clicks", "sales"],
+  nav1: "Effects", nav2: "How it works", nav3: "Pricing", nav4: "FAQ", buy: "Buy · US$ 21.99", eye: "VFX FOR WEBSITES",
+  sub: "A static site loses visitors in 3 seconds. Flamefields adds cinematic motion to your website: particles, kinetic type, scroll animation and micro-interactions that make people stay and click.",
+  cta1: "Put my site in motion", cta2: "See the effects live", t1: "<b>Everything on this page</b> is an effect you can have", t2: "<b>Lightweight</b>: no lag", t3: "<b>Works</b> on mobile",
+  k1: "The effects", h2a: "Hover. <em>Scroll.</em> Feel it.", l1: "Every card below is a real effect running right now. We pick the ones that fit your brand and apply them to your site.",
+  e1: "Particles & glow", e1p: "A living hero background that reacts to the cursor and grabs attention without clutter.", e2: "Kinetic type", e2p: "Headlines that enter word by word, highlighting the word that sells.", e3: "3D parallax", e3p: "Layers that move in depth with the cursor and the scroll.", e4: "Magnetic button", e4b: "Click here", e4p: "The buy button pulls the cursor in. More clicks where it matters.", e5: "Animated gradient", e5p: "Your brand colors in constant motion, like tech websites.", e6: "Counting numbers", e6p: "Results, clients and deadlines that count up as they appear.",
+  k2: "How it works", h2b: "Three steps. <em>Zero headache.</em>", s1: "You buy", s1p: "Pay US$ 21.99 and send the link of the site or page you want animated.", s2: "We apply it", s2p: "We pick the effects that match your brand and prepare everything ready to paste.", s3: "Your site comes alive", s3p: "You get the effects installed or the code with step-by-step instructions.",
+  k3: "VFX Pack", h2c: "Cinematic motion <em>for the price of lunch.</em>", i1: "Motion effects chosen for your brand", i2: "Entrance and scroll animation on headlines", i3: "Micro-interactions on buy buttons", i4: "Optimized for mobile and site speed", i5: "Works with HTML, WordPress, Webflow and more", amt: "US$ 21.99", once: "one-time payment", n1: "Secure payment. You get the instructions right after purchase.", buy2: "Buy now",
+  h2d: "FAQ", q1: "Will it work on my site?", a1: "Yes, if you can edit your site (HTML, WordPress, Webflow, Wix, Framer and similar). If unsure, send us the link before buying.", q2: "Will it slow my site down?", a2: "No. The effects are lightweight, run in the browser and respect visitors who ask for reduced motion.", q3: "How fast do I get it?", a3: "You get the instructions right after payment. Delivery time depends on the size of the site.", q4: "Is there a free trial?", a4: "No. The price is already an entry price: US$ 21.99, one-time payment." }
+};
+const PT = {}; document.querySelectorAll("[data-t]").forEach(e => PT[e.dataset.t] = e.innerHTML);
+let LANG = "pt", tyI = 0;
+function setLang(l) {
+  LANG = l; document.documentElement.lang = l === "pt" ? "pt-BR" : "en";
+  document.querySelectorAll("[data-t]").forEach(e => { const k = e.dataset.t; e.innerHTML = l === "pt" ? PT[k] : (T.en[k] || PT[k]); });
+  document.querySelectorAll(".lang button").forEach(b => b.classList.toggle("on", b.dataset.l === l));
+  const h = document.getElementById("h1"); h.classList.remove("in");
+  h.innerHTML = T[l].h1.map((w, i) => w === "<br>" ? "<br>" : `<span class="w" style="transition-delay:${i * 90}ms">${w}</span>`).join(" ");
+  requestAnimationFrame(() => requestAnimationFrame(() => h.classList.add("in")));
+  const m = T[l].mq.map(x => `<span>${x} <b>✦</b></span>`).join(""); document.getElementById("mq").innerHTML = m + m;
+  try { localStorage.setItem("ffvfx_lang", l); } catch (e) {}
+}
+document.querySelectorAll(".lang button").forEach(b => b.onclick = () => setLang(b.dataset.l));
+let saved = null; try { saved = localStorage.getItem("ffvfx_lang"); } catch (e) {}
+setLang(saved || ((navigator.language || "pt").startsWith("pt") ? "pt" : "en"));
+// checkout
+const buyUrl = (CFG.CHECKOUT && CFG.CHECKOUT.vfx) || "";
+document.querySelectorAll('#buy,[href="#preco"].pri').forEach(a => { if (a.id === "buy") { if (/^https:\/\//.test(buyUrl)) { a.href = buyUrl; a.target = "_blank"; a.rel = "noopener"; } else a.href = "#preco"; } });
+// hero particles
+const cv = document.getElementById("fx"), g = cv.getContext("2d"); let P = [], mx = -999, my = -999, DPR = Math.min(2, devicePixelRatio || 1);
+function rs() { cv.width = cv.offsetWidth * DPR; cv.height = cv.offsetHeight * DPR; P = Array.from({ length: Math.min(140, Math.floor(cv.offsetWidth / 9)) }, () => ({ x: Math.random() * cv.width, y: Math.random() * cv.height, vx: (Math.random() - .5) * .4 * DPR, vy: (Math.random() - .5) * .4 * DPR, r: (Math.random() * 1.8 + .6) * DPR })); }
+addEventListener("resize", rs); rs();
+cv.parentElement.addEventListener("mousemove", e => { const b = cv.getBoundingClientRect(); mx = (e.clientX - b.left) * DPR; my = (e.clientY - b.top) * DPR; });
+const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+function loop(t) {
+  g.clearRect(0, 0, cv.width, cv.height);
+  const gx = cv.width * (.7 + .1 * Math.sin(t / 3000)), gy = cv.height * (.35 + .1 * Math.cos(t / 3700));
+  let rg = g.createRadialGradient(gx, gy, 0, gx, gy, cv.width * .55); rg.addColorStop(0, "rgba(255,90,31,.30)"); rg.addColorStop(1, "rgba(255,90,31,0)"); g.fillStyle = rg; g.fillRect(0, 0, cv.width, cv.height);
+  rg = g.createRadialGradient(cv.width * .1, cv.height, 0, cv.width * .1, cv.height, cv.width * .5); rg.addColorStop(0, "rgba(239,15,77,.22)"); rg.addColorStop(1, "rgba(239,15,77,0)"); g.fillStyle = rg; g.fillRect(0, 0, cv.width, cv.height);
+  for (const p of P) {
+    const dx = p.x - mx, dy = p.y - my, d = Math.hypot(dx, dy); if (d < 140 * DPR) { p.vx += dx / d * .25; p.vy += dy / d * .25; }
+    p.vx *= .985; p.vy *= .985; p.x += p.vx + .05; p.y += p.vy; if (p.x < 0) p.x += cv.width; if (p.x > cv.width) p.x -= cv.width; if (p.y < 0) p.y += cv.height; if (p.y > cv.height) p.y -= cv.height;
+    g.beginPath(); g.arc(p.x, p.y, p.r, 0, 7); g.fillStyle = "rgba(255,190,140,.75)"; g.fill();
+  }
+  for (let i = 0; i < P.length; i++) for (let j = i + 1; j < P.length; j++) { const a = P[i], b = P[j], d = Math.hypot(a.x - b.x, a.y - b.y); if (d < 90 * DPR) { g.strokeStyle = `rgba(255,122,26,${.18 * (1 - d / (90 * DPR))})`; g.lineWidth = DPR; g.beginPath(); g.moveTo(a.x, a.y); g.lineTo(b.x, b.y); g.stroke(); } }
+  if (!RM) requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+// cursor glow
+const gl = document.getElementById("glow"); addEventListener("mousemove", e => { gl.style.left = e.clientX + "px"; gl.style.top = e.clientY + "px"; });
+// reveal on scroll + counter
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: .15 });
+document.querySelectorAll(".rv").forEach(e => io.observe(e));
+const cnt = document.getElementById("cnt"); new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { o.disconnect(); const t0 = performance.now(); (function up(t) { const p = Math.min(1, (t - t0) / 1600); cnt.textContent = Math.round(100 * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(up); })(t0); } }, { threshold: .5 }).observe(cnt);
+// card tilt + spotlight
+document.querySelectorAll(".card").forEach(c => { c.addEventListener("mousemove", e => { const b = c.getBoundingClientRect(), x = (e.clientX - b.left) / b.width, y = (e.clientY - b.top) / b.height; c.style.setProperty("--mx", x * 100 + "%"); c.style.setProperty("--my", y * 100 + "%"); c.style.transform = `perspective(800px) rotateX(${(.5 - y) * 8}deg) rotateY(${(x - .5) * 10}deg)`; }); c.addEventListener("mouseleave", () => c.style.transform = ""); });
+// orbs demo
+const ob = document.getElementById("orbs"); for (let i = 0; i < 18; i++) { const s = document.createElement("span"); s.style.left = Math.random() * 90 + 5 + "%"; s.style.top = Math.random() * 80 + 10 + "%"; s.style.setProperty("--x", (Math.random() - .5) * 80 + "px"); s.style.setProperty("--y", (Math.random() - .5) * 60 + "px"); s.style.animationDelay = Math.random() * 3 + "s"; ob.append(s); }
+// typing demo
+const ty = document.getElementById("typ"); let tw = 0, tc = 0, del = false;
+setInterval(() => { const words = T[LANG].typ; const w = words[tw % words.length]; if (!del) { tc++; if (tc > w.length + 6) del = true; } else { tc--; if (tc <= 0) { del = false; tw++; } } const s = w.slice(0, Math.min(tc, w.length)); ty.innerHTML = tw % words.length === 2 && s ? `<b>${s}</b>` : s; }, 110);
+// parallax demo
+const par = document.getElementById("par"); par.parentElement.addEventListener("mousemove", e => { const b = par.getBoundingClientRect(), x = (e.clientX - b.left) / b.width - .5, y = (e.clientY - b.top) / b.height - .5; [...par.children].forEach((d, i) => d.style.transform = `translate(${x * (i + 1) * 18}px,${y * (i + 1) * 14}px)`); });
+// magnetic button
+const mag = document.getElementById("mag"); mag.parentElement.addEventListener("mousemove", e => { const b = mag.getBoundingClientRect(), x = e.clientX - (b.left + b.width / 2), y = e.clientY - (b.top + b.height / 2); mag.style.transform = `translate(${x * .35}px,${y * .35}px)`; }); mag.parentElement.addEventListener("mouseleave", () => mag.style.transform = "");
+</script>
+</body>
+</html>
