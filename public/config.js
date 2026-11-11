@@ -9,7 +9,7 @@ window.FF_CONFIG = {
 
   // Links de pagamento (Hypercash). Abrem exatamente como estão aqui.
   CHECKOUT: {
-    vfx:             "",  // link de pagamento do Pacote VFX (US$ 21,99)
+    vfx:             "https://pay.hypercash.com.br/pt/payment-link/e1ebed6b-a703-4a53-aea7-94bf99d9ae67",  // Pacote VFX (R$ 125,90)
     mensal:          "https://pay.hypercash.com.br/pt/checkout/2c1c2a00-c873-43a0-ab96-dca3162aaa33", // R$ 329,90 por mês (120 vídeos/mês)
     vitalicio:       "https://pay.hypercash.com.br/pt/checkout/b470cd3b-9c39-4ba3-b2cf-d76210413e74", // R$ 1.190,90 pagamento único
     creditos_mensal: "https://pay.hypercash.com.br/pt/checkout/b470cd3b-9c39-4ba3-b2cf-d76210413e74", // assinatura mensal de créditos
