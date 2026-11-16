@@ -10,7 +10,7 @@ window.FF_CONFIG = {
   // Links de pagamento (Hypercash). Abrem exatamente como estão aqui.
   CHECKOUT: {
     estrutura1:      "",  // 1 estrutura de anúncios (R$ 180)
-    estrutura2:      "",  // 2 estruturas (R$ 300)
+    estrutura2:      "https://pay.hypercash.com.br/pt/checkout/121935a7-2cdf-49e0-8843-4e1e002587d8",  // 2 estruturas (R$ 300)
     estrutura4:      "",  // 4 estruturas (R$ 520)
     hospedagem:      "https://pay.hypercash.com.br/pt/checkout/7ec367af-5cde-4353-96b0-d0dd5b00f653",  // Hospedagem + Domínio vitalício (pagamento único)
     vfx:             "https://pay.hypercash.com.br/pt/payment-link/e1ebed6b-a703-4a53-aea7-94bf99d9ae67",  // Pacote VFX (R$ 125,90)
