@@ -184,10 +184,13 @@ footer{border-top:1px solid var(--line);padding:34px 0;color:var(--mist);font-si
 
 <footer><div class="wrap"><span class="wm" style="font-size:20px"><i aria-hidden="true"></i>ODS <span>Studio</span></span><span>© 2026 ODS Studio · Não somos afiliados a TikTok, Instagram, YouTube ou Facebook.</span></div></footer>
 
-<script src="config.js?v=20261118"></script>
+<script src="config.js?v=20261118b"></script>
 <script>
 const CFG = window.FF_CONFIG || {};
-const zap = String(CFG.LIVE_WHATSAPP || "").replace(/\D/g, "");
+const buy = String((CFG.CHECKOUT || {}).live || "").trim();
+if (/^https:\/\//.test(buy)) document.querySelectorAll(".cta").forEach(a => { a.href = buy; a.target = "_blank"; a.rel = "noopener"; });
+const zap0 = String(CFG.LIVE_WHATSAPP || "").replace(/\D/g, "");
+const zap = /^https:\/\//.test(buy) ? "" : zap0;
 if (zap) { const msg = encodeURIComponent("Olá! Quero contratar uma live com a ODS Studio (R$ 395,96)."); document.querySelectorAll(".cta").forEach(a => { a.href = `https://wa.me/${zap}?text=${msg}`; a.target = "_blank"; a.rel = "noopener"; }); }
 // cotação do dólar em tempo real (R$ 395,96 convertido)
 const BRL = 395.96;

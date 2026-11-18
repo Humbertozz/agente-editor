@@ -9,6 +9,7 @@ window.FF_CONFIG = {
 
   // Links de pagamento (Hypercash). Abrem exatamente como estão aqui.
   CHECKOUT: {
+    live:            "https://pay.hypercash.com.br/pt/payment-link/7b705539-5516-4ad6-8487-67e13ea90824",  // ODS Studio: live completa (R$ 395,96)
     estrutura1:      "",  // 1 estrutura de anúncios (R$ 180)
     estrutura2:      "https://pay.hypercash.com.br/pt/checkout/121935a7-2cdf-49e0-8843-4e1e002587d8",  // 2 estruturas (R$ 300)
     estrutura4:      "",  // 4 estruturas (R$ 520)
