@@ -82,6 +82,9 @@ h2{font-family:var(--H);font-weight:900;font-size:clamp(34px,4.8vw,58px);line-he
 .price{font:900 34px var(--H);letter-spacing:-.03em}
 .inc{list-style:none;padding:0;margin:4px 0 8px;display:grid;gap:9px;font-size:14.5px}.inc li{display:flex;gap:10px}.inc li::before{content:"";flex:none;width:18px;height:18px;margin-top:3px;border-radius:50%;background:var(--live) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3 3 7-7' fill='none' stroke='white' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat}
 .plan .btn{margin-top:auto;width:100%}
+.one{max-width:760px;margin:44px auto 0}.price-big{font:900 clamp(56px,8vw,86px) var(--H);letter-spacing:-.045em;line-height:1}
+.usd{font:600 16px Inter;color:var(--cy)}.usd b{font-weight:800}.usd span{color:var(--mist);font-weight:500}
+.inc.two{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:22px}@media (max-width:600px){.inc.two{grid-template-columns:minmax(0,1fr)}}
 details{border-bottom:1px solid var(--line);padding:18px 0}summary{cursor:pointer;font:700 18px Inter;list-style:none;display:flex;justify-content:space-between;gap:12px}summary::after{content:"+";color:var(--live);font-size:24px;line-height:1}details[open] summary::after{content:"–"}details p{color:var(--mist);margin:10px 0 0}
 .final{text-align:center;border:1px solid rgba(255,45,85,.4);border-radius:30px;padding:clamp(30px,6vw,64px);background:radial-gradient(700px circle at 50% 0%,rgba(255,45,85,.18),transparent 60%),var(--bg2)}
 footer{border-top:1px solid var(--line);padding:34px 0;color:var(--mist);font-size:13px}footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
@@ -91,8 +94,8 @@ footer{border-top:1px solid var(--line);padding:34px 0;color:var(--mist);font-si
 <body>
 <nav><div class="wrap">
   <a class="wm" href="#top"><i aria-hidden="true"></i>ODS <span>Studio</span></a>
-  <div class="links"><a href="#servicos">Serviços</a><a href="#como">Como funciona</a><a href="#para-quem">Para quem</a><a href="#pacotes">Pacotes</a><a href="#faq">Dúvidas</a></div>
-  <a class="btn pri sm cta" href="#pacotes">Fazer orçamento</a>
+  <div class="links"><a href="#servicos">Serviços</a><a href="#como">Como funciona</a><a href="#para-quem">Para quem</a><a href="#pacotes">Preço</a><a href="#faq">Dúvidas</a></div>
+  <a class="btn pri sm cta" href="#pacotes">Contratar · R$ 395,96</a>
 </div></nav>
 
 <header class="hero" id="top"><div class="wrap">
@@ -146,17 +149,21 @@ footer{border-top:1px solid var(--line);padding:34px 0;color:var(--mist);font-si
 </div></section>
 
 <section id="pacotes" style="padding-top:20px"><div class="wrap">
-  <div style="text-align:center"><span class="kick rv">Pacotes</span><h2 class="rv">Escolha o formato <em>da sua live.</em></h2><p class="lead rv" style="margin:0 auto">Cada live tem uma duração e uma estrutura diferente. Fale com a gente e receba o orçamento.</p></div>
-  <div class="plans">
-    <article class="plan rv"><h3>Live avulsa</h3><p class="for">Para testar ou para uma data especial.</p><div class="price">Sob consulta</div>
-      <ul class="inc"><li>1 transmissão</li><li>Estrutura de câmera, luz e áudio</li><li>Transmissão em até 2 redes</li><li>Gravação da live</li></ul>
-      <a class="btn cta" href="#pacotes">Pedir orçamento</a></article>
-    <article class="plan pop rv"><span class="tagp">MAIS PEDIDO</span><h3>Live de vendas</h3><p class="for">Completa, para vender no ao vivo.</p><div class="price">Sob consulta</div>
-      <ul class="inc"><li>Roteiro de live de vendas</li><li>Telas com produto, preço e cupom</li><li>Transmissão em todas as redes</li><li>Cenário com a sua marca</li><li>Cortes dos melhores momentos</li></ul>
-      <a class="btn pri cta" href="#pacotes">Pedir orçamento</a></article>
-    <article class="plan rv"><h3>Pacote mensal</h3><p class="for">Para quem faz live toda semana.</p><div class="price">Sob consulta</div>
-      <ul class="inc"><li>Lives recorrentes no mês</li><li>Tudo do pacote Live de vendas</li><li>Cortes de todas as lives</li><li>Prioridade na agenda</li></ul>
-      <a class="btn cta" href="#pacotes">Pedir orçamento</a></article>
+  <div style="text-align:center"><span class="kick rv">Preço</span><h2 class="rv">Um valor só. <em>Tudo incluso.</em></h2><p class="lead rv" style="margin:0 auto">Sem pacote confuso: a live completa, do roteiro aos cortes, por um preço fechado.</p></div>
+  <div class="one rv">
+    <article class="plan pop"><span class="tagp">LIVE COMPLETA</span>
+      <h3>Live de vendas ODS Studio</h3><p class="for">Produção e transmissão profissional, do começo ao fim.</p>
+      <div class="price-big">R$ 395,96</div>
+      <div class="usd" id="usd" aria-live="polite">≈ US$ <b id="usdv">--</b> <span id="usdt">· buscando cotação do dia…</span></div>
+      <ul class="inc two">
+        <li>Estrutura de câmera, luz e áudio</li><li>Transmissão em todas as redes ao mesmo tempo</li>
+        <li>Roteiro de live de vendas</li><li>Telas com produto, preço e cupom</li>
+        <li>Cenário com a sua marca</li><li>Operação técnica durante toda a live</li>
+        <li>Gravação completa da live</li><li>Cortes dos melhores momentos</li>
+      </ul>
+      <a class="btn pri cta" href="#pacotes" style="font-size:17px;padding:18px">Contratar minha live</a>
+      <p class="for" style="text-align:center;font-size:13px">Valor cobrado em reais. O valor em dólar é só referência e muda com a cotação.</p>
+    </article>
   </div>
 </div></section>
 
@@ -166,7 +173,7 @@ footer{border-top:1px solid var(--line);padding:34px 0;color:var(--mist);font-si
   <details class="rv"><summary>A live é feita no meu espaço ou no estúdio?</summary><p>Pode ser no seu espaço, como na sua loja, ou num local combinado. Levamos a estrutura até você.</p></details>
   <details class="rv"><summary>Preciso saber apresentar?</summary><p>Não precisa ser profissional. O roteiro guia você do começo ao fim, e a gente ajuda a ensaiar antes.</p></details>
   <details class="rv"><summary>Vocês garantem vendas na live?</summary><p>Ninguém pode garantir vendas. O que a gente garante é uma live bem feita, com estrutura, roteiro e telas pensadas para vender.</p></details>
-  <details class="rv"><summary>Quanto custa?</summary><p>Depende da duração, do local e de quantas redes. Fale com a gente e enviamos o orçamento.</p></details>
+  <details class="rv"><summary>Quanto custa?</summary><p>R$ 395,96 por live, com tudo incluso: estrutura, transmissão em todas as redes, roteiro, telas de venda, gravação e cortes.</p></details>
 </div></section>
 
 <section style="padding-top:20px"><div class="wrap"><div class="final rv">
@@ -181,7 +188,22 @@ footer{border-top:1px solid var(--line);padding:34px 0;color:var(--mist);font-si
 <script>
 const CFG = window.FF_CONFIG || {};
 const zap = String(CFG.LIVE_WHATSAPP || "").replace(/\D/g, "");
-if (zap) { const msg = encodeURIComponent("Olá! Quero um orçamento de live com a ODS Studio."); document.querySelectorAll(".cta").forEach(a => { a.href = `https://wa.me/${zap}?text=${msg}`; a.target = "_blank"; a.rel = "noopener"; }); }
+if (zap) { const msg = encodeURIComponent("Olá! Quero contratar uma live com a ODS Studio (R$ 395,96)."); document.querySelectorAll(".cta").forEach(a => { a.href = `https://wa.me/${zap}?text=${msg}`; a.target = "_blank"; a.rel = "noopener"; }); }
+// cotação do dólar em tempo real (R$ 395,96 convertido)
+const BRL = 395.96;
+async function rate() {
+  const srcs = [["https://economia.awesomeapi.com.br/json/last/USD-BRL", j => +j.USDBRL.bid, j => j.USDBRL.create_date],
+                ["https://open.er-api.com/v6/latest/USD", j => +j.rates.BRL, j => j.time_last_update_utc]];
+  for (const [u, get, when] of srcs) { try { const r = await fetch(u, { cache: "no-store" }); const j = await r.json(); const v = get(j); if (v > 1) return { v, when: when(j) }; } catch (e) {} }
+  return null;
+}
+async function paintUSD() {
+  const r = await rate(); const el = document.getElementById("usdv"), tx = document.getElementById("usdt");
+  if (!r) { el.textContent = "--"; tx.textContent = "· cotação indisponível agora"; return; }
+  el.textContent = (BRL / r.v).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const now = new Date(); tx.textContent = `· dólar a R$ ${r.v.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 4 })} · atualizado às ${now.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}`;
+}
+paintUSD(); setInterval(paintUSD, 60000);
 const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: .12 });
 document.querySelectorAll(".rv").forEach(e => io.observe(e));
 </script>
