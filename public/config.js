@@ -26,6 +26,7 @@ window.FF_CONFIG = {
     alt: [{ salt: "qxpQlzoHjzMYYzq7HHXSYA==", hash: "mMQKr5Eg5fdz+Iv4sR0+p6S/WGGwDOKaSbsBIBjry24=" }] },
 
   TRIAL_VIDEOS: 3,       // vídeos grátis para quem se cadastra sozinho no site
+  LIVE_WHATSAPP: "",     // WhatsApp da ODS Studio com DDI e DDD, ex.: "5579999999999" (botões de orçamento da página de lives)
   MONTHLY_PRICE: 0,      // preço da assinatura mensal de créditos (ex.: 197.90). 0 = não mostra o preço
   MONTHLY_CREDITS: 300,  // vídeos somados a cada mês pago
   STYLE_COST: 5          // créditos por análise de estilo
